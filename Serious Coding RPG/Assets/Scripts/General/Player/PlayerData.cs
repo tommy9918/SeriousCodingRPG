@@ -12,6 +12,7 @@ public class PlayerData
     }
     public Gender gender;
     public string name;
+    
 
     public PlayerData()    //initialize a new player
     {
@@ -23,5 +24,8 @@ public class PlayerData
     {
         this.gender = player.data.gender;
         this.name = player.data.name;
+        this.completedTask = new List<int>();
     }
+
+    
 }
