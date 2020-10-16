@@ -12,20 +12,32 @@ public class PlayerData
     }
     public Gender gender;
     public string name;
+    public int level;
+    public int EXP;
+    public int gold;
     public List<int> completedTask;
+    
 
     public PlayerData()    //initialize a new player
     {
         gender = Gender.Male;
         name = "Nameless wizard";
+        level = 1;
+        EXP = 0;
+        gold = 0;
         completedTask = new List<int>();
+        
     }
 
     public PlayerData(Player player)    //get data from player
     {
         this.gender = player.data.gender;
         this.name = player.data.name;
+        this.level = player.data.level;
+        this.EXP = player.data.EXP;
+        this.gold = player.data.gold;
         this.completedTask = new List<int>(player.data.completedTask);
+        
     }
 
     

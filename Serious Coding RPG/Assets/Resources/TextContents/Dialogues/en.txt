@@ -1,0 +1,1 @@
+HELLO=Hello! Welcome to the game!
