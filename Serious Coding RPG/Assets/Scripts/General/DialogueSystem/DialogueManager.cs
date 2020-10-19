@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
     {
         List<string> loaded_dialogues = new List<string>();
 
-        string lang = LanaguageFileTarget(SystemLanguage.Chinese);
+        string lang = LanaguageFileTarget(SystemLanguage.English);
 
         string allTexts = (Resources.Load("TextContents/Dialogues/"+lang) as TextAsset).text; //without (.txt)
         string[] lines = allTexts.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
