@@ -16,6 +16,7 @@ public class PlayerData
     public int EXP;
     public int gold;
     public List<int> completedTask;
+    public string language;
     
 
     public PlayerData()    //initialize a new player
@@ -26,6 +27,7 @@ public class PlayerData
         EXP = 0;
         gold = 0;
         completedTask = new List<int>();
+        language = "en";
         
     }
 
@@ -37,8 +39,21 @@ public class PlayerData
         this.EXP = player.data.EXP;
         this.gold = player.data.gold;
         this.completedTask = new List<int>(player.data.completedTask);
+        this.language = player.data.language;
         
     }
 
-    
+    string LanguageFileTarget(SystemLanguage language)
+    {
+        switch (language)
+        {
+            case SystemLanguage.English:
+                return "en";
+            case SystemLanguage.Chinese:
+                return "ch";
+        }
+        return "en";
+    }
+
+
 }

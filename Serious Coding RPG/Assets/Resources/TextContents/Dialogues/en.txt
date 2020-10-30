@@ -1,1 +1,17 @@
 HELLO=Hello! Welcome to the game!
+GOLD=Gold
+REWARD=Reward
+EXP=EXP
+OK=OK
+NPCNAMEELDER=Elder Wizard
+ELDER=Hi again! Young man! Have a nice day!
+STARTQUEST=Start quest now?
+YES=Yes
+NO=No
+QUEST1-1=Oh! Hey there......
+QUEST1-2=I haven't seen your face before...... You must be a new comer!
+QUEST1-3=To become a true magician, you must first pass my test!
+QUEST2-1=Let me tell you how to cast a spell properly!
+QUEST2-2=First, you need to know what a spell is, and what a spell can do.
+QUEST2-3=All casted spells will consume time and magical energy.
+QUEST2-3=Spells can be built by many small components!

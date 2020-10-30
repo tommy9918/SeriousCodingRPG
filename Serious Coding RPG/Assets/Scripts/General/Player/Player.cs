@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (Instance == null)   //singleton Player instance, easy for referencing in other scripts
         {
@@ -26,6 +26,18 @@ public class Player : MonoBehaviour
         Application.targetFrameRate = 60;
         data = LoadData();     //load player data
     }   
+
+    public bool checkQuestStatus(int id)    //0 = not finished, 1 = finished
+    {
+        foreach(int questid in data.completedTask)
+        {
+            if(id == questid)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public PlayerData LoadData()
     {

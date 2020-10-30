@@ -6,7 +6,8 @@ public class CharacterManager : MonoBehaviour
 {
     public float speed = 1;
     public Vector3 mousePos = new Vector3();
-    public GameObject camera;
+    public GameObject cam;
+    public float slow_down;
     void Start()
     {
 
@@ -25,38 +26,40 @@ public class CharacterManager : MonoBehaviour
 
     void OnTouchStay()
     {    
-        Vector3 mousePos = camera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mousePos = cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
       
         float x_different = mousePos.x-transform.position.x;
         float y_different = mousePos.y-transform.position.y;
         if (Mathf.Abs(x_different) > Mathf.Abs(y_different))
         {
+            float slow_factor = Mathf.Min(Mathf.Abs(x_different) / slow_down, 1f);
             if (x_different > 0)
             {
-                transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+                transform.position += new Vector3(speed * Time.deltaTime * slow_factor, 0, 0);
                 
             }
             else
             {
-                transform.position += new Vector3(-speed * Time.deltaTime, 0, 0);
+                transform.position += new Vector3(-speed * Time.deltaTime * slow_factor, 0, 0);
                 
             }
         }
         else if (Mathf.Abs(x_different) < Mathf.Abs(y_different))
         {
+            float slow_factor = Mathf.Min(Mathf.Abs(y_different) / slow_down, 1f);
             if (y_different > 0)
             {
-                transform.position += new Vector3(0, speed * Time.deltaTime, 0);
+                transform.position += new Vector3(0, speed * Time.deltaTime * slow_factor, 0);
                 
             }
 
             else
             {
-                transform.position += new Vector3(0, -speed * Time.deltaTime, 0);
+                transform.position += new Vector3(0, -speed * Time.deltaTime * slow_factor, 0);
                 
             }
         }
-        camera.transform.position = new Vector3(transform.position.x, transform.position.y, camera.transform.position.z);
+        cam.transform.position = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
 
     }
 

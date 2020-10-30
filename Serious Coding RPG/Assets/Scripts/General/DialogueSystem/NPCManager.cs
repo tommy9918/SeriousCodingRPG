@@ -5,13 +5,34 @@ using UnityEngine;
 public class NPCManager : MonoBehaviour
 {
     public GameObject speechBubble;
+    public GameObject quest_icon;
+    public DialogueManager dialogue_manager;
     public float react_radius;
     public bool canTalkTo;
+    public string NPC_id;
+    public string quest_id;
+    //public string NPCname;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        dialogue_manager = GetComponent<DialogueManager>();
+        UpdateQuest();
+    }
+
+    public void UpdateQuest()
+    {
+        quest_id = QuestManager.Instance.getQuest(NPC_id);
+        if (quest_id != null)
+        {
+            dialogue_manager.dialogues = dialogue_manager.LoadQuestDialogues(quest_id);
+            quest_icon.SetActive(true);
+        }
+        else
+        {
+            dialogue_manager.dialogues = dialogue_manager.LoadDialogues(NPC_id);
+            quest_icon.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -49,5 +70,10 @@ public class NPCManager : MonoBehaviour
             speechBubble.GetComponent<BoxCollider2D>().enabled = false;
             speechBubble.GetComponent<ScaleChange>().StartAnimateReverse();
         }
+    }
+
+    public void StartDialogue()
+    {
+        DialoguePanel.Instance.StartDialogue(gameObject);
     }
 }
