@@ -12,7 +12,7 @@ public class QuestManager : MonoBehaviour
     public GameObject questUI;
     public GameObject RewardPanel;
 
-    void Start()
+    void Awake()
     {
         if (Instance == null)   //singleton Quest instance, easy for referencing in other scripts
         {

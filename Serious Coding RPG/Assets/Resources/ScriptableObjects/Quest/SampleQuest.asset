@@ -14,7 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questNPCId: ELDER
   questId: 1
-  input: []
-  output: []
+  input:
+  - 1,2
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  output:
+  - 3
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   rewardEXP: 100
   rewardGold: 100

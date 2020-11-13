@@ -70,6 +70,23 @@ public class FadeControl : MonoBehaviour
 
     }
 
+    public void GetAllComponenets()
+    {
+        sprites = GetComponentsInChildren<SpriteRenderer>();
+        texts = GetComponentsInChildren<Text>();
+        images = GetComponentsInChildren<Image>();
+        colors = new Color[sprites.Length];
+        colors2 = new Color[texts.Length];
+        colors3 = new Color[images.Length];
+
+        getColors();
+    }
+
+    public bool isChild(GameObject obj)
+    {
+        return obj.transform.IsChildOf(gameObject.transform);
+    }
+
     // Update is called once per frame
     void LateUpdate()
     {
@@ -144,28 +161,37 @@ public class FadeControl : MonoBehaviour
             {
                 for (int i = 0; i <= sprites.Length - 1; i++)
                 {
-                    Color tmp = colors[i];
-                    tmp.a = current * colors[i].a;
-                    sprites[i].GetComponent<SpriteRenderer>().color = tmp;
-                    //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                    if (isChild(sprites[i].gameObject))
+                    {
+                        Color tmp = colors[i];
+                        tmp.a = current * colors[i].a;
+                        sprites[i].GetComponent<SpriteRenderer>().color = tmp;
+                        //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                    }
 
                 }
 
                 for (int i = 0; i <= texts.Length - 1; i++)
                 {
-                    Color tmp = colors2[i];
-                    tmp.a = current * colors2[i].a;
-                    texts[i].GetComponent<Text>().color = tmp;
-                    //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                    if (isChild(texts[i].gameObject))
+                    {
+                        Color tmp = colors2[i];
+                        tmp.a = current * colors2[i].a;
+                        texts[i].GetComponent<Text>().color = tmp;
+                        //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                    }
 
                 }
 
                 for (int i = 0; i <= images.Length - 1; i++)
                 {
-                    Color tmp = colors3[i];
-                    tmp.a = current * colors3[i].a;
-                    images[i].GetComponent<Image>().color = tmp;
-                    //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                    if (isChild(images[i].gameObject))
+                    {
+                        Color tmp = colors3[i];
+                        tmp.a = current * colors3[i].a;
+                        images[i].GetComponent<Image>().color = tmp;
+                        //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                    }
 
                 }
 
@@ -178,28 +204,37 @@ public class FadeControl : MonoBehaviour
 
                     for (int i = 0; i <= sprites.Length - 1; i++)
                     {
-                        Color tmp = colors[i];
-                        tmp.a = current * colors[i].a;
-                        sprites[i].GetComponent<SpriteRenderer>().color = tmp;
-                        //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                        if (isChild(sprites[i].gameObject))
+                        {
+                            Color tmp = colors[i];
+                            tmp.a = current * colors[i].a;
+                            sprites[i].GetComponent<SpriteRenderer>().color = tmp;
+                            //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                        }
 
                     }
 
                     for (int i = 0; i <= texts.Length - 1; i++)
                     {
-                        Color tmp = colors2[i];
-                        tmp.a = current * colors2[i].a;
-                        texts[i].GetComponent<Text>().color = tmp;
-                        //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                        if (isChild(texts[i].gameObject))
+                        {
+                            Color tmp = colors2[i];
+                            tmp.a = current * colors2[i].a;
+                            texts[i].GetComponent<Text>().color = tmp;
+                            //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                        }
 
                     }
 
                     for (int i = 0; i <= images.Length - 1; i++)
                     {
-                        Color tmp = colors3[i];
-                        tmp.a = current * colors3[i].a;
-                        images[i].GetComponent<Image>().color = tmp;
-                        //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                        if (isChild(images[i].gameObject))
+                        {
+                            Color tmp = colors3[i];
+                            tmp.a = current * colors3[i].a;
+                            images[i].GetComponent<Image>().color = tmp;
+                            //gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                        }
 
                     }
                 }
