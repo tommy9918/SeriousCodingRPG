@@ -14,6 +14,10 @@ GameObject:
   - component: {fileID: 8901688030014237024}
   - component: {fileID: 8901688030014237055}
   - component: {fileID: 8901688030014237054}
+  - component: {fileID: -3528796190437976107}
+  - component: {fileID: -7907521643900155001}
+  - component: {fileID: 2593241302748593334}
+  - component: {fileID: 7005818349624065139}
   m_Layer: 0
   m_Name: EqualBlock
   m_TagString: Untagged
@@ -162,6 +166,87 @@ MonoBehaviour:
   - {fileID: 8901688031453275731}
   horizontal: 1
   vertical: 0
+--- !u!114 &-3528796190437976107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8901688030014237053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917ee2fab0bc54b419c4c46b9d694bde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affectedByTime: 0
+  XYSeparate: 0
+  finalScale: 1
+  startScale: 0
+  moveTime: 20
+  auto_start: 0
+--- !u!114 &-7907521643900155001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8901688030014237053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385f5230b39dc6340a29969740e40d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affectedByTime: 0
+  movefromstart: 0
+  moveTime: 20
+  startPosition: {x: 0, y: 0}
+  destination: {x: 0, y: 0}
+  moving: 0
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &2593241302748593334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8901688030014237053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed2168735b15d8468099a16784718c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+  texts: []
+  images: []
+  colors: []
+  colors2: []
+  colors3: []
+  FadeIn: 0
+  FadeOut: 0
+  FadeInFromStart: 0
+  FadeOutFromStart: 0
+  speed: 20
+  current: 1
+  unscaledTime: 0
+  debug: 0
+--- !u!114 &7005818349624065139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8901688030014237053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9560c024275be214081a392c4dd0cbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
 --- !u!1 &8901688030962879299
 GameObject:
   m_ObjectHideFlags: 0

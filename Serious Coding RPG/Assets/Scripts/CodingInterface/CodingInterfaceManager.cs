@@ -9,6 +9,8 @@ public class CodingInterfaceManager : MonoBehaviour
     public GameObject block_selection;
     public GameObject block_selection_scroll_list;
     public GameObject coding_scroll_list;
+    public GameObject DarkLayerInstance;
+    public GameObject DarkLayer;
     public List<GameObject> coding_blocks;
 
     public GameObject active_dragging_block;
@@ -28,6 +30,8 @@ public class CodingInterfaceManager : MonoBehaviour
     public void OpenBlockSelection()
     {
         block_selection.SetActive(true);
+        DarkLayer = Instantiate(DarkLayerInstance);
+        DarkLayer.GetComponent<FadeControl>().StartFadeIn();
     }
 
     public void CloseBlockSelection()
@@ -38,6 +42,9 @@ public class CodingInterfaceManager : MonoBehaviour
     IEnumerator CloseBlockSelectionRoutine()
     {
         //block_selection.GetComponent<FadeControl>().GetAllComponenets();
+        DarkLayer.GetComponent<FadeControl>().StartFadeOut();
+        block_selection.GetComponent<BlockSelection>().FadeAllBlocks();
+        Destroy(DarkLayer, 0.5f);
         block_selection.GetComponent<FadeControl>().StartFadeOut();
         block_selection.GetComponent<ScaleChange>().StartAnimateReverse();
         yield return new WaitForSeconds(0.5f);

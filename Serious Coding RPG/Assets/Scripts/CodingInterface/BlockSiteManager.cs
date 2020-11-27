@@ -152,17 +152,20 @@ public class BlockSiteManager : MonoBehaviour
 
     void OnTouchStay()
     {
-        if (coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != null && coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != transform.parent.gameObject)
+        if (coding_manager)
         {
-            incoming_insertion = coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block;
-            if (BlockMatch(coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block))
+            if (coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != null && coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != transform.parent.gameObject)
             {
-                //Debug.Log("match!");
-                Highlight();
-            }
-            else
-            {
-                //Debug.Log("not match!");
+                incoming_insertion = coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block;
+                if (BlockMatch(coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block))
+                {
+                    //Debug.Log("match!");
+                    Highlight();
+                }
+                else
+                {
+                    //Debug.Log("not match!");
+                }
             }
         }
     }
@@ -179,7 +182,11 @@ public class BlockSiteManager : MonoBehaviour
             
             //GameObject insertion = coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block;
             incoming_insertion.transform.parent = gameObject.transform;
-            incoming_insertion.transform.localPosition = new Vector3(0.1f, -0.1f, -0.03f);
+            //incoming_insertion.transform.localPosition = new Vector3(0.1f, -0.1f, -0.03f);
+            incoming_insertion.transform.localPosition = new Vector3(incoming_insertion.transform.localPosition.x, incoming_insertion.transform.localPosition.y, -0.03f);
+            incoming_insertion.GetComponent<MoveTo>().startPosition = incoming_insertion.transform.localPosition;
+            incoming_insertion.GetComponent<MoveTo>().destination = new Vector3(0.1f, -0.1f, -0.03f);
+            incoming_insertion.GetComponent<MoveTo>().ReplayMotion();
 
             inserted_block = incoming_insertion;
 

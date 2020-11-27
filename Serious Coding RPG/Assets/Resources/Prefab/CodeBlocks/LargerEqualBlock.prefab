@@ -14,6 +14,10 @@ GameObject:
   - component: {fileID: 4968070848202891948}
   - component: {fileID: 4968070848202891949}
   - component: {fileID: 4968070848202891938}
+  - component: {fileID: -1005296532322257404}
+  - component: {fileID: -2562415068441620863}
+  - component: {fileID: -7599867381309231345}
+  - component: {fileID: -1846619481554255436}
   m_Layer: 0
   m_Name: LargerEqualBlock
   m_TagString: Untagged
@@ -162,6 +166,87 @@ MonoBehaviour:
   - {fileID: 4968070848659922895}
   horizontal: 1
   vertical: 0
+--- !u!114 &-1005296532322257404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4968070848202891939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917ee2fab0bc54b419c4c46b9d694bde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affectedByTime: 0
+  XYSeparate: 0
+  finalScale: 1
+  startScale: 0
+  moveTime: 20
+  auto_start: 0
+--- !u!114 &-2562415068441620863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4968070848202891939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385f5230b39dc6340a29969740e40d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affectedByTime: 0
+  movefromstart: 0
+  moveTime: 20
+  startPosition: {x: 0, y: 0}
+  destination: {x: 0, y: 0}
+  moving: 0
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &-7599867381309231345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4968070848202891939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed2168735b15d8468099a16784718c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+  texts: []
+  images: []
+  colors: []
+  colors2: []
+  colors3: []
+  FadeIn: 0
+  FadeOut: 0
+  FadeInFromStart: 0
+  FadeOutFromStart: 0
+  speed: 20
+  current: 1
+  unscaledTime: 0
+  debug: 0
+--- !u!114 &-1846619481554255436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4968070848202891939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9560c024275be214081a392c4dd0cbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
 --- !u!1 &4968070848556790281
 GameObject:
   m_ObjectHideFlags: 0

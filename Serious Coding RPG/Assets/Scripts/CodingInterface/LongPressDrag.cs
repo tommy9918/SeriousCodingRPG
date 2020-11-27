@@ -6,6 +6,7 @@ public class LongPressDrag : MonoBehaviour
 {
     Vector2 finger_start_position;
     Vector2 finger_current_position;
+    Vector2 offset;
     float original_z;
     bool pressed;
     bool dragging;
@@ -17,7 +18,7 @@ public class LongPressDrag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        original_z = transform.localPosition.z;
+        original_z = transform.position.z;
     }
 
     // Update is called once per frame
@@ -43,14 +44,14 @@ public class LongPressDrag : MonoBehaviour
         if (dragging && (Input.touchCount != 0 || Input.GetMouseButton(0)))
         {
             Vector2 finger = FingerPos();
-
+            finger = finger - offset;
             transform.position = new Vector3(finger.x, finger.y, original_z - 0.1f);
         }
         
         else if((Input.touchCount == 0 || !Input.GetMouseButton(0)) && dragging)
         {
             endDragging();
-            transform.position = new Vector3(transform.position.x, transform.position.y, original_z);
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }
     }
 
@@ -75,6 +76,7 @@ public class LongPressDrag : MonoBehaviour
         dragging = true;
         GetComponent<BoxCollider2D>().enabled = false;
         finger_start_position = FingerPos();
+        offset = finger_start_position - (Vector2)transform.position;
         coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block = gameObject;
 
         BlockSiteManager[] sites = gameObject.GetComponentsInChildren<BlockSiteManager>();
@@ -89,6 +91,9 @@ public class LongPressDrag : MonoBehaviour
         {
             coding_manager.GetComponent<CodingInterfaceManager>().CloseBlockSelection();
         }
+
+        GetComponent<SetMaskInteration>().SetInteraction("none");
+        GetComponent<SetMaskInteration>().SetMask("Default", 1);
     }
 
     void endDragging()

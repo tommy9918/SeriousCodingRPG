@@ -44,3 +44,6 @@ TagManager:
   - name: Magic Circle
     uniqueID: 1816369463
     locked: 0
+  - name: Selection
+    uniqueID: 42823011
+    locked: 0

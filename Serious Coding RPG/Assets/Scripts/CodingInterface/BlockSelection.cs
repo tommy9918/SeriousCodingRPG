@@ -5,6 +5,12 @@ using UnityEngine;
 public class BlockSelection : MonoBehaviour
 {
     public GameObject[] all_blocks_reference;
+    public GameObject[] main_blocks_reference;
+    public GameObject[] calculation_blocks_reference;
+    public GameObject[] variable_blocks_reference;
+    public GameObject[] conditional_blocks_reference;
+    public GameObject selection_outline;
+    public string type_state;
     public List<GameObject> summoned_blocks;
 
     public GameObject scroll_list;
@@ -12,8 +18,10 @@ public class BlockSelection : MonoBehaviour
     private void OnEnable()
     {
         summoned_blocks = new List<GameObject>();
-        SummonAllBlockAsChild();
-        GetComponent<FadeControl>().GetAllComponenets();
+        //SummonAllBlockAsChild();
+        SwitchMain();
+        
+        //GetComponent<FadeControl>().GetAllComponenets();
         StartAnimate();
         
     }
@@ -35,29 +43,151 @@ public class BlockSelection : MonoBehaviour
         summoned_blocks.Clear();
     }
 
-    void SummonAllBlockAsChild()
+    public void FadeAllBlocks()
+    {
+        foreach (GameObject blk in summoned_blocks)
+        {
+            if (blk.transform.parent == scroll_list.transform)
+            {
+                blk.GetComponent<FadeControl>().StartFadeOut();
+            }
+        }
+        //summoned_blocks.Clear();
+    }
+
+    //void SummonAllBlockAsChild()
+    //{
+    //    float total_y_offset = 0f;
+    //    for(int i = 0; i <= all_blocks_reference.Length - 1; i++)
+    //    {
+    //        total_y_offset -= 0.3f;
+    //        GameObject temp = Instantiate(all_blocks_reference[i], scroll_list.transform);
+    //        temp.transform.localPosition = new Vector3(-3.17f, total_y_offset, -0.01f);
+
+    //        if(temp.GetComponent<BlockManager>() != null)
+    //        {
+    //            temp.GetComponent<BlockManager>().InititiateBlockSize();
+    //        }
+    //        else if(temp.GetComponent<SubBlockManager>() != null)
+    //        {
+    //            temp.GetComponent<SubBlockManager>().InititiateBlockSize();
+    //        }
+    //        temp.GetComponent<LongPressDrag>().coding_manager = transform.parent.gameObject;
+
+    //        total_y_offset -= temp.GetComponent<SpriteRenderer>().size.y;
+
+    //        summoned_blocks.Add(temp);
+    //    }
+
+    //}
+
+
+
+    public void SwitchMain()
+    {
+        if (type_state != "main" || summoned_blocks.Count == 0)
+        {
+            RemoveAllSummonedBlocks();
+            type_state = "main";
+            MoveSelectionOutline(-3.97f);
+            StartCoroutine(SummonBlocksSequence(main_blocks_reference));
+        }
+    }
+
+    public void SwitchVariable()
+    {
+        if (type_state != "variable")
+        {
+            RemoveAllSummonedBlocks();
+            type_state = "variable";
+            MoveSelectionOutline(-1.95f);
+            StartCoroutine(SummonBlocksSequence(variable_blocks_reference));
+        }
+    }
+
+    public void SwitchConditional()
+    {
+        if (type_state != "conditional")
+        {
+            RemoveAllSummonedBlocks();
+            type_state = "conditional";
+            MoveSelectionOutline(1.95f);
+            StartCoroutine(SummonBlocksSequence(conditional_blocks_reference));
+        }
+    }
+
+    public void SwitchCalculation()
+    {
+        if (type_state != "calculation")
+        {
+            RemoveAllSummonedBlocks();
+            type_state = "calculation";
+            MoveSelectionOutline(0f);
+            StartCoroutine(SummonBlocksSequence(calculation_blocks_reference));
+        }
+    }
+
+    public void SwitchCustom()
+    {
+        if (type_state != "custom")
+        {
+            RemoveAllSummonedBlocks();
+            type_state = "custom";
+            MoveSelectionOutline(3.97f);
+        }
+    }
+
+    public void MoveSelectionOutline(float x_coor)
+    {
+        selection_outline.GetComponent<MoveTo>().startPosition = selection_outline.transform.localPosition;
+        selection_outline.GetComponent<MoveTo>().destination = new Vector3(x_coor, selection_outline.transform.localPosition.y, selection_outline.transform.localPosition.z);
+        selection_outline.GetComponent<MoveTo>().ReplayMotion();
+    }
+
+    public void RemoveAllSummonedBlocks()
+    {
+        foreach(GameObject blks in summoned_blocks)
+        {
+            blks.GetComponent<ScaleChange>().StartAnimateReverse();
+            Destroy(blks, 0.5f);
+            
+        }
+        summoned_blocks.Clear();
+    }
+
+
+
+    IEnumerator SummonBlocksSequence(GameObject[] blocks)
     {
         float total_y_offset = 0f;
-        for(int i = 0; i <= all_blocks_reference.Length - 1; i++)
+        for (int i = 0; i <= blocks.Length - 1; i++)
         {
             total_y_offset -= 0.3f;
-            GameObject temp = Instantiate(all_blocks_reference[i], scroll_list.transform);
+            GameObject temp = Instantiate(blocks[i], scroll_list.transform);
             temp.transform.localPosition = new Vector3(-3.17f, total_y_offset, -0.01f);
 
-            if(temp.GetComponent<BlockManager>() != null)
+            if (temp.GetComponent<BlockManager>() != null)
             {
                 temp.GetComponent<BlockManager>().InititiateBlockSize();
             }
-            else if(temp.GetComponent<SubBlockManager>() != null)
+            else if (temp.GetComponent<SubBlockManager>() != null)
             {
                 temp.GetComponent<SubBlockManager>().InititiateBlockSize();
             }
             temp.GetComponent<LongPressDrag>().coding_manager = transform.parent.gameObject;
-
+            temp.GetComponent<ScaleChange>().StartAnimate();
             total_y_offset -= temp.GetComponent<SpriteRenderer>().size.y;
 
             summoned_blocks.Add(temp);
+
+            temp.GetComponent<SetMaskInteration>().InitializeSpritesArray();
+            temp.GetComponent<SetMaskInteration>().SetMask("Default", 10);
+            temp.GetComponent<SetMaskInteration>().SetInteraction("inside");
+
+
+            yield return new WaitForSeconds(0.05f);
         }
+        //GetComponent<FadeControl>().GetAllComponenets();
     }
 
 
