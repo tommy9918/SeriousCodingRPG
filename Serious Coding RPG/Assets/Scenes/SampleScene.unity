@@ -10742,7 +10742,7 @@ MonoBehaviour:
   questID: 
   block_selection: {fileID: 2049744067}
   block_selection_scroll_list: {fileID: 0}
-  coding_scroll_list: {fileID: 1876599001}
+  coding_scroll_list: {fileID: 1612436222}
   DarkLayerInstance: {fileID: 2352189036381088807, guid: a62741b9ee5fe0d439da85a11c2736ba,
     type: 3}
   DarkLayer: {fileID: 0}
@@ -10899,7 +10899,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 11
   m_TargetDisplay: 0
 --- !u!1 &503092286
 GameObject:
@@ -39036,7 +39036,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 42823011
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &2065942530

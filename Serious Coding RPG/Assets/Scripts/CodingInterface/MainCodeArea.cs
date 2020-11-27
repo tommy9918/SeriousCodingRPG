@@ -82,8 +82,8 @@ public class MainCodeArea : MonoBehaviour
     {
         if (coding_blocks.Count == 0) return 1;
         //Debug.Log(y_pos);
-        //Debug.Log(coding_blocks.Count);
-        float offset = 4.6692f;
+        //Debug.Log(block_parent.transform.localPosition.y);
+        float offset = 4.6692f + (block_parent.transform.localPosition.y - 6.1946f);
         float initial_y = offset;
         for(int i=0; i<=coding_blocks.Count-1; i++)
         {
@@ -130,6 +130,7 @@ public class MainCodeArea : MonoBehaviour
             }
             summoned_outline.Clear();
             current_line_number = 0;
+            RepositionBlocks();
         }
     }
 
@@ -173,9 +174,22 @@ public class MainCodeArea : MonoBehaviour
         }
 
         initial_y -= block_size;
-        initial_y -= 0.3f;
+        if(block_size > 0) initial_y -= 0.3f;
 
         for (int i=line_number-1; i<= coding_blocks.Count-1; i++)
+        {
+            coding_blocks[i].GetComponent<MoveTo>().startPosition = coding_blocks[i].transform.localPosition;
+            coding_blocks[i].GetComponent<MoveTo>().destination = new Vector3(coding_blocks[i].transform.localPosition.x, initial_y, coding_blocks[i].transform.localPosition.z);
+            coding_blocks[i].GetComponent<MoveTo>().ReplayMotion();
+            initial_y -= coding_blocks[i].GetComponent<SpriteRenderer>().size.y;
+            initial_y -= 0.3f;
+        }
+    }
+
+    void RepositionBlocks()
+    {
+        float initial_y = -0.3f;
+        for (int i = 0; i <= coding_blocks.Count - 1; i++)
         {
             coding_blocks[i].GetComponent<MoveTo>().startPosition = coding_blocks[i].transform.localPosition;
             coding_blocks[i].GetComponent<MoveTo>().destination = new Vector3(coding_blocks[i].transform.localPosition.x, initial_y, coding_blocks[i].transform.localPosition.z);

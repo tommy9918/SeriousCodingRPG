@@ -225,6 +225,7 @@ public class BlockSiteManager : MonoBehaviour
 
             else if (inserted_type == SubBlockManager.BlockType.VALUE && type == SiteType.VALUE)
             {
+                
                 if (block_inserted.GetComponent<SubBlockManager>().value_type.Equals(value_type))
                 {
                     return true;
@@ -245,7 +246,7 @@ public class BlockSiteManager : MonoBehaviour
             {
                 if(inserted_type == SubBlockManager.BlockType.VARIABLE || inserted_type == SubBlockManager.BlockType.VALUE)
                 {
-                    if (block_inserted.GetComponent<SubBlockManager>().value_type.Equals(value_type) || value_type == "")
+                    if (block_inserted.GetComponent<SubBlockManager>().value_type.Equals(value_type) || value_type == "" || block_inserted.GetComponent<SubBlockManager>().value_type == "")
                     {
                         return true;
                     }

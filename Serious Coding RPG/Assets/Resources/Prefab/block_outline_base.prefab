@@ -105,7 +105,7 @@ MonoBehaviour:
   FadeOut: 0
   FadeInFromStart: 0
   FadeOutFromStart: 0
-  speed: 30
+  speed: 15
   current: 1
   unscaledTime: 0
   debug: 0

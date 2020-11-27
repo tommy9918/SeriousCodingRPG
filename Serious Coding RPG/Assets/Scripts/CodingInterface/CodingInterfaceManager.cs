@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CodingInterfaceManager : MonoBehaviour
 {
@@ -49,6 +50,16 @@ public class CodingInterfaceManager : MonoBehaviour
         block_selection.GetComponent<ScaleChange>().StartAnimateReverse();
         yield return new WaitForSeconds(0.5f);
         block_selection.SetActive(false);
+    }
+
+    public void DisableScrolling()
+    {
+        coding_scroll_list.GetComponent<ScrollRect>().vertical = false;
+    }
+
+    public void EnableScrolling()
+    {
+        coding_scroll_list.GetComponent<ScrollRect>().vertical = true;
     }
 
     public void GenerateInputBlock(string variable_name)

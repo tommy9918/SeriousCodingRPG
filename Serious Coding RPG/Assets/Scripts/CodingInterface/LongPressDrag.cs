@@ -78,6 +78,7 @@ public class LongPressDrag : MonoBehaviour
         finger_start_position = FingerPos();
         offset = finger_start_position - (Vector2)transform.position;
         coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block = gameObject;
+        coding_manager.GetComponent<CodingInterfaceManager>().DisableScrolling();
 
         BlockSiteManager[] sites = gameObject.GetComponentsInChildren<BlockSiteManager>();
         foreach(BlockSiteManager st in sites)
@@ -103,5 +104,6 @@ public class LongPressDrag : MonoBehaviour
         current = 0;
         GetComponent<BoxCollider2D>().enabled = true;
         coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block = null;
+        coding_manager.GetComponent<CodingInterfaceManager>().EnableScrolling();
     }
 }
