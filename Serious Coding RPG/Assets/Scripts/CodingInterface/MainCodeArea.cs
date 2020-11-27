@@ -33,6 +33,21 @@ public class MainCodeArea : MonoBehaviour
         else
         {
             GetComponent<Highlight>().Defocus();
+            if(coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != null)
+            {
+                AlignBlocks();
+            }
+        }
+    }
+
+    void AlignBlocks()
+    {
+        float initial_y = -0.3f;
+        for (int i = 0; i <= coding_blocks.Count - 1; i++)
+        {
+            coding_blocks[i].transform.localPosition = new Vector3(coding_blocks[i].transform.localPosition.x, initial_y, coding_blocks[i].transform.localPosition.z);
+            initial_y -= coding_blocks[i].GetComponent<SpriteRenderer>().size.y;
+            initial_y -= 0.3f;
         }
     }
 
