@@ -74,9 +74,9 @@ public class BlockSiteManager : MonoBehaviour
             float total_y_offset = 0;
             for (int i = 0; i <= inserted_vertical_blocks.Count - 1; i++)
             {
-                total_y_offset += 0.1f;
+                total_y_offset -= 0.1f;
                 inserted_vertical_blocks[i].transform.localPosition = new Vector3(0.1f, total_y_offset, inserted_vertical_blocks[i].transform.localPosition.z);
-                total_y_offset += inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
+                total_y_offset -= inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
                 if (inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.x > max_x_size)
                 {
                     max_x_size = inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.x;
@@ -87,7 +87,7 @@ public class BlockSiteManager : MonoBehaviour
                 }
 
             }
-            GetComponent<SpriteRenderer>().size = new Vector2(max_x_size + 0.2f, total_y_offset + 0.1f);
+            GetComponent<SpriteRenderer>().size = new Vector2(max_x_size + 0.2f, -total_y_offset + 0.1f);
         }
     }
 
@@ -144,11 +144,7 @@ public class BlockSiteManager : MonoBehaviour
         }
     }
 
-    //public bool ConditionalsCase()
-    //{
-    //    //string type1 = transform.parent.gameObject.GetComponent<SubBlockManager>().block_sites[0].;
-    //    return false;
-    //}
+    
 
     void OnTouchStay()
     {
@@ -188,7 +184,8 @@ public class BlockSiteManager : MonoBehaviour
             incoming_insertion.GetComponent<MoveTo>().destination = new Vector3(0.1f, -0.1f, -0.03f);
             incoming_insertion.GetComponent<MoveTo>().ReplayMotion();
 
-            inserted_block = incoming_insertion;
+            if(horizontal) inserted_block = incoming_insertion;
+            else if (vertical) inserted_vertical_blocks.Add(incoming_insertion);
 
             if (horizontal) SetSubBlockPositionHorizontal();
             else if (vertical) SetSubBlockPositionVertical();
