@@ -17,10 +17,13 @@ public class SubBlockManager : MonoBehaviour
     public BlockType type;
     public string value_type;
     public List<GameObject> block_sites;
+    public GameObject value_reference;
 
 
     public bool horizontal;
     public bool vertical;
+
+    public string block_type;
     // Start is called before the first frame update
     void Start()
     {

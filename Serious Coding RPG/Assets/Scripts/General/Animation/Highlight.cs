@@ -6,6 +6,7 @@ public class Highlight : MonoBehaviour
 {
     public float speed;
     public float max_alpha;
+    public float min_alpha;
     public float current_alpha;
     public Color original_color;
     // Start is called before the first frame update
@@ -13,7 +14,7 @@ public class Highlight : MonoBehaviour
     {
         original_color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = new Color(original_color.r, original_color.g, original_color.b, 0f);
-        current_alpha = 0;
+        current_alpha = min_alpha;
     }
 
 
@@ -31,9 +32,9 @@ public class Highlight : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().color = new Color(original_color.r, original_color.g, original_color.b, current_alpha);
         current_alpha -= speed;
-        if (current_alpha <= 0f)
+        if (current_alpha <= min_alpha)
         {
-            current_alpha = 0f;
+            current_alpha = min_alpha;
         }
     }
 }

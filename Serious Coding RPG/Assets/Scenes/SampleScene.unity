@@ -368,6 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.01
   max_alpha: 0.2
+  min_alpha: 0.05
   current_alpha: 0
   original_color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &84939474
@@ -10739,14 +10740,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a766729beb0525240955ab1c30d2aae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questID: 
+  questID: 1
   block_selection: {fileID: 2049744067}
   block_selection_scroll_list: {fileID: 0}
   coding_scroll_list: {fileID: 1612436222}
   DarkLayerInstance: {fileID: 2352189036381088807, guid: a62741b9ee5fe0d439da85a11c2736ba,
     type: 3}
   DarkLayer: {fileID: 0}
-  coding_blocks: []
+  main_code_area: {fileID: 84939474}
+  quest_inputs: []
+  expect_outputs: []
   active_dragging_block: {fileID: 0}
 --- !u!4 &468652194
 Transform:

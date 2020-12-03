@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 6013582030482571804}
   - component: {fileID: -3913554036362677803}
   - component: {fileID: -1193811242020350042}
+  - component: {fileID: 1486686699211958443}
   m_Layer: 0
   m_Name: CharBlock
   m_TagString: Untagged
@@ -546,8 +547,10 @@ MonoBehaviour:
   block_sites:
   - {fileID: 3371324371293354047}
   - {fileID: 3371324370036958708}
+  value_reference: {fileID: 3371324371747736757}
   horizontal: 1
   vertical: 0
+  block_type: char
 --- !u!114 &3371324371675941129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,6 +643,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9560c024275be214081a392c4dd0cbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+--- !u!114 &1486686699211958443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3371324371675941128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3445dac32fd6348478db7c9eb6acefab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []

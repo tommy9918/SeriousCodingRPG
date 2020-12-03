@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: -2410291696832069159}
   - component: {fileID: 4137760300418529247}
   - component: {fileID: 4801034718404660933}
+  - component: {fileID: 5642919900785227474}
   m_Layer: 0
   m_Name: SmallerBlock
   m_TagString: Untagged
@@ -395,6 +396,7 @@ MonoBehaviour:
   - {fileID: 6318530653322444652}
   horizontal: 1
   vertical: 0
+  block_type: smaller
 --- !u!114 &-183655901021173843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +475,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9560c024275be214081a392c4dd0cbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+--- !u!114 &5642919900785227474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6318530653309225186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3445dac32fd6348478db7c9eb6acefab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []

@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: -7489589030419859467}
   - component: {fileID: 8449915335413678863}
   - component: {fileID: -5219442603736641052}
+  - component: {fileID: -1512511652766517452}
   m_Layer: 0
   m_Name: NumBlock
   m_TagString: Untagged
@@ -229,8 +230,10 @@ MonoBehaviour:
   block_sites:
   - {fileID: 6516508537011149144}
   - {fileID: 6516508537660182760}
+  value_reference: {fileID: 6516508538490611801}
   horizontal: 1
   vertical: 0
+  block_type: num
 --- !u!114 &6516508537125884351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +326,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9560c024275be214081a392c4dd0cbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+--- !u!114 &-1512511652766517452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6516508537125884341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3445dac32fd6348478db7c9eb6acefab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []

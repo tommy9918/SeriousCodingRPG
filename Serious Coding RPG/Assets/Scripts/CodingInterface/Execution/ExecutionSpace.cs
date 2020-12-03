@@ -1,0 +1,347 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class NumVariable
+{
+    public string variable_name;
+    public List<int> step_log;
+    public List<double> variable_value;
+
+    public NumVariable()
+    {
+        variable_name = "";
+        step_log = new List<int>();
+        variable_value = new List<double>();
+    }
+
+    public NumVariable(string name, string value, int step)
+    {
+        variable_name = name;
+        step_log = new List<int>();
+        variable_value = new List<double>();
+        step_log.Add(step);
+        variable_value.Add(double.Parse(value));
+    }
+
+    public void ModifyValue(string value, int step)
+    {
+        step_log.Add(step);
+        variable_value.Add(double.Parse(value));
+    }
+
+    public string GetLatestValue()
+    {
+        return variable_value[variable_value.Count - 1].ToString();
+    }
+
+    public string GetValueAtStep(int step)
+    {
+        for(int i = 0; i <= step_log.Count - 2; i++)
+        {
+            if(step >= step_log[i] && step < step_log[i + 1])
+            {
+                return variable_value[i].ToString();
+            }
+        }
+        return GetLatestValue();
+    }
+}
+
+public class CharVariable
+{
+    public string variable_name;
+    public List<int> step_log;
+    public List<string> variable_value;
+
+    public CharVariable()
+    {
+        variable_name = "";
+        step_log = new List<int>();
+        variable_value = new List<string>();
+    }
+
+    public CharVariable(string name, string value, int step)
+    {
+        variable_name = name;
+        step_log = new List<int>();
+        variable_value = new List<string>();
+        step_log.Add(step);
+        variable_value.Add(value);
+    }
+
+    public void ModifyValue(string value, int step)
+    {
+        step_log.Add(step);
+        variable_value.Add(value);
+    }
+
+    public string GetLatestValue()
+    {
+        return variable_value[variable_value.Count - 1];
+    }
+
+    public string GetValueAtStep(int step)
+    {
+        for (int i = 0; i <= step_log.Count - 2; i++)
+        {
+            if (step >= step_log[i] && step < step_log[i + 1])
+            {
+                return variable_value[i];
+            }
+        }
+        return GetLatestValue();
+    }
+}
+public class ExecutionSpace
+{
+    public List<NumVariable> num_variable;
+    public List<CharVariable> char_variable;
+    public List<int> line_number_traversed;
+    public int current_line_number;
+    public int current_step;
+    public bool execution_end;
+    public string[] input_array;
+    int input_index;
+
+    public ExecutionSpace()
+    {
+        num_variable = new List<NumVariable>();
+        char_variable = new List<CharVariable>();
+        line_number_traversed = new List<int>();
+        current_line_number = 1;
+        current_step = 1;
+        execution_end = false;
+        input_index = 0;
+        
+    }
+
+    public string StartExecution(List<CommandBlock> commands, string input_long_string)
+    {
+        input_index = 0;
+        input_array = input_long_string.Split(',');
+
+        while (!execution_end)
+        {
+            //Debug.Log(commands[current_line_number - 1].command);
+            line_number_traversed.Add(current_line_number);
+            switch (commands[current_line_number - 1].command)
+            {
+                case "assign":
+                    string var_name = commands[current_line_number - 1].value_blocks[0].value;
+                    //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
+                    string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
+                    string type = commands[current_line_number - 1].value_blocks[1].value_type;
+                    ExecuteAssign(var_name, value, type, current_step);
+                    current_line_number++;
+                    break;
+                case "output":
+                    return TranslateToValue(commands[current_line_number - 1].value_blocks[0]);
+                case "input":
+                    string var_name2 = commands[current_line_number - 1].value_blocks[0].value;
+                    string value2 = input_array[input_index];
+                    input_index++;
+                    string type2 = "num";
+                    ExecuteAssign(var_name2, value2, type2, current_step);
+                    current_line_number++;
+                    break;
+                case "if":
+                    if(TranslateToValue(commands[current_line_number - 1].value_blocks[0]).Equals("True"))
+                    {
+                        string sub_output = ExecuteSubroutine(commands[current_line_number - 1].command_blocks1);
+                        if (sub_output.Length > 0) return sub_output;
+                    }
+                    else if (TranslateToValue(commands[current_line_number - 1].value_blocks[0]).Equals("False"))
+                    {
+                        string sub_output = ExecuteSubroutine(commands[current_line_number - 1].command_blocks2);
+                        if (sub_output.Length > 0) return sub_output;
+                    }
+                    current_step++;
+                    break;
+                case "jump":
+                    current_line_number = int.Parse(TranslateToValue(commands[current_line_number - 1].value_blocks[0]));
+                    break;
+            }
+            //DebugAllVariable();
+            current_step++;
+        }
+        return "";
+    }
+
+    public string ExecuteSubroutine(List<CommandBlock> commands)
+    {
+        for(int i = 0; i <= commands.Count - 1; i++)
+        {
+            switch (commands[current_line_number - 1].command)
+            {
+                case "assign":
+                    string var_name = commands[current_line_number - 1].value_blocks[0].value;
+                    //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
+                    string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
+                    string type = commands[current_line_number - 1].value_blocks[1].value_type;
+                    ExecuteAssign(var_name, value, type, current_step);
+                    current_line_number++;
+                    break;
+                case "output":
+                    return TranslateToValue(commands[current_line_number - 1].value_blocks[0]);
+                case "input":
+                    string var_name2 = commands[current_line_number - 1].value_blocks[0].value;
+                    string value2 = input_array[input_index];
+                    input_index++;
+                    string type2 = "num";
+                    ExecuteAssign(var_name2, value2, type2, current_step);
+                    current_line_number++;
+                    break;
+                case "if":
+                    if (TranslateToValue(commands[current_line_number - 1].value_blocks[0]).Equals("True"))
+                    {
+                        string sub_output = ExecuteSubroutine(commands[current_line_number - 1].command_blocks1);
+                        if (sub_output.Length > 0) return sub_output;
+                    }
+                    else if (TranslateToValue(commands[current_line_number - 1].value_blocks[0]).Equals("False"))
+                    {
+                        string sub_output = ExecuteSubroutine(commands[current_line_number - 1].command_blocks2);
+                        if (sub_output.Length > 0) return sub_output;
+                    }
+                    current_step++;
+                    break;
+                case "jump":
+                    current_line_number = int.Parse(TranslateToValue(commands[current_line_number - 1].value_blocks[0]));
+                    return "";                  
+            }
+            //DebugAllVariable();
+            current_step++;
+        }
+        return "";
+    }
+
+    public void DebugAllVariable()
+    {
+        Debug.Log("In step " + current_step + ", the memory space:");
+        foreach(NumVariable nv in num_variable)
+        {
+            Debug.Log(nv.variable_name + ": " + nv.GetValueAtStep(current_step));
+        }
+        foreach (CharVariable cv in char_variable)
+        {
+            Debug.Log(cv.variable_name + ": " + cv.GetValueAtStep(current_step));
+        }
+    }
+
+    public string TranslateToValue(ValueBlock value_blk)
+    {
+        //Debug.Log(value_blk.value_operation);
+        if (value_blk.value_operation.Equals("variable"))
+        {
+            //Debug.Log("translation required");
+            if (GetNumVariable(value_blk.value) != null)
+            {
+                return GetNumVariable(value_blk.value).GetLatestValue();
+            }
+            else if (GetCharVariable(value_blk.value) != null)
+            {
+                return GetCharVariable(value_blk.value).GetLatestValue();
+            }
+            else return null;
+        }
+        else
+        {
+            switch (value_blk.value_operation)
+            {
+                case "":
+                    return value_blk.value;
+                case "num":
+                    return value_blk.value;
+                case "char":
+                    return value_blk.value;
+                case "plus":
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) + double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                case "minus":
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) - double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                case "multiply":
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) * double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                case "divide":
+                    return ((int)(double.Parse(TranslateToValue(value_blk.value_blocks[0])) / double.Parse(TranslateToValue(value_blk.value_blocks[1])))).ToString();
+                case "remainder":
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) % double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                case "equal":
+                    return TranslateToValue(value_blk.value_blocks[0]).Equals(TranslateToValue(value_blk.value_blocks[1])).ToString();
+                case "smaller":
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) < double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                case "smaller_equal":
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) <= double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                case "larger":
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) > double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                case "larger_equal":
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) >= double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                case "and":
+                    return (bool.Parse(TranslateToValue(value_blk.value_blocks[0])) && bool.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                case "or":
+                    return (bool.Parse(TranslateToValue(value_blk.value_blocks[0])) || bool.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                case "not":
+                    return (!bool.Parse(TranslateToValue(value_blk.value_blocks[0]))).ToString();
+            }
+            //return value_blk.GetValue();
+        }
+        return null;
+    }
+
+    public bool containsVariable(string var_name)
+    {
+        foreach(NumVariable nv in num_variable)
+        {
+            if (nv.variable_name.Equals(var_name)) return true;
+        }
+        foreach (CharVariable cv in char_variable)
+        {
+            if (cv.variable_name.Equals(var_name)) return true;
+        }
+        return false;
+    }
+
+    public NumVariable GetNumVariable(string var_name)
+    {
+        foreach (NumVariable nv in num_variable)
+        {
+            if (nv.variable_name.Equals(var_name)) return nv;
+        }
+        return null;
+    }
+
+    public CharVariable GetCharVariable(string var_name)
+    {
+        foreach (CharVariable cv in char_variable)
+        {
+            if (cv.variable_name.Equals(var_name)) return cv;
+        }
+        return null;
+    }
+
+    public void ExecuteAssign(string var_name, string value, string value_type, int step)
+    {
+        if (containsVariable(var_name))
+        {
+            if (value_type.Equals("num"))
+            {
+                GetNumVariable(var_name).ModifyValue(value, step);
+            }
+            else if (value_type.Equals("char"))
+            {
+                GetCharVariable(var_name).ModifyValue(value, step);
+            }
+        }
+        else
+        {
+            if (value_type.Equals("num"))
+            {
+                num_variable.Add(new NumVariable(var_name, value, step));
+            }
+            else if (value_type.Equals("char"))
+            {
+                char_variable.Add(new CharVariable(var_name, value, step));
+            }
+        }
+    }
+
+    
+}

@@ -51,7 +51,7 @@ public class LongPressDrag : MonoBehaviour
         else if((Input.touchCount == 0 || !Input.GetMouseButton(0)) && dragging)
         {
             endDragging();
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }
     }
 
@@ -105,5 +105,6 @@ public class LongPressDrag : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = true;
         coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block = null;
         coding_manager.GetComponent<CodingInterfaceManager>().EnableScrolling();
+        this.enabled = false;
     }
 }

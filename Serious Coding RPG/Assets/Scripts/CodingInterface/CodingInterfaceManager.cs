@@ -12,14 +12,31 @@ public class CodingInterfaceManager : MonoBehaviour
     public GameObject coding_scroll_list;
     public GameObject DarkLayerInstance;
     public GameObject DarkLayer;
-    public List<GameObject> coding_blocks;
+    public MainCodeArea main_code_area;
+    
+    public List<CommandBlock> coding_blocks;
+    public List<string> quest_inputs;
+    public List<string> expect_outputs;
+    
 
     public GameObject active_dragging_block;
 
     // Start is called before the first frame update
     void Start()
     {
-        coding_blocks = new List<GameObject>();
+        coding_blocks = new List<CommandBlock>();
+        quest_inputs = new List<string>();
+        expect_outputs = new List<string>();
+        if (questID != null && questID != "")
+        {
+            Quest current_quest = QuestManager.Instance.getQuestFromID(questID);
+            for (int i = 0; i <= current_quest.input.Length - 1; i++)
+            {
+                quest_inputs.Add(current_quest.input[i]);
+                expect_outputs.Add(current_quest.output[i]);
+            }
+        }
+        //Debug.Log(coding_blocks);
     }
 
     // Update is called once per frame
@@ -28,11 +45,70 @@ public class CodingInterfaceManager : MonoBehaviour
         
     }
 
+    [ContextMenu("GetAllCommand")]
+    public void GetAllCommand()
+    {
+        coding_blocks.Clear();
+        List<GameObject> coding_block_obj_array = main_code_area.coding_blocks;
+        for (int i = 0; i <= coding_block_obj_array.Count - 1; i++)
+        {
+            coding_blocks.Add(new CommandBlock(coding_block_obj_array[i].GetComponent<BlockManager>()));
+        }
+    }
+
+    [ContextMenu("RunCode")]
+    public void RunCode()
+    {
+        Debug.Log(true.ToString());
+        GetAllCommand();
+        for (int i = 0; i <= quest_inputs.Count - 1; i++)
+        {
+            ExecutionSpace exec = new ExecutionSpace();
+            string output = exec.StartExecution(coding_blocks, quest_inputs[i]);
+            if (output.Length > 0)
+            {
+                Debug.Log("The program output: " + output);               
+            }
+            else
+            {
+                Debug.Log("The program output nothing.");
+            }
+            if (output.Equals(expect_outputs[i]))
+            {
+                Debug.Log("Test case passed!");
+            }
+            else
+            {
+                //Debug.Log("Expected output is: " + expect_outputs[i]);
+                Debug.Log("Test case failed! Try again?");
+            }
+        }
+    }
+
+    [ContextMenu("DebugRunCode")]
+    public void DebugRunCode()
+    {
+        GetAllCommand();
+        ExecutionSpace exec = new ExecutionSpace();
+        string output = exec.StartExecution(coding_blocks, "");
+        if (output.Length > 0)
+        {
+            Debug.Log("The program output: " + output);
+        }
+        else
+        {
+            Debug.Log("The program output nothing.");
+        }
+    }
+
     public void OpenBlockSelection()
     {
-        block_selection.SetActive(true);
-        DarkLayer = Instantiate(DarkLayerInstance);
-        DarkLayer.GetComponent<FadeControl>().StartFadeIn();
+        if (block_selection.active == false)
+        {
+            block_selection.SetActive(true);
+            DarkLayer = Instantiate(DarkLayerInstance);
+            DarkLayer.GetComponent<FadeControl>().StartFadeIn();
+        }
     }
 
     public void CloseBlockSelection()

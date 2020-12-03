@@ -36,6 +36,7 @@ public class BlockSiteManager : MonoBehaviour
     void Start()
     {
         inserted_vertical_blocks = new List<GameObject>();
+        AutoUpdateSize();
     }
 
     public SubBlockManager.BlockType getInsertedType()
@@ -54,6 +55,17 @@ public class BlockSiteManager : MonoBehaviour
         if (horizontal) SetSubBlockPositionHorizontal();
         else if (vertical) SetSubBlockPositionVertical();
 
+    }
+
+    void AlignBlocks()
+    {
+        float initial_y = -0.1f;
+        for (int i = 0; i <= inserted_vertical_blocks.Count - 1; i++)
+        {
+            inserted_vertical_blocks[i].transform.localPosition = new Vector3(inserted_vertical_blocks[i].transform.localPosition.x, initial_y, inserted_vertical_blocks[i].transform.localPosition.z);
+            initial_y -= inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
+            initial_y -= 0.1f;
+        }
     }
 
     public void SetSubBlockPositionHorizontal()
@@ -139,7 +151,7 @@ public class BlockSiteManager : MonoBehaviour
         {
             highlighted = false;
             highlight_outline.GetComponent<FadeControl>().StartFadeOut();
-            if(inserted_block == null) Resize(1, 1);
+            if(inserted_block == null) Resize(width, height);
             Destroy(highlight_outline, 0.6f);
         }
     }
@@ -148,19 +160,23 @@ public class BlockSiteManager : MonoBehaviour
 
     void OnTouchStay()
     {
-        if (coding_manager)
+        if (coding_manager && inserted_block == null)
         {
             if (coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != null && coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != transform.parent.gameObject)
             {
-                incoming_insertion = coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block;
-                if (BlockMatch(coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block))
+                if (incoming_insertion == null)
                 {
-                    //Debug.Log("match!");
-                    Highlight();
-                }
-                else
-                {
-                    //Debug.Log("not match!");
+                    incoming_insertion = coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block;
+                    if (BlockMatch(incoming_insertion))
+                    {
+                        //Debug.Log("match!");
+                        Highlight();
+                    }
+                    else
+                    {
+                        //Debug.Log("not match!");
+                        incoming_insertion.GetComponent<ErrorBlock>().StartFadeError();
+                    }
                 }
             }
         }
@@ -169,6 +185,14 @@ public class BlockSiteManager : MonoBehaviour
     void OnTouchExit()
     {
         Dehighlight();
+        if (incoming_insertion != null)
+        {
+            if (BlockMatch(incoming_insertion) == false)
+            {
+                incoming_insertion.GetComponent<ErrorBlock>().StartFadeBack();
+            }
+            incoming_insertion = null;
+        }
     }
 
     void OnTouchUp()

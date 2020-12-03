@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: -2028640660884601877}
   - component: {fileID: -5366984469573076093}
   - component: {fileID: 1327616298717030836}
+  - component: {fileID: -4850372164525720533}
   m_Layer: 0
   m_Name: MultiplyBlock
   m_TagString: Untagged
@@ -314,6 +315,7 @@ MonoBehaviour:
   - {fileID: 1483116365327246799}
   horizontal: 1
   vertical: 0
+  block_type: multiply
 --- !u!114 &-6049968572047430811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,6 +394,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9560c024275be214081a392c4dd0cbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+--- !u!114 &-4850372164525720533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483116364540810103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3445dac32fd6348478db7c9eb6acefab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []

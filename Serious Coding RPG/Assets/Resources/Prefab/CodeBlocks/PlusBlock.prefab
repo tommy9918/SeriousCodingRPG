@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: -4638151177149319046}
   - component: {fileID: -3438300430370416774}
   - component: {fileID: 781062890029716470}
+  - component: {fileID: -5557641832992710127}
   m_Layer: 0
   m_Name: PlusBlock
   m_TagString: Untagged
@@ -247,6 +248,7 @@ MonoBehaviour:
   - {fileID: 6166042829433430808}
   horizontal: 1
   vertical: 0
+  block_type: plus
 --- !u!114 &4057847026096802409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,6 +327,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9560c024275be214081a392c4dd0cbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+--- !u!114 &-5557641832992710127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6166042828406755850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3445dac32fd6348478db7c9eb6acefab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []

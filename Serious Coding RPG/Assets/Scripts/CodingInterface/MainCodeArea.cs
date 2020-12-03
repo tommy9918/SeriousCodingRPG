@@ -95,29 +95,11 @@ public class MainCodeArea : MonoBehaviour
 
     int InsertLinePosition(float y_pos)
     {
-        if (coding_blocks.Count == 0) return 1;
-        //Debug.Log(y_pos);
-        //Debug.Log(block_parent.transform.localPosition.y);
+        if (coding_blocks.Count == 0) return 1;        
         float offset = 4.6692f + (block_parent.transform.localPosition.y - 6.1946f);
         float initial_y = offset;
         for(int i=0; i<=coding_blocks.Count-1; i++)
-        {
-            //if(i < coding_blocks.Count - 1)
-            //{
-            //    if (y_pos <= coding_blocks[i].transform.position.y && y_pos > coding_blocks[i+1].transform.position.y)
-            //    {
-            //        return i + 1;
-            //    }
-            //}
-            //else if (i == coding_blocks.Count - 1)
-            //{
-            //    float length = coding_blocks[i].GetComponent<SpriteRenderer>().size.y;
-
-            //    if (y_pos <= coding_blocks[i].transform.position.y && y_pos > coding_blocks[i].transform.position.y - length)
-            //    {
-            //        return i + 1;
-            //    }
-            //}
+        {           
             float length = coding_blocks[i].GetComponent<SpriteRenderer>().size.y;
             if(y_pos <= initial_y && y_pos > initial_y - length - 0.3f)
             {
@@ -125,7 +107,6 @@ public class MainCodeArea : MonoBehaviour
             }
             initial_y -= 0.3f;
             initial_y -= length;
-
 
         }
         return coding_blocks.Count + 1;
@@ -168,7 +149,7 @@ public class MainCodeArea : MonoBehaviour
             coding_blocks.Insert(current_line_number - 1, inserted_block);
             inserted_block.transform.parent = block_parent.transform;
             inserted_block.transform.localPosition = new Vector3(inserted_block.transform.localPosition.x, inserted_block.transform.localPosition.y, -0.1f);
-            Debug.Log(inserted_block.transform.localPosition);
+            //Debug.Log(inserted_block.transform.localPosition);
             inserted_block.GetComponent<MoveTo>().startPosition = inserted_block.transform.localPosition;
             inserted_block.GetComponent<MoveTo>().destination = block_destination;
             inserted_block.GetComponent<MoveTo>().ReplayMotion();

@@ -20,6 +20,7 @@ public class BlockManager : MonoBehaviour
     public bool horizontal;
     public bool vertical;
 
+    //public string block_type;
     public enum BlockType
     {
         ASSIGN,
