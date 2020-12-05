@@ -12,6 +12,7 @@ public class LongPressDrag : MonoBehaviour
     bool dragging;
     public int confirm_duration;
     int current = 0;
+    public bool accepted;
 
     public GameObject coding_manager;
 
@@ -52,6 +53,11 @@ public class LongPressDrag : MonoBehaviour
         {
             endDragging();
             //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            if (!accepted)
+            {
+                GetComponent<ScaleChange>().StartAnimateReverse();
+                Destroy(gameObject, 0.5f);
+            }
         }
     }
 

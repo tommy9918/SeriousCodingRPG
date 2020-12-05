@@ -44,7 +44,8 @@ public class NumVariable
                 return variable_value[i].ToString();
             }
         }
-        return GetLatestValue();
+        if (step >= step_log[step_log.Count - 1]) return GetLatestValue();
+        return null;
     }
 }
 
@@ -90,7 +91,8 @@ public class CharVariable
                 return variable_value[i];
             }
         }
-        return GetLatestValue();
+        if(step >= step_log[step_log.Count - 1]) return GetLatestValue();
+        return null;
     }
 }
 public class ExecutionSpace
@@ -113,7 +115,8 @@ public class ExecutionSpace
         current_step = 1;
         execution_end = false;
         input_index = 0;
-        
+
+        //Debug.Log("Construct Execution Space Success");
     }
 
     public string StartExecution(List<CommandBlock> commands, string input_long_string)
@@ -125,6 +128,7 @@ public class ExecutionSpace
         {
             //Debug.Log(commands[current_line_number - 1].command);
             line_number_traversed.Add(current_line_number);
+            //Debug.Log("Running line number:" + current_line_number);
             switch (commands[current_line_number - 1].command)
             {
                 case "assign":
@@ -156,14 +160,16 @@ public class ExecutionSpace
                         string sub_output = ExecuteSubroutine(commands[current_line_number - 1].command_blocks2);
                         if (sub_output.Length > 0) return sub_output;
                     }
-                    current_step++;
+                    //current_step++;
                     break;
                 case "jump":
                     current_line_number = int.Parse(TranslateToValue(commands[current_line_number - 1].value_blocks[0]));
                     break;
             }
             //DebugAllVariable();
+            //Debug.Log("Run Success");
             current_step++;
+            if (current_step > 5000) execution_end = true;
         }
         return "";
     }
@@ -172,46 +178,49 @@ public class ExecutionSpace
     {
         for(int i = 0; i <= commands.Count - 1; i++)
         {
-            switch (commands[current_line_number - 1].command)
+            //Debug.Log("Running sub line number:" + (i+1).ToString());
+            switch (commands[i].command)
             {
                 case "assign":
-                    string var_name = commands[current_line_number - 1].value_blocks[0].value;
+                    string var_name = commands[i].value_blocks[0].value;
                     //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
-                    string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
-                    string type = commands[current_line_number - 1].value_blocks[1].value_type;
+                    string value = TranslateToValue(commands[i].value_blocks[1]);
+                    string type = commands[i].value_blocks[1].value_type;
                     ExecuteAssign(var_name, value, type, current_step);
-                    current_line_number++;
+                    //i++;
                     break;
                 case "output":
-                    return TranslateToValue(commands[current_line_number - 1].value_blocks[0]);
+                    return TranslateToValue(commands[i].value_blocks[0]);
                 case "input":
-                    string var_name2 = commands[current_line_number - 1].value_blocks[0].value;
+                    string var_name2 = commands[i].value_blocks[0].value;
                     string value2 = input_array[input_index];
                     input_index++;
                     string type2 = "num";
                     ExecuteAssign(var_name2, value2, type2, current_step);
-                    current_line_number++;
+                    //i++;
                     break;
                 case "if":
-                    if (TranslateToValue(commands[current_line_number - 1].value_blocks[0]).Equals("True"))
+                    if (TranslateToValue(commands[i].value_blocks[0]).Equals("True"))
                     {
-                        string sub_output = ExecuteSubroutine(commands[current_line_number - 1].command_blocks1);
+                        string sub_output = ExecuteSubroutine(commands[i].command_blocks1);
                         if (sub_output.Length > 0) return sub_output;
                     }
-                    else if (TranslateToValue(commands[current_line_number - 1].value_blocks[0]).Equals("False"))
+                    else if (TranslateToValue(commands[i].value_blocks[0]).Equals("False"))
                     {
-                        string sub_output = ExecuteSubroutine(commands[current_line_number - 1].command_blocks2);
+                        string sub_output = ExecuteSubroutine(commands[i].command_blocks2);
                         if (sub_output.Length > 0) return sub_output;
                     }
                     current_step++;
                     break;
                 case "jump":
-                    current_line_number = int.Parse(TranslateToValue(commands[current_line_number - 1].value_blocks[0]));
+                    current_line_number = int.Parse(TranslateToValue(commands[i].value_blocks[0]));
+                    current_step++;
                     return "";                  
             }
             //DebugAllVariable();
             current_step++;
         }
+        current_line_number++;
         return "";
     }
 
@@ -226,6 +235,27 @@ public class ExecutionSpace
         {
             Debug.Log(cv.variable_name + ": " + cv.GetValueAtStep(current_step));
         }
+    }
+
+    public string DebugTextAtStep(int step)
+    {
+        //Debug.Log(step);
+        if (step == 0) step = 1;
+        string debugtext = "Currently in memory: \n";
+        //Debug.Log("In step " + current_step + ", the memory space:");
+        foreach (NumVariable nv in num_variable)
+        {
+            //Debug.Log(nv.variable_name + ": " + nv.GetValueAtStep(current_step));
+            if(nv.GetValueAtStep(step) != null)
+                debugtext = debugtext + nv.variable_name + ": " + nv.GetValueAtStep(step) + "\n";
+        }
+        foreach (CharVariable cv in char_variable)
+        {
+            //Debug.Log(cv.variable_name + ": " + cv.GetValueAtStep(current_step));
+            if (cv.GetValueAtStep(step) != null)
+                debugtext = debugtext + cv.variable_name + ": " + cv.GetValueAtStep(step) + "\n";
+        }
+        return debugtext;
     }
 
     public string TranslateToValue(ValueBlock value_blk)

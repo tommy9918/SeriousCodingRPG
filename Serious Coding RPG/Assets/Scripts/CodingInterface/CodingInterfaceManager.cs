@@ -17,9 +17,15 @@ public class CodingInterfaceManager : MonoBehaviour
     public List<CommandBlock> coding_blocks;
     public List<string> quest_inputs;
     public List<string> expect_outputs;
+
+    public GameObject step_indicator;
     
 
     public GameObject active_dragging_block;
+
+    public ExecutionSpace debug_space;
+    public string debug_expected_output;
+    public string debug_real_output;
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +65,7 @@ public class CodingInterfaceManager : MonoBehaviour
     [ContextMenu("RunCode")]
     public void RunCode()
     {
-        Debug.Log(true.ToString());
+        //Debug.Log(true.ToString());
         GetAllCommand();
         for (int i = 0; i <= quest_inputs.Count - 1; i++)
         {
@@ -67,7 +73,7 @@ public class CodingInterfaceManager : MonoBehaviour
             string output = exec.StartExecution(coding_blocks, quest_inputs[i]);
             if (output.Length > 0)
             {
-                Debug.Log("The program output: " + output);               
+                Debug.Log("The program output: " + output+"    Expected output: "+expect_outputs[i]);               
             }
             else
             {
@@ -76,13 +82,35 @@ public class CodingInterfaceManager : MonoBehaviour
             if (output.Equals(expect_outputs[i]))
             {
                 Debug.Log("Test case passed!");
+                debug_space = exec;
+                debug_expected_output = expect_outputs[i];
+                debug_real_output = output;
+                step_indicator.GetComponent<StepIndicator>().Summon(1, debug_space.current_step);
             }
             else
             {
                 //Debug.Log("Expected output is: " + expect_outputs[i]);
                 Debug.Log("Test case failed! Try again?");
+                debug_space = exec;
+                debug_expected_output = expect_outputs[i];
+                debug_real_output = output;
+                step_indicator.GetComponent<StepIndicator>().Summon(1, debug_space.current_step);
+                break;
             }
         }
+    }
+
+    public void SetDebugStep(int step)
+    {
+        //int step = (int) (slide_value * debug_space.current_step);
+        step_indicator.GetComponent<StepIndicator>().SetStepText(step, debug_space.current_step);
+    }
+
+    public string GetDebugText(int step)
+    {
+        string debugText = "Expected Output: " + debug_expected_output + "          " + "Your Output: " + debug_real_output + "\n";
+        debugText = debugText + debug_space.DebugTextAtStep(step);
+        return debugText;
     }
 
     [ContextMenu("DebugRunCode")]

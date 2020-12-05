@@ -171,6 +171,7 @@ public class BlockSiteManager : MonoBehaviour
                     {
                         //Debug.Log("match!");
                         Highlight();
+                        incoming_insertion.GetComponent<LongPressDrag>().accepted = true;
                     }
                     else
                     {
@@ -187,6 +188,7 @@ public class BlockSiteManager : MonoBehaviour
         Dehighlight();
         if (incoming_insertion != null)
         {
+            incoming_insertion.GetComponent<LongPressDrag>().accepted = false;
             if (BlockMatch(incoming_insertion) == false)
             {
                 incoming_insertion.GetComponent<ErrorBlock>().StartFadeBack();
@@ -208,7 +210,9 @@ public class BlockSiteManager : MonoBehaviour
             incoming_insertion.GetComponent<MoveTo>().destination = new Vector3(0.1f, -0.1f, -0.03f);
             incoming_insertion.GetComponent<MoveTo>().ReplayMotion();
 
-            if(horizontal) inserted_block = incoming_insertion;
+            incoming_insertion.GetComponent<LongPressDrag>().accepted = true;
+
+            if (horizontal) inserted_block = incoming_insertion;
             else if (vertical) inserted_vertical_blocks.Add(incoming_insertion);
 
             if (horizontal) SetSubBlockPositionHorizontal();

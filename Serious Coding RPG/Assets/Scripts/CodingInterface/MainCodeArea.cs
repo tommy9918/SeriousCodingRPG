@@ -56,6 +56,7 @@ public class MainCodeArea : MonoBehaviour
         if(coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != null && 
             coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block.GetComponent<BlockManager>() != null)
         {
+            coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block.GetComponent<LongPressDrag>().accepted = true;
             highlighted = true;
             float finger_y = FingerPos().y;
             int line_num = InsertLinePosition(finger_y);
@@ -118,6 +119,7 @@ public class MainCodeArea : MonoBehaviour
     {
         if (highlighted)
         {
+            coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block.GetComponent<LongPressDrag>().accepted = false;
             highlighted = false;
             foreach (GameObject outline in summoned_outline)
             {
