@@ -190,6 +190,16 @@ public class BlockSelection : MonoBehaviour
         //GetComponent<FadeControl>().GetAllComponenets();
     }
 
+    //IEnumerator AnimationCoroutineDemo(GameObject[] obj)
+    //{
+    //    //make a series of gameobjects fade in one by one with interval of 0.1 second
+    //    for(int i = 0; i <= obj.Length - 1; i++)
+    //    {
+    //        obj[i].GetComponent<FadeControl>().StartFadeIn(); 
+    //        yield return new WaitForSeconds(0.1f);
+    //    }
+    //}
+
 
     // Start is called before the first frame update
     void Start()

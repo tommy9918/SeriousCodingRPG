@@ -44,7 +44,8 @@ public class PlayBar : MonoBehaviour
     public void UpdateStep(float slide_value)
     {
         int step = (int)(Mathf.Floor(slide_value * coding_manager.debug_space.current_step)+1);
-        step_no = step;
+        if (step > coding_manager.debug_space.current_step) step = coding_manager.debug_space.current_step;
+        step_no = step;     
         coding_manager.SetDebugStep(step);
         debug_bar.GetComponent<DebugBar>().SetDebugText();
     }

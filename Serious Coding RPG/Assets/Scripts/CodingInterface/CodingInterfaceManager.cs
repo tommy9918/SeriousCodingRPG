@@ -12,6 +12,7 @@ public class CodingInterfaceManager : MonoBehaviour
     public GameObject coding_scroll_list;
     public GameObject DarkLayerInstance;
     public GameObject DarkLayer;
+    public GameObject detail_requirement;
     public MainCodeArea main_code_area;
     
     public List<CommandBlock> coding_blocks;
@@ -19,6 +20,7 @@ public class CodingInterfaceManager : MonoBehaviour
     public List<string> expect_outputs;
 
     public GameObject step_indicator;
+    public DebugBar debug_bar;
     
 
     public GameObject active_dragging_block;
@@ -95,9 +97,36 @@ public class CodingInterfaceManager : MonoBehaviour
                 debug_expected_output = expect_outputs[i];
                 debug_real_output = output;
                 step_indicator.GetComponent<StepIndicator>().Summon(1, debug_space.current_step);
+                debug_bar.SetWrong();
                 break;
             }
         }
+    }
+
+    public void ShowRequirement()
+    {
+        detail_requirement.SetActive(true);
+        DarkLayer = Instantiate(DarkLayerInstance);
+        DarkLayer.GetComponent<FadeControl>().StartFadeIn();
+    }
+
+    public void CloseRequirement()
+    {
+        //Debug.Log("here!");
+        StartCoroutine(CloseRequirementRoutine());
+    }
+
+    IEnumerator CloseRequirementRoutine()
+    {
+        //Debug.Log("wohoo!");
+        DarkLayer.GetComponent<FadeControl>().StartFadeOut();
+        detail_requirement.GetComponent<Animator>().enabled = false;
+        detail_requirement.GetComponent<MoveTo>().ReplayMotion();
+        Destroy(DarkLayer, 0.5f);
+        
+        yield return new WaitForSeconds(0.5f);
+        detail_requirement.SetActive(false);
+        detail_requirement.GetComponent<Animator>().enabled = true;
     }
 
     public void SetDebugStep(int step)

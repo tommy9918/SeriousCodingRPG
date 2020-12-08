@@ -10,7 +10,7 @@ public class LongPressDrag : MonoBehaviour
     float original_z;
     bool pressed;
     bool dragging;
-    public int confirm_duration;
+    int confirm_duration = 10;
     int current = 0;
     public bool accepted;
 

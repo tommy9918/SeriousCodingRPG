@@ -112,7 +112,7 @@ public class ExecutionSpace
         char_variable = new List<CharVariable>();
         line_number_traversed = new List<int>();
         current_line_number = 1;
-        current_step = 1;
+        current_step = 0;
         execution_end = false;
         input_index = 0;
 
@@ -128,29 +128,35 @@ public class ExecutionSpace
         {
             //Debug.Log(commands[current_line_number - 1].command);
             line_number_traversed.Add(current_line_number);
-            //Debug.Log("Running line number:" + current_line_number);
+            Debug.Log("Running line number:" + current_line_number);
             switch (commands[current_line_number - 1].command)
             {
                 case "assign":
+                    current_step++;
                     string var_name = commands[current_line_number - 1].value_blocks[0].value;
                     //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
                     string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
                     string type = commands[current_line_number - 1].value_blocks[1].value_type;
+                    Debug.Log(var_name+' '+value+' '+type);
+                    if (type == "") type = "num";
                     ExecuteAssign(var_name, value, type, current_step);
-                    current_line_number++;
+                    current_line_number++;                 
                     break;
                 case "output":
+                    current_step++;
                     return TranslateToValue(commands[current_line_number - 1].value_blocks[0]);
                 case "input":
+                    current_step++;
                     string var_name2 = commands[current_line_number - 1].value_blocks[0].value;
                     string value2 = input_array[input_index];
                     input_index++;
                     string type2 = "num";
                     ExecuteAssign(var_name2, value2, type2, current_step);
-                    current_line_number++;
+                    current_line_number++;                 
                     break;
                 case "if":
-                    if(TranslateToValue(commands[current_line_number - 1].value_blocks[0]).Equals("True"))
+                    current_step++;
+                    if (TranslateToValue(commands[current_line_number - 1].value_blocks[0]).Equals("True"))
                     {
                         string sub_output = ExecuteSubroutine(commands[current_line_number - 1].command_blocks1);
                         if (sub_output.Length > 0) return sub_output;
@@ -163,13 +169,15 @@ public class ExecutionSpace
                     //current_step++;
                     break;
                 case "jump":
+                    current_step++;
                     current_line_number = int.Parse(TranslateToValue(commands[current_line_number - 1].value_blocks[0]));
                     break;
             }
             //DebugAllVariable();
             //Debug.Log("Run Success");
-            current_step++;
+            //current_step++;
             if (current_step > 5000) execution_end = true;
+            if(current_line_number - 1 > commands.Count-1) execution_end = true;
         }
         return "";
     }
@@ -182,24 +190,30 @@ public class ExecutionSpace
             switch (commands[i].command)
             {
                 case "assign":
+                    current_step++;
                     string var_name = commands[i].value_blocks[0].value;
                     //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
                     string value = TranslateToValue(commands[i].value_blocks[1]);
                     string type = commands[i].value_blocks[1].value_type;
                     ExecuteAssign(var_name, value, type, current_step);
+                    //current_step++;
                     //i++;
                     break;
                 case "output":
+                    current_step++;
                     return TranslateToValue(commands[i].value_blocks[0]);
                 case "input":
+                    current_step++;
                     string var_name2 = commands[i].value_blocks[0].value;
                     string value2 = input_array[input_index];
                     input_index++;
                     string type2 = "num";
                     ExecuteAssign(var_name2, value2, type2, current_step);
+                    //current_step++;
                     //i++;
                     break;
                 case "if":
+                    current_step++;
                     if (TranslateToValue(commands[i].value_blocks[0]).Equals("True"))
                     {
                         string sub_output = ExecuteSubroutine(commands[i].command_blocks1);
@@ -210,15 +224,16 @@ public class ExecutionSpace
                         string sub_output = ExecuteSubroutine(commands[i].command_blocks2);
                         if (sub_output.Length > 0) return sub_output;
                     }
-                    current_step++;
+                    //current_step++;
                     break;
                 case "jump":
-                    current_line_number = int.Parse(TranslateToValue(commands[i].value_blocks[0]));
                     current_step++;
+                    current_line_number = int.Parse(TranslateToValue(commands[i].value_blocks[0]));
+                    //current_step++;
                     return "";                  
             }
             //DebugAllVariable();
-            current_step++;
+            //current_step++;
         }
         current_line_number++;
         return "";
@@ -241,7 +256,8 @@ public class ExecutionSpace
     {
         //Debug.Log(step);
         if (step == 0) step = 1;
-        string debugtext = "Currently in memory: \n";
+        string debugtext = "Finish executing line " + line_number_traversed[step - 1] + ".\n";
+        debugtext = debugtext +  "Currently in memory: \n";
         //Debug.Log("In step " + current_step + ", the memory space:");
         foreach (NumVariable nv in num_variable)
         {
@@ -259,12 +275,10 @@ public class ExecutionSpace
     }
 
     public string TranslateToValue(ValueBlock value_blk)
-    {
-        //Debug.Log(value_blk.value_operation);
-        if (value_blk.value_operation.Equals("variable"))
-        {
-            //Debug.Log("translation required");
-            if (GetNumVariable(value_blk.value) != null)
+    {        
+        if (value_blk.value_operation.Equals("variable"))   //value block is a variable
+        {           
+            if (GetNumVariable(value_blk.value) != null)     //get the value of the variable in the main memory
             {
                 return GetNumVariable(value_blk.value).GetLatestValue();
             }
@@ -276,7 +290,7 @@ public class ExecutionSpace
         }
         else
         {
-            switch (value_blk.value_operation)
+            switch (value_blk.value_operation)      //recursively calculate the value of value block
             {
                 case "":
                     return value_blk.value;
@@ -316,15 +330,24 @@ public class ExecutionSpace
         return null;
     }
 
-    public bool containsVariable(string var_name)
+    public bool containsVariable(string var_name, out string type)
     {
+        type = "";
         foreach(NumVariable nv in num_variable)
         {
-            if (nv.variable_name.Equals(var_name)) return true;
+            if (nv.variable_name.Equals(var_name))
+            {
+                type = "num";
+                return true;
+            }
         }
         foreach (CharVariable cv in char_variable)
         {
-            if (cv.variable_name.Equals(var_name)) return true;
+            if (cv.variable_name.Equals(var_name))
+            {
+                type = "char";
+                return true;
+            }
         }
         return false;
     }
@@ -349,7 +372,8 @@ public class ExecutionSpace
 
     public void ExecuteAssign(string var_name, string value, string value_type, int step)
     {
-        if (containsVariable(var_name))
+        string var_type = "";
+        if (containsVariable(var_name, out var_type))
         {
             if (value_type.Equals("num"))
             {
@@ -361,7 +385,7 @@ public class ExecutionSpace
             }
         }
         else
-        {
+        {          
             if (value_type.Equals("num"))
             {
                 num_variable.Add(new NumVariable(var_name, value, step));

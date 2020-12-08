@@ -10,6 +10,7 @@ public class DebugBar : MonoBehaviour
     public Text debugText;
 
     public PlayBar play_bar;
+    public Sprite wrong_bg;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,11 @@ public class DebugBar : MonoBehaviour
     public void PopUp()
     {
         StartCoroutine(PopUpCoroutine());
+    }
+
+    public void SetWrong()
+    {
+        GetComponent<SpriteRenderer>().sprite = wrong_bg;
     }
 
     IEnumerator PopUpCoroutine()
