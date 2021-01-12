@@ -62,13 +62,14 @@ public class CodingInterfaceManager : MonoBehaviour
         {
             coding_blocks.Add(new CommandBlock(coding_block_obj_array[i].GetComponent<BlockManager>()));
         }
+        //coding_blocks = Player.Instance.data.skills[0].GetOriginalCommandBlockList();
     }
 
     [ContextMenu("RunCode")]
     public void RunCode()
     {
-        //Debug.Log(true.ToString());
         GetAllCommand();
+        //Player.Instance.data.skills.Add(new Skill(coding_blocks, "Sum", 2));
         for (int i = 0; i <= quest_inputs.Count - 1; i++)
         {
             ExecutionSpace exec = new ExecutionSpace();
@@ -105,9 +106,12 @@ public class CodingInterfaceManager : MonoBehaviour
 
     public void ShowRequirement()
     {
-        detail_requirement.SetActive(true);
-        DarkLayer = Instantiate(DarkLayerInstance);
-        DarkLayer.GetComponent<FadeControl>().StartFadeIn();
+        if (block_selection.active == false)
+        {
+            detail_requirement.SetActive(true);
+            DarkLayer = Instantiate(DarkLayerInstance);
+            DarkLayer.GetComponent<FadeControl>().StartFadeIn();
+        }
     }
 
     public void CloseRequirement()

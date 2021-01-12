@@ -128,24 +128,27 @@ public class ExecutionSpace
         {
             //Debug.Log(commands[current_line_number - 1].command);
             line_number_traversed.Add(current_line_number);
-            Debug.Log("Running line number:" + current_line_number);
+            //Debug.Log("Running line number:" + current_line_number);
             switch (commands[current_line_number - 1].command)
             {
                 case "assign":
+                    //Debug.Log("Running assign");
                     current_step++;
                     string var_name = commands[current_line_number - 1].value_blocks[0].value;
                     //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
                     string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
                     string type = commands[current_line_number - 1].value_blocks[1].value_type;
-                    Debug.Log(var_name+' '+value+' '+type);
+                    //Debug.Log(var_name+' '+value+' '+type);
                     if (type == "") type = "num";
                     ExecuteAssign(var_name, value, type, current_step);
                     current_line_number++;                 
                     break;
                 case "output":
+                    //Debug.Log("Running output");
                     current_step++;
                     return TranslateToValue(commands[current_line_number - 1].value_blocks[0]);
                 case "input":
+                    //Debug.Log("Running input");
                     current_step++;
                     string var_name2 = commands[current_line_number - 1].value_blocks[0].value;
                     string value2 = input_array[input_index];
@@ -155,6 +158,8 @@ public class ExecutionSpace
                     current_line_number++;                 
                     break;
                 case "if":
+                    //Debug.Log("Running if");
+                    //Debug.Log(TranslateToValue(commands[current_line_number - 1].value_blocks[0]));
                     current_step++;
                     if (TranslateToValue(commands[current_line_number - 1].value_blocks[0]).Equals("True"))
                     {
@@ -163,12 +168,14 @@ public class ExecutionSpace
                     }
                     else if (TranslateToValue(commands[current_line_number - 1].value_blocks[0]).Equals("False"))
                     {
+                        //Debug.Log("Outputing laaaaa");
                         string sub_output = ExecuteSubroutine(commands[current_line_number - 1].command_blocks2);
                         if (sub_output.Length > 0) return sub_output;
                     }
                     //current_step++;
                     break;
                 case "jump":
+                    //Debug.Log("Running jump");
                     current_step++;
                     current_line_number = int.Parse(TranslateToValue(commands[current_line_number - 1].value_blocks[0]));
                     break;
@@ -176,7 +183,7 @@ public class ExecutionSpace
             //DebugAllVariable();
             //Debug.Log("Run Success");
             //current_step++;
-            if (current_step > 5000) execution_end = true;
+            if (current_step > 100) execution_end = true;
             if(current_line_number - 1 > commands.Count-1) execution_end = true;
         }
         return "";
@@ -186,6 +193,7 @@ public class ExecutionSpace
     {
         for(int i = 0; i <= commands.Count - 1; i++)
         {
+            line_number_traversed.Add(current_line_number);
             //Debug.Log("Running sub line number:" + (i+1).ToString());
             switch (commands[i].command)
             {
@@ -317,6 +325,9 @@ public class ExecutionSpace
                 case "larger":
                     return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) > double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
                 case "larger_equal":
+                    //Debug.Log("Comparing:");
+                    //Debug.Log(double.Parse(TranslateToValue(value_blk.value_blocks[0])));
+                    //Debug.Log(double.Parse(TranslateToValue(value_blk.value_blocks[1])));
                     return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) >= double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
                 case "and":
                     return (bool.Parse(TranslateToValue(value_blk.value_blocks[0])) && bool.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();

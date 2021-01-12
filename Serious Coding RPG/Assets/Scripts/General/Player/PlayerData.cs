@@ -16,6 +16,7 @@ public class PlayerData
     public int EXP;
     public int gold;
     public List<int> completedTask;
+    public List<Skill> skills;
     public string language;
     
 
@@ -27,6 +28,7 @@ public class PlayerData
         EXP = 0;
         gold = 0;
         completedTask = new List<int>();
+        skills = new List<Skill>();
         language = "en";
         
     }
@@ -39,6 +41,7 @@ public class PlayerData
         this.EXP = player.data.EXP;
         this.gold = player.data.gold;
         this.completedTask = new List<int>(player.data.completedTask);
+        this.skills = new List<Skill>(player.data.skills);
         this.language = player.data.language;
         
     }

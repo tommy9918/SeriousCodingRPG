@@ -748,6 +748,40 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8545913378193774032}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &468652193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468652192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b39528a0e08db4f89314169436e41f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  code_block_parent: {fileID: 0}
+  all_blocks_reference:
+  - {fileID: 6516508537125884341, guid: 8a73d39994597974d9e173a95e5b71d6, type: 3}
+  - {fileID: 3371324371675941128, guid: dd8b4998deb1e2f4cac5049c304dc124, type: 3}
+  - {fileID: 5751817112538306324, guid: 436acb388b16b634aa05c342706bfeed, type: 3}
+  - {fileID: 2417217381777566695, guid: b6be01b4fdbc5a646932e4bee50bf784, type: 3}
+  - {fileID: 6979680749101026176, guid: d448a29cd232da44badc78395bb48f9c, type: 3}
+  - {fileID: 1894218052830540289, guid: eb44f69db08f0894ca7cadc836507ac9, type: 3}
+  - {fileID: 1909491612104911292, guid: 6f643409dbfecc542b842edec4a56e0e, type: 3}
+  - {fileID: 2591798509578471018, guid: 0ab58786793e48342ba6562b6217ec19, type: 3}
+  - {fileID: 1550336594683564084, guid: 9110389df2799eb4e89374d071c725c4, type: 3}
+  - {fileID: 7678825270192767202, guid: 3fe8638a317097b4fbea075e656c3612, type: 3}
+  - {fileID: 8901688030014237053, guid: 54b53004a731ddb40bdb367daf056a9e, type: 3}
+  - {fileID: 682471016824909305, guid: e0222f41d5ca5304d8a5f7d701d44a59, type: 3}
+  - {fileID: 4968070848202891939, guid: c521d1afcf7419c44a41d597af97e31e, type: 3}
+  - {fileID: 6318530653309225186, guid: 9bddd5157c846c64e8812d597de7fb7d, type: 3}
+  - {fileID: 7053668443473737592, guid: 9f53bd514eab6784cb8bebfe21d314f6, type: 3}
+  - {fileID: 6166042828406755850, guid: 0000b07bf0eef6d479215d44550ac1e4, type: 3}
+  - {fileID: 8598836602353019568, guid: 3adc158393aa6e64b84d41a703db7684, type: 3}
+  - {fileID: 1483116364540810103, guid: a5e0662df61fd844e89cfe17eb657de9, type: 3}
+  - {fileID: 1879225105723442274, guid: 6c917cd546089744ca4d99f10d9323fa, type: 3}
+  - {fileID: 6554324729884806830, guid: dee85c2a93289e74b81434ebc3606ac7, type: 3}
 --- !u!4 &468652194 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8545913378110997874, guid: dec772c12b55f194aa256b5fa8acf039,
@@ -980,6 +1014,7 @@ MonoBehaviour:
     EXP: 0
     gold: 0
     completedTask: 
+    skills: []
     language: 
   character: {fileID: 1334030250}
 --- !u!114 &519420035
@@ -4554,7 +4589,7 @@ PrefabInstance:
     - target: {fileID: 8545913378110997873, guid: dec772c12b55f194aa256b5fa8acf039,
         type: 3}
       propertyPath: questID
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8545913378110997873, guid: dec772c12b55f194aa256b5fa8acf039,
         type: 3}

@@ -13,8 +13,9 @@ public class CommandBlock
     public CommandBlock()
     {
         command = "";
-        //value_blocks = new List<ValueBlock>();
-        //command_blocks = new List<CommandBlock>();
+        value_blocks = new List<ValueBlock>();
+        command_blocks1 = new List<CommandBlock>();
+        command_blocks2 = new List<CommandBlock>();
     }
 
     public CommandBlock(BlockManager blk)
