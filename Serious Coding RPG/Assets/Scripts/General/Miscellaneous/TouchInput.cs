@@ -84,7 +84,7 @@ public class TouchInput : MonoBehaviour
             foreach (Touch touch in Input.touches)
             {
 
-                hit = Physics2D.Raycast(GetComponent<Camera>().ScreenToWorldPoint(touch.position﻿), Vector2.zero);
+                hit = Physics2D.Raycast(GetComponent<Camera>().ScreenToWorldPoint(touch.position ﻿), Vector2.zero);
 
 
                 if (hit.collider != null)
