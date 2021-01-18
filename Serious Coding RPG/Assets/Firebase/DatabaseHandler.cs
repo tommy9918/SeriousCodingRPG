@@ -18,7 +18,7 @@ public class DatabaseHandler : MonoBehaviour
     private FirebaseUser user;
     
     private string databaseURL = "https://spelloverflow-default-rtdb.firebaseio.com/"; 
-    private string AuthKey = "AIzaSyDh9qM2YHYAwd-F6uEwW6LmJj4p3yotduc";
+    // private string AuthKey = "AIzaSyDh9qM2YHYAwd-F6uEwW6LmJj4p3yotduc";
     void Start()
     {
         if(AccountHandler.getUser() !=null)
@@ -38,23 +38,23 @@ public class DatabaseHandler : MonoBehaviour
         if (AccountHandler.getUser() != null)
         {
             user =  AccountHandler.getUser();
-            Firebase.Auth.UserProfile profile = new Firebase.Auth.UserProfile
-            {
-                DisplayName = userNameText.text,
-            };
-
-            user.UpdateUserProfileAsync(profile).ContinueWith(task => {
-                if (task.IsCanceled) {
-                    Debug.LogError("UpdateUserProfileAsync was canceled.");
-                    return;
-                }
-                if (task.IsFaulted) {
-                    Debug.LogError("UpdateUserProfileAsync encountered an error: " + task.Exception);
-                    return;
-                }
-
-                Debug.Log("User profile updated successfully.");
-            }); 
+            // Firebase.Auth.UserProfile profile = new Firebase.Auth.UserProfile
+            // {
+            //     DisplayName = userNameText.text,
+            // };
+            //
+            // user.UpdateUserProfileAsync(profile).ContinueWith(task => {
+            //     if (task.IsCanceled) {
+            //         Debug.LogError("UpdateUserProfileAsync was canceled.");
+            //         return;
+            //     }
+            //     if (task.IsFaulted) {
+            //         Debug.LogError("UpdateUserProfileAsync encountered an error: " + task.Exception);
+            //         return;
+            //     }
+            //
+            //     Debug.Log("User profile updated successfully.");
+            // }); 
         }
         emailText.text += user.Email;
         uidText.text += user.UserId;

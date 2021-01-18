@@ -1,6 +1,7 @@
 ﻿using Firebase;
 // using Firebase.Analytics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FirebaseInit : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class FirebaseInit : MonoBehaviour
     void Start()
     {
         FirebaseApp.CheckAndFixDependenciesAsync();
+        // SceneManager.UnloadSceneAsync("SignUpScene");
+        // SceneManager.UnloadSceneAsync("UploadUserProfile");
+        // SceneManager.LoadScene("SignInScene", LoadSceneMode.Single);
+
         // FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         // {
         //     FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);

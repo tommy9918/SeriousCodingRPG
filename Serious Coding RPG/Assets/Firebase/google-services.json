@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "320930175122",
+	"firebase_url": "https://spelloverflow-default-rtdb.firebaseio.com",
     "project_id": "spelloverflow",
     "storage_bucket": "spelloverflow.appspot.com"
   },
