@@ -26,7 +26,7 @@ public class AccountHandler : MonoBehaviour
 
     public void onSignUp()
     {
-        auth.CreateUserWithEmailAndPasswordAsync(emailText.text, passwordText.text).ContinueWith(task => {
+        auth.CreateUserWithEmailAndPasswordAsync(emailText.text, passwordText.text).ContinueWithOnMainThread(task => {
             if (task.IsCanceled) {
                 Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
                 return;
@@ -46,7 +46,10 @@ public class AccountHandler : MonoBehaviour
             newUser.UpdateUserProfileAsync(profile);
             Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                 newUser.Email, newUser.UserId);
+            SceneManager.LoadScene("SignInScene", LoadSceneMode.Single);
         });
+        
+        
     }
     
     
