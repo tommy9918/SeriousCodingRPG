@@ -41,23 +41,6 @@ public class DatabaseHandler : MonoBehaviour
         if (AccountHandler.getUser() != null)
         {
             user =  AccountHandler.getUser();
-            // Firebase.Auth.UserProfile profile = new Firebase.Auth.UserProfile
-            // {
-            //     DisplayName = userNameText.text,
-            // };
-            //
-            // user.UpdateUserProfileAsync(profile).ContinueWith(task => {
-            //     if (task.IsCanceled) {
-            //         Debug.LogError("UpdateUserProfileAsync was canceled.");
-            //         return;
-            //     }
-            //     if (task.IsFaulted) {
-            //         Debug.LogError("UpdateUserProfileAsync encountered an error: " + task.Exception);
-            //         return;
-            //     }
-            //
-            //     Debug.Log("User profile updated successfully.");
-            // }); 
         }
 
         
@@ -65,7 +48,7 @@ public class DatabaseHandler : MonoBehaviour
         userProfile.setScore(Int32.Parse(scoreText.text));
         userProfile.setLevel(Int32.Parse(levelText.text));
         RestClient.Put(databaseURL  + user.UserId + ".json" , userProfile);
-        Debug.Log("Local userprofile uploaded");
+        Debug.Log("Local user score uploaded");
     }
 
     [ContextMenu("onPushFile")]
@@ -90,7 +73,7 @@ public class DatabaseHandler : MonoBehaviour
                 DefaultContentType = false
             } ).Then( response =>
             {
-                Debug.Log("Rest Post succeeded");
+                Debug.LogFormat("Rest Post {0} succeeded",filename);
             }).Catch(exception => Debug.Log(exception));
         } 
         
@@ -128,6 +111,7 @@ public class DatabaseHandler : MonoBehaviour
         {
             Debug.Log("Rest Download succeeded");
             fs.Write(response.Data, 0, response.Data.Length);
+            Debug.LogFormat("Rest Download {0} succeeded", filename);
 
         }).Catch(exception => Debug.Log(exception));
     

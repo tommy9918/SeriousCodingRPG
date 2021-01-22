@@ -52,11 +52,7 @@ public class AccountHandler : MonoBehaviour
         
     }
     
-    
-    // public void DoThePublicThing()
-    // {
-    //     Debug.Log("DoThePublicThing");
-    // }
+
 
     public  void onSignIn()
     {
@@ -92,11 +88,12 @@ public class AccountHandler : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+   
     [ContextMenu("sign out")]
     public void onSignOut()
     {
         auth.SignOut();
+        SceneManager.LoadScene("SignInScene", LoadSceneMode.Single);
     }
 
     public static FirebaseUser getUser()
@@ -108,5 +105,10 @@ public class AccountHandler : MonoBehaviour
     {
         SceneManager.LoadScene("SignUpScene", LoadSceneMode.Single);
 
+    }
+
+    public void onGoBack()
+    {
+        SceneManager.LoadScene("SignInScene", LoadSceneMode.Single);
     }
 }
