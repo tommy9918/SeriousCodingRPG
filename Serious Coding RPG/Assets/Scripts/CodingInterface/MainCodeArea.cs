@@ -40,15 +40,18 @@ public class MainCodeArea : MonoBehaviour
         }
     }
 
-    void AlignBlocks()
+    [ContextMenu("AlignBlock")]
+    public float AlignBlocks()
     {
         float initial_y = -0.3f;
         for (int i = 0; i <= coding_blocks.Count - 1; i++)
         {
+            //Debug.Log(coding_blocks[i].GetComponent<SpriteRenderer>().size.y);
             coding_blocks[i].transform.localPosition = new Vector3(coding_blocks[i].transform.localPosition.x, initial_y, coding_blocks[i].transform.localPosition.z);
             initial_y -= coding_blocks[i].GetComponent<SpriteRenderer>().size.y;
             initial_y -= 0.3f;
         }
+        return initial_y;
     }
 
     void OnTouchStay()

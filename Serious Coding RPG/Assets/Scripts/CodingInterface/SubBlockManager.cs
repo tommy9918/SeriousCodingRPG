@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SubBlockManager : MonoBehaviour
 {
     public float width;
     public float height;
+    public Text skill_name_text;
 
     public enum BlockType
     {
@@ -45,8 +47,72 @@ public class SubBlockManager : MonoBehaviour
     void Update()
     {
         AutoUpdateSize();
-        if (horizontal) SetSubBlockPositionHorizontal();
-        else if (vertical) SetSubBlockPositionVertical();
+        if (GetComponent<SkillBlockInit>() != null)
+        {
+            SetSkillBlockPosition();
+        }
+        else
+        {
+            if (horizontal) SetSubBlockPositionHorizontal();
+            else if (vertical) SetSubBlockPositionVertical();
+        }
+    }
+
+    public void SetSkillBlockPosition()
+    {
+        float max_x_size = -1f;
+        float max_y_size = -1f;
+        float total_x_offset = CalculateTextWidth() / 100f + 0.65f;
+        for (int i = 1; i <= block_sites.Count - 1; i++)
+        {
+            total_x_offset += 0.1f;
+
+            if (block_sites[i].transform.parent == gameObject.transform)
+            {
+                //Debug.Log(total_x_offset);
+                block_sites[i].transform.localPosition = new Vector3(total_x_offset, -0.245f, block_sites[i].transform.localPosition.z);
+            }
+            else
+            {
+                //block_sites[i].transform.parent.localPosition = new Vector3(total_x_offset, -0.1f, block_sites[i].transform.localPosition.z);
+            }
+
+            if (block_sites[i].GetComponent<SpriteRenderer>() != null)
+            {
+                //Debug.Log(block_sites[i].GetComponent<SpriteRenderer>().size.x);
+                total_x_offset += block_sites[i].GetComponent<SpriteRenderer>().size.x;
+                if (block_sites[i].GetComponent<SpriteRenderer>().size.x > max_x_size)
+                {
+                    max_x_size = block_sites[i].GetComponent<SpriteRenderer>().size.x;
+                }
+                if (block_sites[i].GetComponent<SpriteRenderer>().size.y > max_y_size)
+                {
+                    max_y_size = block_sites[i].GetComponent<SpriteRenderer>().size.y;
+                }
+            }          
+        }
+        GetComponent<SpriteRenderer>().size = new Vector2(total_x_offset + 0.3f, max_y_size + 0.5f);
+    }
+
+    int CalculateTextWidth()
+    {
+        Text theText = skill_name_text;
+        int totalLength = 0;
+        //Text theText = GetComponentInChildren<Text>();
+        Font myFont = theText.font;  //chatText is my Text component
+        CharacterInfo characterInfo = new CharacterInfo();
+
+        string real_text = theText.text;
+        char[] arr = real_text.ToCharArray();
+
+        foreach (char c in arr)
+        {
+            myFont.GetCharacterInfo(c, out characterInfo, theText.fontSize);
+
+            totalLength += characterInfo.advance;
+        }
+
+        return totalLength;
     }
 
     public void AutoUpdateSize()

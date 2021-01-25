@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 8449915335413678863}
   - component: {fileID: -5219442603736641052}
   - component: {fileID: -1512511652766517452}
+  - component: {fileID: -2446672435830484107}
   m_Layer: 0
   m_Name: NumBlock
   m_TagString: Untagged
@@ -225,6 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 0
   height: 0
+  skill_name_text: {fileID: 0}
   type: 1
   value_type: num
   block_sites:
@@ -246,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0472d15dc6ce00d42b2db764eb8f7d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirm_duration: 30
+  accepted: 0
   coding_manager: {fileID: 0}
 --- !u!114 &8310401302058751596
 MonoBehaviour:
@@ -342,6 +344,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
+--- !u!210 &-2446672435830484107
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6516508537125884341}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &6516508537444319970
 GameObject:
   m_ObjectHideFlags: 0

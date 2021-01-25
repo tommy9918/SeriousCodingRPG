@@ -14,7 +14,8 @@ public class SetMaskInteration : MonoBehaviour
 
     public void SetMask(string mask_name, int layer)
     {
-        //Debug.Log("setmask");
+        InitializeSpritesArray();
+        Debug.Log("setmask");
         foreach(SpriteRenderer sprite in sprites)
         {
             sprite.sortingOrder = layer;
@@ -26,7 +27,8 @@ public class SetMaskInteration : MonoBehaviour
 
     public void SetInteraction(string description)
     {
-        //Debug.Log("setinteraction");
+        InitializeSpritesArray();
+        Debug.Log("setinteraction");
         switch (description)
         {
             case "none":
@@ -47,6 +49,7 @@ public class SetMaskInteration : MonoBehaviour
                     sprite.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
                 }
                 break;
+            
 
         }
         

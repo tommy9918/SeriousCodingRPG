@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: -8830684874623042545}
   - component: {fileID: -2522750388755950983}
   - component: {fileID: -200039873733796243}
+  - component: {fileID: 5346493256807782968}
   m_Layer: 0
   m_Name: SmallerEqualBlock
   m_TagString: Untagged
@@ -439,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0472d15dc6ce00d42b2db764eb8f7d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirm_duration: 30
+  accepted: 0
   coding_manager: {fileID: 0}
 --- !u!114 &7053668443473737595
 MonoBehaviour:
@@ -455,12 +456,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 0
   height: 0
+  skill_name_text: {fileID: 0}
   type: 2
   value_type: smaller_equal
   block_sites:
   - {fileID: 7053668442819871961}
   - {fileID: 7053668443568651370}
   - {fileID: 7053668442357046346}
+  value_reference: {fileID: 0}
   horizontal: 1
   vertical: 0
   block_type: smaller_equal
@@ -558,6 +561,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
+--- !u!210 &5346493256807782968
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7053668443473737592}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &7053668443568651370
 GameObject:
   m_ObjectHideFlags: 0

@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 1837200026558207660}
   - component: {fileID: 5825641985248179287}
   - component: {fileID: -7206106752929404387}
+  - component: {fileID: -4342664048138995914}
   m_Layer: 0
   m_Name: AssignBlock
   m_TagString: Untagged
@@ -397,7 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0472d15dc6ce00d42b2db764eb8f7d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirm_duration: 30
+  accepted: 0
   coding_manager: {fileID: 0}
 --- !u!114 &-3023192001448747314
 MonoBehaviour:
@@ -493,6 +494,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
+--- !u!210 &-4342664048138995914
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417217381777566695}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &2417217382239334873
 GameObject:
   m_ObjectHideFlags: 0

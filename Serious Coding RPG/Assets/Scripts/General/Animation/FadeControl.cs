@@ -45,7 +45,7 @@ public class FadeControl : MonoBehaviour
                 Color tmp = colors[i];
                 tmp.a = current;
                 sprites[i].GetComponent<SpriteRenderer>().color = tmp;
-                gameObject.GetComponent<SpriteRenderer>().color = tmp;
+                //gameObject.GetComponent<SpriteRenderer>().color = tmp;
 
             }
 
@@ -54,7 +54,7 @@ public class FadeControl : MonoBehaviour
                 Color tmp = colors2[i];
                 tmp.a = current;
                 texts[i].GetComponent<Text>().color = tmp;
-                gameObject.GetComponent<Text>().color = tmp;
+                //gameObject.GetComponent<Text>().color = tmp;
 
             }
 
@@ -63,7 +63,7 @@ public class FadeControl : MonoBehaviour
                 Color tmp = colors3[i];
                 tmp.a = current;
                 images[i].GetComponent<Image>().color = tmp;
-                gameObject.GetComponent<Image>().color = tmp;
+                //gameObject.GetComponent<Image>().color = tmp;
 
             }
         }
@@ -346,6 +346,7 @@ public class FadeControl : MonoBehaviour
 
     public void StartFadeIn()
     {
+        GetAllComponenets();
         getColors();
         FadeIn = true;
         FadeOut = false;
@@ -354,6 +355,7 @@ public class FadeControl : MonoBehaviour
 
     public void StartFadeOut()
     {
+        GetAllComponenets();
         getColors();
         FadeIn = false;
         FadeOut = true;

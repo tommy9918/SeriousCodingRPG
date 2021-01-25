@@ -65,6 +65,14 @@ public class CodingInterfaceManager : MonoBehaviour
         //coding_blocks = Player.Instance.data.skills[0].GetOriginalCommandBlockList();
     }
 
+    [ContextMenu("SaveSkill")]
+    public void SaveSkill()
+    {
+        string skill_name = "Power";
+        int input_slots = 2;
+        Player.Instance.data.skills.Add(new Skill(coding_blocks, skill_name, input_slots));
+    }
+
     [ContextMenu("RunCode")]
     public void RunCode()
     {
@@ -88,7 +96,7 @@ public class CodingInterfaceManager : MonoBehaviour
                 debug_space = exec;
                 debug_expected_output = expect_outputs[i];
                 debug_real_output = output;
-                step_indicator.GetComponent<StepIndicator>().Summon(1, debug_space.current_step);
+                step_indicator.GetComponent<StepIndicator>().Summon(1, debug_space.TotalStep());
             }
             else
             {
@@ -97,7 +105,7 @@ public class CodingInterfaceManager : MonoBehaviour
                 debug_space = exec;
                 debug_expected_output = expect_outputs[i];
                 debug_real_output = output;
-                step_indicator.GetComponent<StepIndicator>().Summon(1, debug_space.current_step);
+                step_indicator.GetComponent<StepIndicator>().Summon(1, debug_space.TotalStep());
                 debug_bar.SetWrong();
                 break;
             }
@@ -136,7 +144,7 @@ public class CodingInterfaceManager : MonoBehaviour
     public void SetDebugStep(int step)
     {
         //int step = (int) (slide_value * debug_space.current_step);
-        step_indicator.GetComponent<StepIndicator>().SetStepText(step, debug_space.current_step);
+        step_indicator.GetComponent<StepIndicator>().SetStepText(step, debug_space.TotalStep());
     }
 
     public string GetDebugText(int step)

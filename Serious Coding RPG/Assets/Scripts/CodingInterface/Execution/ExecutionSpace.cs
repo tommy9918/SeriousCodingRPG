@@ -100,6 +100,8 @@ public class ExecutionSpace
     public List<NumVariable> num_variable;
     public List<CharVariable> char_variable;
     public List<int> line_number_traversed;
+    public List<int> jump_index;
+    public List<int> jump_amount;
     public int current_line_number;
     public int current_step;
     public bool execution_end;
@@ -111,6 +113,8 @@ public class ExecutionSpace
         num_variable = new List<NumVariable>();
         char_variable = new List<CharVariable>();
         line_number_traversed = new List<int>();
+        jump_index = new List<int>();
+        jump_amount = new List<int>();
         current_line_number = 1;
         current_step = 0;
         execution_end = false;
@@ -335,10 +339,44 @@ public class ExecutionSpace
                     return (bool.Parse(TranslateToValue(value_blk.value_blocks[0])) || bool.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
                 case "not":
                     return (!bool.Parse(TranslateToValue(value_blk.value_blocks[0]))).ToString();
+                case "skill":
+                    string input_string = "";
+                    for (int i = 0; i <= value_blk.value_blocks.Count - 1; i++)
+                    {
+                        input_string = input_string + TranslateToValue(value_blk.value_blocks[i]);
+                        if (i < value_blk.value_blocks.Count - 1)
+                        {
+                            input_string = input_string + ',';
+                        }
+                    }
+                    foreach (Skill skill in Player.Instance.data.skills)
+                    {
+                        
+                        if (value_blk.value.Equals(skill.name.ToLower()))
+                        {
+                            ExecutionSpace skill_exec = new ExecutionSpace();
+                            string output = skill_exec.StartExecution(skill.GetOriginalCommandBlockList(), input_string);
+                            //current_step += skill_exec.current_step;
+                            jump_index.Add(current_step);
+                            jump_amount.Add(skill_exec.TotalStep());
+                            return output;
+                        }
+                    }
+                    return null;
             }
             //return value_blk.GetValue();
         }
         return null;
+    }
+
+    public int TotalStep()
+    {
+        int sum = 0;
+        foreach(int stp in jump_amount)
+        {
+            sum += stp;
+        }
+        return sum + current_step;
     }
 
     public bool containsVariable(string var_name, out string type)

@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: -7855444713070001397}
   - component: {fileID: -6695271983062181568}
   - component: {fileID: -4714340370993399378}
+  - component: {fileID: -6472266460212085662}
   m_Layer: 0
   m_Name: AndBlock
   m_TagString: Untagged
@@ -372,7 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0472d15dc6ce00d42b2db764eb8f7d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirm_duration: 30
+  accepted: 0
   coding_manager: {fileID: 0}
 --- !u!114 &1550336594683564085
 MonoBehaviour:
@@ -388,12 +389,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 0
   height: 0
+  skill_name_text: {fileID: 0}
   type: 2
   value_type: and
   block_sites:
   - {fileID: 1550336595690752589}
   - {fileID: 1550336594045306044}
   - {fileID: 1550336594180715789}
+  value_reference: {fileID: 0}
   horizontal: 1
   vertical: 0
   block_type: and
@@ -491,6 +494,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
+--- !u!210 &-6472266460212085662
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550336594683564084}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &1550336595690752589
 GameObject:
   m_ObjectHideFlags: 0

@@ -67,6 +67,11 @@ public class LongPressDrag : MonoBehaviour
         pressed = true;
     }
 
+    void OnTouchUp()
+    {
+        confirm_duration = 0;
+    }
+
     
 
     Vector2 FingerPos()
@@ -100,11 +105,12 @@ public class LongPressDrag : MonoBehaviour
         }
 
         GetComponent<SetMaskInteration>().SetInteraction("none");
-        GetComponent<SetMaskInteration>().SetMask("Default", 1);
+        GetComponent<SetMaskInteration>().SetMask("Default", 0);
     }
 
     void endDragging()
     {
+        GetComponent<SetMaskInteration>().SetInteraction("inside");
         dragging = false;
         pressed = false;
         current = 0;

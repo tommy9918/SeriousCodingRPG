@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: -3438300430370416774}
   - component: {fileID: 781062890029716470}
   - component: {fileID: -5557641832992710127}
+  - component: {fileID: 6327922684326651167}
   m_Layer: 0
   m_Name: PlusBlock
   m_TagString: Untagged
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0472d15dc6ce00d42b2db764eb8f7d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirm_duration: 30
+  accepted: 0
   coding_manager: {fileID: 0}
 --- !u!114 &6166042828406755851
 MonoBehaviour:
@@ -240,12 +241,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 0
   height: 0
+  skill_name_text: {fileID: 0}
   type: 1
   value_type: num
   block_sites:
   - {fileID: 6166042830303594250}
   - {fileID: 6166042828343576446}
   - {fileID: 6166042829433430808}
+  value_reference: {fileID: 0}
   horizontal: 1
   vertical: 0
   block_type: plus
@@ -343,6 +346,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
+--- !u!210 &6327922684326651167
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6166042828406755850}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &6166042829433430808
 GameObject:
   m_ObjectHideFlags: 0

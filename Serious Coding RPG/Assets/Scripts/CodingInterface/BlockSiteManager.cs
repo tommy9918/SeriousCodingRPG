@@ -35,7 +35,7 @@ public class BlockSiteManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inserted_vertical_blocks = new List<GameObject>();
+        //inserted_vertical_blocks = new List<GameObject>();
         AutoUpdateSize();
     }
 
@@ -54,6 +54,8 @@ public class BlockSiteManager : MonoBehaviour
 
         if (horizontal) SetSubBlockPositionHorizontal();
         else if (vertical) SetSubBlockPositionVertical();
+
+       
 
     }
 

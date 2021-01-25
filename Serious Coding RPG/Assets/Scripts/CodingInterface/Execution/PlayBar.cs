@@ -46,6 +46,14 @@ public class PlayBar : MonoBehaviour
         int step = (int)(Mathf.Floor(slide_value * coding_manager.debug_space.current_step)+1);
         if (step > coding_manager.debug_space.current_step) step = coding_manager.debug_space.current_step;
         step_no = step;     
+        //foreach(int stp in coding_manager.debug_space.jump_index)
+        for (int i = 0; i <= coding_manager.debug_space.jump_index.Count - 1; i++)
+        {
+            if (step_no >= coding_manager.debug_space.jump_index[i])
+            {
+                step += coding_manager.debug_space.jump_amount[i];
+            }
+        }       
         coding_manager.SetDebugStep(step);
         debug_bar.GetComponent<DebugBar>().SetDebugText();
     }

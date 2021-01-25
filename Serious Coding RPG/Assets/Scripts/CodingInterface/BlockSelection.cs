@@ -9,6 +9,8 @@ public class BlockSelection : MonoBehaviour
     public GameObject[] calculation_blocks_reference;
     public GameObject[] variable_blocks_reference;
     public GameObject[] conditional_blocks_reference;
+    public GameObject[] custom_blocks_list;
+    public GameObject skill_block_reference;
     public GameObject selection_outline;
     public string type_state;
     public List<GameObject> summoned_blocks;
@@ -134,6 +136,7 @@ public class BlockSelection : MonoBehaviour
             RemoveAllSummonedBlocks();
             type_state = "custom";
             MoveSelectionOutline(3.97f);
+            StartCoroutine(SummonCustomBlocksSequence());
         }
     }
 
@@ -153,6 +156,43 @@ public class BlockSelection : MonoBehaviour
             
         }
         summoned_blocks.Clear();
+    }
+
+    IEnumerator SummonCustomBlocksSequence()
+    {
+        float total_y_offset = 0f;
+
+        for (int i = 0; i <= Player.Instance.data.skills.Count - 1; i++)
+        {
+            total_y_offset -= 0.3f;
+            GameObject temp = Instantiate(skill_block_reference, scroll_list.transform);
+            temp.GetComponent<SkillBlockInit>().skill = Player.Instance.data.skills[i];
+            temp.GetComponent<SkillBlockInit>().InitializeSkillBlock();
+            temp.GetComponent<SubBlockManager>().SetSkillBlockPosition();
+            temp.transform.localPosition = new Vector3(-3.17f, total_y_offset, -0.01f);
+
+            if (temp.GetComponent<BlockManager>() != null)
+            {
+                temp.GetComponent<BlockManager>().InititiateBlockSize();
+            }
+            else if (temp.GetComponent<SubBlockManager>() != null)
+            {
+                temp.GetComponent<SubBlockManager>().InititiateBlockSize();
+            }
+            temp.GetComponent<LongPressDrag>().coding_manager = transform.parent.gameObject;
+            temp.GetComponent<ScaleChange>().StartAnimate();
+            total_y_offset -= temp.GetComponent<SpriteRenderer>().size.y;
+
+            summoned_blocks.Add(temp);
+
+            temp.GetComponent<SetMaskInteration>().InitializeSpritesArray();
+            temp.GetComponent<SetMaskInteration>().SetMask("Default", 0);
+            temp.GetComponent<SetMaskInteration>().SetInteraction("inside");
+
+
+            yield return new WaitForSeconds(0.05f);
+        }
+        //GetComponent<FadeControl>().GetAllComponenets();
     }
 
 
@@ -181,7 +221,7 @@ public class BlockSelection : MonoBehaviour
             summoned_blocks.Add(temp);
 
             temp.GetComponent<SetMaskInteration>().InitializeSpritesArray();
-            temp.GetComponent<SetMaskInteration>().SetMask("Default", 10);
+            temp.GetComponent<SetMaskInteration>().SetMask("Default", 0);
             temp.GetComponent<SetMaskInteration>().SetInteraction("inside");
 
 

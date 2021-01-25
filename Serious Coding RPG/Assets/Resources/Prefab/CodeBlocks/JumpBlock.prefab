@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 5190174890870739009}
   - component: {fileID: -3836093166471733196}
   - component: {fileID: -3612717409347079635}
+  - component: {fileID: -1453119967134656220}
   m_Layer: 0
   m_Name: JumpBlock
   m_TagString: Untagged
@@ -166,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0472d15dc6ce00d42b2db764eb8f7d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirm_duration: 30
+  accepted: 0
   coding_manager: {fileID: 0}
 --- !u!114 &-6636649727979292206
 MonoBehaviour:
@@ -262,6 +263,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
+--- !u!210 &-1453119967134656220
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909491612104911292}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &1909491612206359138
 GameObject:
   m_ObjectHideFlags: 0

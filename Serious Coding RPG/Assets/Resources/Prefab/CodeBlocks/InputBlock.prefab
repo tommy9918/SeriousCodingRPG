@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: -4387782556343735035}
   - component: {fileID: -8280559860514381198}
   - component: {fileID: 1532941354028475114}
+  - component: {fileID: 5541139169080087281}
   m_Layer: 0
   m_Name: InputBlock
   m_TagString: Untagged
@@ -478,7 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0472d15dc6ce00d42b2db764eb8f7d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirm_duration: 30
+  accepted: 0
   coding_manager: {fileID: 0}
 --- !u!114 &-5837701840656268223
 MonoBehaviour:
@@ -574,3 +575,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
+--- !u!210 &5541139169080087281
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894218052830540289}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
