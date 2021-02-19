@@ -18,6 +18,10 @@ public class UserProfile
         email = user.Email;
         uid = user.UserId;
     }
+    public UserProfile()
+    {
+        
+    }
 
 
     public void setScore(int parse)

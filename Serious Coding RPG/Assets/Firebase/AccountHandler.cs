@@ -16,6 +16,7 @@ public class AccountHandler : MonoBehaviour
     public InputField emailText;
     // public InputField usernameText;
     public InputField passwordText;
+    public InputField verifyText;
     public InputField usernameText;
     private Firebase.Auth.FirebaseAuth auth;
     private static Firebase.Auth.FirebaseUser user;
@@ -88,7 +89,14 @@ public class AccountHandler : MonoBehaviour
 
     }
 
-   
+    public void onVerifierChange()
+    {
+        // Debug.Log("value changed");
+        verifyText.image.color = verifyText.text != passwordText.text ? Color.red : Color.white;
+        
+    }
+
+
     [ContextMenu("sign out")]
     public void onSignOut()
     {

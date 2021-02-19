@@ -5,10 +5,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Firebase.Auth;
+using Firebase.Database;
 using UnityEngine;
 using UnityEngine.UI;
 using Proyecto26;
+using Proyecto26.Common;
 using UnityEngine.Networking;
+using Random = System.Random;
 
 public class DatabaseHandler : MonoBehaviour
 {
@@ -42,14 +45,13 @@ public class DatabaseHandler : MonoBehaviour
         {
             user =  AccountHandler.getUser();
         }
-
-        
         UserProfile userProfile = new UserProfile(user);
         userProfile.setScore(Int32.Parse(scoreText.text));
         userProfile.setLevel(Int32.Parse(levelText.text));
-        RestClient.Put(databaseURL  + user.UserId + ".json" , userProfile);
+        RestClient.Put(databaseURL +"/leaderboard/" + user.UserId + ".json" , userProfile);
         Debug.Log("Local user score uploaded");
     }
+    
 
     [ContextMenu("onPushFile")]
     public void onPushFile()
