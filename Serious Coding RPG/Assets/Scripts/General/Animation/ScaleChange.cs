@@ -15,7 +15,7 @@ public class ScaleChange : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         if (auto_start) StartAnimate();
     }

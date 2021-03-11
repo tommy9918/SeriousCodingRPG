@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainCodeArea : MonoBehaviour
 {
@@ -8,10 +9,13 @@ public class MainCodeArea : MonoBehaviour
     public GameObject fade_indicator;
     public GameObject block_parent;
     public GameObject outline_reference;
+    public GameObject line_number_referene;
     public List<GameObject> summoned_outline;
     public List<GameObject> coding_blocks;
+    public List<GameObject> line_numbers;
     public int current_line_number;
     bool highlighted;
+    bool editing;
 
 
     public Vector3 block_destination;
@@ -26,17 +30,73 @@ public class MainCodeArea : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != null && !editing)
+        {
+            //Debug.Log("Fade out");
+            editing = true;
+            foreach(GameObject obj in line_numbers)
+            {
+                obj.GetComponent<FadeControl>().StartFadeOut();
+            }
+        }
+        else if(coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block == null && editing)
+        {
+            editing = false;
+            UpdateLineNumberPos();
+            //Debug.Log("Fade in");
+            foreach (GameObject obj in line_numbers)
+            {
+                obj.GetComponent<FadeControl>().StartFadeIn();
+            }
+        }
+
         if (highlighted)
         {
             GetComponent<Highlight>().Focus();
+            
         }
         else
         {
             GetComponent<Highlight>().Defocus();
             if(coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != null)
             {
-                AlignBlocks();
+                float y = -AlignBlocks();
+                if (y < 7.4f) y = 7.4f;
+                block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(block_parent.GetComponent<RectTransform>().sizeDelta.x, y + 5f);
+                UpdateLineNumberPos();
             }
+        }
+    }
+
+    public void UpdateLineNumberList(bool increase)
+    {
+        if (increase)
+        {
+            GameObject temp = Instantiate(line_number_referene, block_parent.transform);
+            line_numbers.Add(temp);
+        }
+        else
+        {
+            line_numbers.RemoveAt(line_numbers.Count - 1);
+        }
+
+        UpdateLineNumberPos();
+    }
+
+    public void UpdateLineNumberPos()
+    {
+        float start_y = 4.4f + block_parent.GetComponent<RectTransform>().localPosition.y - 6.194598f; ;
+
+        for (int i = 0; i <= coding_blocks.Count - 1; i++)
+        {
+            Vector3 pos = line_numbers[i].transform.position;
+            //Debug.Log(pos);
+
+            //Debug.Log(start_y);
+            line_numbers[i].transform.position = new Vector3(pos.x, start_y, pos.z);
+            //Debug.Log(line_numbers[i].GetComponent<RectTransform>().localPosition);
+            line_numbers[i].GetComponent<Text>().text = (i + 1).ToString();
+            start_y -= coding_blocks[i].GetComponent<SpriteRenderer>().size.y + 0.3f;
         }
     }
 
@@ -56,6 +116,7 @@ public class MainCodeArea : MonoBehaviour
 
     void OnTouchStay()
     {
+        
         if(coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block != null && 
             coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block.GetComponent<BlockManager>() != null)
         {
@@ -94,7 +155,7 @@ public class MainCodeArea : MonoBehaviour
             total_y_offset -= 0.3f;
 
         }
-        return new Vector3(-3.8f, total_y_offset, -0.1f);
+        return new Vector3(0.95f, total_y_offset, -0.1f);
     }
 
     int InsertLinePosition(float y_pos)
@@ -124,6 +185,7 @@ public class MainCodeArea : MonoBehaviour
         {
             coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block.GetComponent<LongPressDrag>().accepted = false;
             highlighted = false;
+            
             foreach (GameObject outline in summoned_outline)
             {
                 outline.GetComponent<FadeControl>().StartFadeOut();
@@ -132,6 +194,7 @@ public class MainCodeArea : MonoBehaviour
             summoned_outline.Clear();
             current_line_number = 0;
             RepositionBlocks();
+            
         }
     }
 
@@ -140,6 +203,7 @@ public class MainCodeArea : MonoBehaviour
         if (highlighted)
         {
             highlighted = false;
+           
             foreach (GameObject outline in summoned_outline)
             {
                 outline.GetComponent<FadeControl>().StartFadeOut();
@@ -152,6 +216,7 @@ public class MainCodeArea : MonoBehaviour
             GameObject inserted_block = coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block;
             //inserted_block.GetComponent<SetMaskInteration>().SetInteraction("inside");
             coding_blocks.Insert(current_line_number - 1, inserted_block);
+            
             inserted_block.transform.parent = block_parent.transform;
             inserted_block.transform.localPosition = new Vector3(inserted_block.transform.localPosition.x, inserted_block.transform.localPosition.y, -0.1f);
             //Debug.Log(inserted_block.transform.localPosition);
@@ -159,7 +224,13 @@ public class MainCodeArea : MonoBehaviour
             inserted_block.GetComponent<MoveTo>().destination = block_destination;
             inserted_block.GetComponent<MoveTo>().ReplayMotion();
 
+            float y = -AlignBlocks();
+            if (y < 7.4f) y = 7.4f;
+            block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(block_parent.GetComponent<RectTransform>().sizeDelta.x, y + 5f);
+            UpdateLineNumberList(true);
+
             current_line_number = 0;
+                      
         }
     }
 

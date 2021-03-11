@@ -21,7 +21,8 @@ public class CodeBlockReconstructor : MonoBehaviour
         {
             GameObject temp = FillCommandBlock(command_blocks[i], code_block_parent);
             main_code_area.GetComponent<MainCodeArea>().coding_blocks.Add(temp);
-            temp.transform.localPosition = new Vector3(-3.8f, -0.3f, -0.1f);
+            main_code_area.GetComponent<MainCodeArea>().UpdateLineNumberList(true);
+            temp.transform.localPosition = new Vector3(0.95f, -0.3f, -0.1f);
             temp.GetComponent<BlockManager>().InititiateBlockSize();
             SetCodingManager(temp);
             //temp.GetComponent<SetMaskInteration>().SetMask("Default", 1);

@@ -16,6 +16,7 @@ public class BlockSelection : MonoBehaviour
     public List<GameObject> summoned_blocks;
 
     public GameObject scroll_list;
+    
 
     private void OnEnable()
     {

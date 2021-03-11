@@ -17,6 +17,9 @@ public class PlayerData
     public int gold;
     public List<int> completedTask;
     public List<Skill> skills;
+    public List<string> equiped_spells_id;
+    public List<BattleSpell> all_spells;
+    public int spell_channels;
     public string language;
     
 

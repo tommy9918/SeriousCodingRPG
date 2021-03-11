@@ -19,7 +19,11 @@ public class SetText : MonoBehaviour
     public void setText()
     {
         Text text_comp = GetComponent<Text>();
-        text_comp.text = LoadText(Textkey);
+        if (LoadText(Textkey) != null)
+        {
+            text_comp.text = LoadText(Textkey);           
+        }
+        //else text_comp.text = "Fuck!"; 
 
     }
 

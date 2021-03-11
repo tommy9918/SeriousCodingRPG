@@ -227,6 +227,11 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 7338461728906115624, guid: fec1f33e085a1f041b90cf9c6d6b9d5a,
+    type: 3}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
   type: 5
   value_type: 
 --- !u!1 &6979680749098543676
@@ -738,6 +743,11 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 7338461728906115624, guid: fec1f33e085a1f041b90cf9c6d6b9d5a,
+    type: 3}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
   type: 5
   value_type: 
 --- !u!1 &6979680749696601307
@@ -967,5 +977,9 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 0}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
   type: 2
   value_type: 

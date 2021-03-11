@@ -10,6 +10,8 @@ public class Skill
     public List<CommandBlockS> command_blocks;
     public List<ValueBlockS> value_blocks;
     public List<int> command_index;
+    public int average_steps;
+    public int average_memory;
 
     public Skill(List<CommandBlock> original_commands, string skill_name, int slot_no)
     {

@@ -15,3 +15,6 @@ QUEST2-1=Let me tell you how to cast a spell properly!
 QUEST2-2=First, you need to know what a spell is, and what a spell can do.
 QUEST2-3=All casted spells will consume time and magical energy.
 QUEST2-3=Spells can be built by many small components!
+FIREBALL=Fireball
+HEAL=Heal
+MIRACLE=Miracle

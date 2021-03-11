@@ -51,10 +51,12 @@ public class LongPressDrag : MonoBehaviour
         
         else if((Input.touchCount == 0 || !Input.GetMouseButton(0)) && dragging)
         {
+            //Debug.Log("dump");
             endDragging();
             //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             if (!accepted)
             {
+                GetComponent<SetMaskInteration>().SetInteraction("none");
                 GetComponent<ScaleChange>().StartAnimateReverse();
                 Destroy(gameObject, 0.5f);
             }
@@ -69,7 +71,8 @@ public class LongPressDrag : MonoBehaviour
 
     void OnTouchUp()
     {
-        confirm_duration = 0;
+        current = 0;
+        pressed = false;
     }
 
     

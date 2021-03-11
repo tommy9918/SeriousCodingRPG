@@ -350,7 +350,7 @@ public class FadeControl : MonoBehaviour
         getColors();
         FadeIn = true;
         FadeOut = false;
-        current = 0;
+        current = 0;       
     }
 
     public void StartFadeOut()
