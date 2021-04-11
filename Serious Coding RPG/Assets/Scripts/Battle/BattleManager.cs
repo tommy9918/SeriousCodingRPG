@@ -16,6 +16,8 @@ public class BattleManager : MonoBehaviour
     public bool paused;
     public Coroutine MPAutoRestore;
     public AdventureProgressBar progress_bar;
+    public GameObject repairing_spell;
+    public GameObject repair_screen;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,6 +38,15 @@ public class BattleManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void RepairSpell(string skill_name, GameObject spell)
+    {
+        repairing_spell = spell;
+        List<CommandBlock> spell_code = Player.Instance.GetSkillCode(skill_name);
+        repair_screen.SetActive(true);
+        repair_screen.GetComponent<CodeBlockReconstructor>().RebuildBlocksRepair(spell_code);
+
     }
 
     [ContextMenu("StartStage")]
@@ -62,52 +73,69 @@ public class BattleManager : MonoBehaviour
     public void damage(int damage_amt)
     {
         Player.Instance.damage(damage_amt);
-        UpdatePlayerStatus();
+        //UpdatePlayerStatus();
+        Player_HP_Bar.GetComponent<BarChange>().ChangeTo((float)Player.Instance.health / Player.Instance.max_health);
+        Player_HP_Bar.GetComponentInChildren<Flash>().StartFlash();
     }   
 
     public void heal(int heal_amt)
     {
         Player.Instance.heal(heal_amt);
-        UpdatePlayerStatus();
+        //UpdatePlayerStatus();
+        Player_HP_Bar.GetComponent<BarChange>().ChangeTo((float)Player.Instance.health / Player.Instance.max_health);
     }
 
     public void restore(int restore_amt)
     {
         Player.Instance.restore(restore_amt);
-        UpdatePlayerStatus();
+        Player_MP_Bar.GetComponent<BarChange>().ChangeTo((float)Player.Instance.mana / Player.Instance.max_mana);
+        //UpdatePlayerStatus();
+
     }
 
-    public void consume(int consume_amt)
+    public bool consume(int consume_amt)
     {
-        Player.Instance.consume(consume_amt);
-        UpdatePlayerStatus();
+        bool enough_mana = Player.Instance.consume(consume_amt);
+        //UpdatePlayerStatus();
+        Player_MP_Bar.GetComponent<BarChange>().ChangeTo((float)Player.Instance.mana / Player.Instance.max_mana);
+        Player_MP_Bar.GetComponentInChildren<Flash>().StartFlash();
+        return enough_mana;
     }
 
     public void ActivateSpell(BattleSpell spell, GameObject origin)
     {
-        consume(spell.average_steps);
-        //Debug.Log(origin.transform.childCount);
-        if (origin.transform.childCount < 4)
+        if (consume(spell.GetAverageStep()))
         {
-            switch (spell.usage)
+            //Debug.Log(origin.transform.childCount);
+            if (origin.transform.childCount < 3)
             {
-                case "attack":
-                    GameObject atk_obj = Instantiate(spell.instance_reference, origin.transform.position, Quaternion.identity);
-                    int target_index = Random.Range(0, monster_summoned.Count);
-                    atk_obj.GetComponent<FlyingAttackObject>().target = monster_summoned[target_index];
-                    atk_obj.GetComponent<FlyingAttackObject>().InitializeFAO();
-                    int real_atk = Player.Instance.ATK + (int)spell.effect_value - monster_summoned[target_index].GetComponent<MonsterManager>().DEF;
-                    atk_obj.GetComponent<FlyingAttackObject>().damage_carried = real_atk;
-                    break;
-                case "heal":
-                    heal((int)spell.effect_value);
-                    break;
-                case "restore":
-                    restore((int)spell.effect_value);
-                    break;
+                switch (spell.usage)
+                {
+                    case "attack":
+                        GameObject atk_obj = Instantiate(spell.instance_reference, origin.transform.position, Quaternion.identity);
+                        int target_index = Random.Range(0, monster_summoned.Count);
+                        atk_obj.GetComponent<FlyingAttackObject>().target = monster_summoned[target_index];
+                        atk_obj.GetComponent<FlyingAttackObject>().InitializeFAO();
+                        int real_atk = Player.Instance.ATK + (int)spell.effect_value - monster_summoned[target_index].GetComponent<MonsterManager>().DEF;
+                        atk_obj.GetComponent<FlyingAttackObject>().damage_carried = real_atk;
+                        break;
+                    case "heal":
+                        heal((int)spell.effect_value);
+                        break;
+                    case "restore":
+                        restore((int)spell.effect_value);
+                        break;
+                }
             }
+            //else
+            //{
+            //    foreach (ParticleSystem ps in origin.GetComponentsInChildren<ParticleSystem>())
+            //    {
+            //        ps.enableEmission = false;
+            //    }
+            //}
         }
-        else
+        if (origin.transform.childCount >= 3)
         {
             foreach (ParticleSystem ps in origin.GetComponentsInChildren<ParticleSystem>())
             {

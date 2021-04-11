@@ -25,6 +25,19 @@ public class SetMaskInteration : MonoBehaviour
         }
     }
 
+    public void SetOrder(int layer)
+    {
+        InitializeSpritesArray();
+        //Debug.Log("setmask");
+        foreach (SpriteRenderer sprite in sprites)
+        {
+            sprite.sortingOrder = layer;
+            //Debug.Log(sprite.sortingOrder);
+            //Debug.Log(layer);
+            //sprite.sortingLayerName = mask_name;
+        }
+    }
+
     public void SetInteraction(string description)
     {
         InitializeSpritesArray();

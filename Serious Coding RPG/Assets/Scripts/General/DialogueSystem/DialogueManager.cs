@@ -84,6 +84,7 @@ public class DialogueManager : MonoBehaviour
     {
         //Debug.Log(search_key);
         //Debug.Log(read_key);
+        if (read_key.Length < search_key.Length) return false;
         
         for(int i = 0; i <= search_key.Length - 1; i++)
         {

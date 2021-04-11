@@ -32,7 +32,7 @@ public class DialoguePanel : MonoBehaviour
         if (Instance == null)   //singleton Dialogue Panel instance, easy for referencing in other scripts
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -56,7 +56,7 @@ public class DialoguePanel : MonoBehaviour
                 if (current == text_scroll_speed)
                 {
                     current_sentence_index++;
-                    dialogue_text.text = SentenceInProgress(dialogues[current_dialogue_index], current_sentence_index);
+                    dialogue_text.text = "<b>" + SentenceInProgress(dialogues[current_dialogue_index], current_sentence_index) + "</b>";
 
                     if (current_sentence_index >= dialogues[current_dialogue_index].Length)
                     {
@@ -83,7 +83,7 @@ public class DialoguePanel : MonoBehaviour
         NPCName = LoadText("NPCNAME"+manager.NPC_id);
         current_dialogue_index = 0;
         current_sentence_index = 0;
-        NPC_name_text.text = NPCName;
+        NPC_name_text.text = "<b>" + NPCName + "</b>";
         dialogue_text.text = "";
         current = 0;
         canNext = false;
@@ -99,14 +99,14 @@ public class DialoguePanel : MonoBehaviour
 
     string SentenceInProgress(string sentence, int progress)
     {
-        return sentence.Substring(0, progress);
+        return sentence.Substring(0, progress) + "<color=#00000000>" + sentence.Substring(progress, sentence.Length-progress) + "</color>";
     }
 
     
 
     public void Next()
     {
-        Debug.Log("next");
+        //Debug.Log("next");
         if (!canNext)
         {
             current_sentence_index = dialogues[current_dialogue_index].Length - 1;

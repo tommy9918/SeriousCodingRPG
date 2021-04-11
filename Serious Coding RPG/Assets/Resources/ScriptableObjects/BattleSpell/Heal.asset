@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 468824282020aac4eac1f83918694fec, type: 3}
-  m_Name: Heal
+  m_Name: HEAL
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 3e38dda353c392b458d098343f5310c6, type: 3}
   spell_id: HEAL
   required_skill: sort
-  average_steps: 10
-  average_memory: 0
   usage: heal
   effect_value: 15
   instance_reference: {fileID: 0}

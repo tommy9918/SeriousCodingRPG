@@ -74,6 +74,7 @@ public class MainCodeArea : MonoBehaviour
         {
             GameObject temp = Instantiate(line_number_referene, block_parent.transform);
             line_numbers.Add(temp);
+            temp.SetActive(false);
         }
         else
         {
@@ -277,5 +278,21 @@ public class MainCodeArea : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Vector3 rayPoint = ray.GetPoint(distance);
         return new Vector2(rayPoint.x, rayPoint.y);
+    }
+
+    public void ResetCodeArea()
+    {
+        DeleteGameObjectList(summoned_outline);
+        DeleteGameObjectList(coding_blocks);
+        DeleteGameObjectList(line_numbers);
+    }
+
+    void DeleteGameObjectList(List<GameObject> list)
+    {
+        foreach(GameObject obj in list)
+        {
+            Destroy(obj);
+        }
+        list.Clear();
     }
 }

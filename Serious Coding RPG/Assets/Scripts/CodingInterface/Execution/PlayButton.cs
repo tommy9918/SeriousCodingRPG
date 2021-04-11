@@ -10,7 +10,7 @@ public class PlayButton : MonoBehaviour
         //Debug.Log("Hello");
         coding_manager.RunCode();
         Deactivate();
-        transform.parent.gameObject.GetComponent<PlayBar>().SwitchToDebug();
+        //transform.parent.gameObject.GetComponent<PlayBar>().SwitchToDebug();
     }
 
     public void Deactivate()
@@ -21,6 +21,7 @@ public class PlayButton : MonoBehaviour
 
     public void Reactivate()
     {
+        GetComponent<BoxCollider2D>().enabled = true;
         StartCoroutine(ReactivateRoutine());
     }
 

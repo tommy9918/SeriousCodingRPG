@@ -111,8 +111,9 @@ GameObject:
   - component: {fileID: 968371060194209308}
   - component: {fileID: 968371060194209311}
   - component: {fileID: 968371060194209298}
-  - component: {fileID: 968371060194209309}
   - component: {fileID: 968371060194209299}
+  - component: {fileID: 6118951402420721765}
+  - component: {fileID: -5170038400227012043}
   m_Layer: 0
   m_Name: Spell Icon
   m_TagString: Untagged
@@ -199,7 +200,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.012700915, y: -0.16511106}
+  m_Offset: {x: 0.009659767, y: 0.018246055}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -210,21 +211,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9748204, y: 2.534461}
+  m_Size: {x: 1.930099, y: 1.8278649}
   m_EdgeRadius: 0
---- !u!114 &968371060194209309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 968371060194209310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fae398485bbf4041a6c6a259c9ffda0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skill_detail: {fileID: 0}
 --- !u!114 &968371060194209299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +229,57 @@ MonoBehaviour:
   spell_sprite_ren: {fileID: 968371060271973762}
   spell_name: {fileID: 968371061237930757}
   name_part: {fileID: 968371060099336030}
+  black_mist: {fileID: 0}
+--- !u!114 &6118951402420721765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968371060194209310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed2168735b15d8468099a16784718c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+  texts: []
+  images: []
+  colors: []
+  colors2: []
+  colors3: []
+  FadeIn: 0
+  FadeOut: 0
+  FadeInFromStart: 0
+  FadeOutFromStart: 0
+  speed: 20
+  current: 1
+  unscaledTime: 0
+  debug: 0
+--- !u!114 &-5170038400227012043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968371060194209310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385f5230b39dc6340a29969740e40d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affectedByTime: 0
+  movefromstart: 0
+  moveTime: 20
+  startPosition: {x: 0, y: 0}
+  destination: {x: 0, y: 0}
+  moving: 0
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &968371060271973772
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,8 +22,35 @@ public class MasterTextManager : MonoBehaviour
         List<string> loaded_dialogues = new List<string>();
 
         string lang = Player.Instance.data.language;
-
+        //Debug.Log(lang);
         string allTexts = (Resources.Load("TextContents/Dialogues/" + lang) as TextAsset).text; //without (.txt)
+        string[] lines = allTexts.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+        string key, value;
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            if (lines[i].IndexOf("=") >= 0 && !lines[i].StartsWith("#"))
+            {
+                key = lines[i].Substring(0, lines[i].IndexOf("="));
+                value = lines[i].Substring(lines[i].IndexOf("=") + 1,
+                    lines[i].Length - lines[i].IndexOf("=") - 1).Replace("\\n", Environment.NewLine);  //get string after '='
+                if (CompareKeys(target_key, key))
+                {
+                    return value;
+                }
+            }
+        }
+
+        return "";
+    }
+
+    public string LoadQuestText(string target_key)
+    {
+        List<string> loaded_dialogues = new List<string>();
+
+        string lang = Player.Instance.data.language;
+        //Debug.Log(lang);
+        string allTexts = (Resources.Load("TextContents/Quests/" + lang) as TextAsset).text; //without (.txt)
         string[] lines = allTexts.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
         string key, value;
 

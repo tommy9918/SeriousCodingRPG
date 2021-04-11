@@ -12,6 +12,9 @@ public class MainUI : MonoBehaviour
     public Image HealthBar;
     public Image ManaBar;
 
+    public GameObject top;
+    public GameObject bottom;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,5 +35,19 @@ public class MainUI : MonoBehaviour
         ExpGem.fillAmount = 0.5f;
         HealthBar.fillAmount = 0.7f;
         ManaBar.fillAmount = 0.95f;
+    }
+
+    [ContextMenu("HideMainUI")]
+    public void HideMainUI()
+    {
+        top.GetComponent<MoveTo>().ReplayMotion();
+        bottom.GetComponent<MoveTo>().ReplayMotion();
+    }
+
+    [ContextMenu("ShowMainUI")]
+    public void ShowMainUI()
+    {
+        top.GetComponent<MoveTo>().ReverseMotion();
+        bottom.GetComponent<MoveTo>().ReverseMotion();
     }
 }

@@ -21,9 +21,25 @@ public class Player : MonoBehaviour
     public int spell_channels;
     public int chanting_speed;
     public int max_equip_spells;
-    public List<int> channel_chanting_speed;
-    
-    
+
+    [ContextMenu("TestAddSpellChannels")]
+    public void TestAddSpells()
+    {
+        data.TestAddSpellChannels();
+    }
+
+    public List<CommandBlock> GetSkillCode(string skill_name)
+    {
+        foreach(Skill skill in data.skills)
+        {
+            if(skill_name == skill.name)
+            {
+                return skill.GetOriginalCommandBlockList();
+            }
+        }
+        return null;
+    }
+
 
     // Start is called before the first frame update
     void Awake()
@@ -31,7 +47,7 @@ public class Player : MonoBehaviour
         if (Instance == null)   //singleton Player instance, easy for referencing in other scripts
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {

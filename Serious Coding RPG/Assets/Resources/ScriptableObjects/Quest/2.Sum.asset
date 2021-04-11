@@ -10,21 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4b693504d564fc47b4d3d30ded67c8f, type: 3}
-  m_Name: SampleQuest2
+  m_Name: 2.Sum
   m_EditorClassIdentifier: 
   questNPCId: ELDER
   questId: 2
   input:
-  - 1,6
-  - 2,3
-  - 3,3
-  - 10,3
-  - 2,10
+  - 1,2
+  - 5,6
+  - 5,4
+  - 6,2
+  - 1,4
+  - 8,9
+  - 11,5
+  - 752,14
+  - 65,158
+  - 98,4523
   output:
-  - 1
+  - 3
+  - 11
+  - 9
   - 8
-  - 27
-  - 1000
-  - 1024
-  rewardEXP: 200
-  rewardGold: 200
+  - 5
+  - 17
+  - 16
+  - 766
+  - 223
+  - 4621
+  rewardEXP: 150
+  rewardGold: 0
+  skill_name: 
+  input_slots_length: 0

@@ -12,7 +12,7 @@ public class CodeBlockReconstructor : MonoBehaviour
     [ContextMenu("TestLoadSum")]
     public void TestLoadSum()
     {
-        RebuildBlocks(Player.Instance.data.skills[1].GetOriginalCommandBlockList());
+        RebuildBlocks(Player.Instance.data.skills[0].GetOriginalCommandBlockList());
     }
 
     public void RebuildBlocks(List<CommandBlock> command_blocks)
@@ -34,9 +34,33 @@ public class CodeBlockReconstructor : MonoBehaviour
 
     }
 
+    public void RebuildBlocksRepair(List<CommandBlock> command_blocks)
+    {
+        
+        float initial_y = -0.3f;
+        float initial_x = 0.95f;
+        for (int i = 0; i <= command_blocks.Count - 1; i++)
+        {
+            GameObject temp = FillCommandBlock(command_blocks[i], code_block_parent);
+            //main_code_area.GetComponent<MainCodeArea>().coding_blocks.Add(temp);
+            //main_code_area.GetComponent<MainCodeArea>().UpdateLineNumberList(true);
+            temp.transform.localPosition = new Vector3(initial_x, initial_y, -0.1f);
+            temp.GetComponent<BlockManager>().InititiateBlockSize();
+            //SetCodingManager(temp);
+            //temp.GetComponent<SetMaskInteration>().SetMask("Default", 1);
+            temp.GetComponent<SetMaskInteration>().SetInteraction("inside");
+            //temp.GetComponent<SetMaskInteration>().SetOrder(1);
+            initial_y -= (temp.GetComponent<SpriteRenderer>().size.y + 0.2f);
+        }
+        //float y_length = -main_code_area.GetComponent<MainCodeArea>().AlignBlocks();
+        //Debug.Log(y_length);
+        code_block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(code_block_parent.GetComponent<RectTransform>().sizeDelta.x, -initial_y + 5f);
+    }
+
     public GameObject FillCommandBlock(CommandBlock blk, GameObject parent)
     {
-        GameObject temp = Instantiate(all_blocks_reference[TypeToIndex(blk.command)]);
+        //GameObject temp = Instantiate(all_blocks_reference[TypeToIndex(blk.command)]);
+        GameObject temp = Instantiate(TypeToGameObject(blk.command));
         temp.transform.parent = parent.transform;
         temp.transform.localPosition = new Vector3(0.1f, -0.1f, -0.03f);
         List<BlockSiteManager> value_slots = new List<BlockSiteManager>();
@@ -87,7 +111,8 @@ public class CodeBlockReconstructor : MonoBehaviour
 
     public GameObject FillValueBlock(ValueBlock blk, GameObject parent)
     {
-        GameObject temp = Instantiate(all_blocks_reference[TypeToIndex(blk.value_operation)]);
+        //GameObject temp = Instantiate(all_blocks_reference[TypeToIndex(blk.value_operation)]);
+        GameObject temp = Instantiate(TypeToGameObject(blk.value_operation));
         temp.transform.parent = parent.transform;
         temp.transform.localPosition = new Vector3(0.1f, -0.1f, -0.03f);
         List<BlockSiteManager> value_slots = new List<BlockSiteManager>();
@@ -223,5 +248,53 @@ public class CodeBlockReconstructor : MonoBehaviour
                 return 19;
         }
         return -1;
+    }
+
+    public GameObject TypeToGameObject(string type)
+    {
+        switch (type)
+        {
+            case "num":
+                return Resources.Load("Prefab/CodeBlocks/NumBlock") as GameObject;
+            case "char":
+                return Resources.Load("Prefab/CodeBlocks/CharBlock") as GameObject;
+            case "variable":
+                return Resources.Load("Prefab/CodeBlocks/VariableBlock") as GameObject;
+            case "assign":
+                return Resources.Load("Prefab/CodeBlocks/AssignBlock") as GameObject;
+            case "if":
+                return Resources.Load("Prefab/CodeBlocks/IfBlock") as GameObject;
+            case "input":
+                return Resources.Load("Prefab/CodeBlocks/InputBlock") as GameObject;
+            case "jump":
+                return Resources.Load("Prefab/CodeBlocks/JumpBlock") as GameObject;
+            case "output":
+                return Resources.Load("Prefab/CodeBlocks/OutputBlock") as GameObject;
+            case "and":
+                return Resources.Load("Prefab/CodeBlocks/AndBlock") as GameObject;
+            case "or":
+                return Resources.Load("Prefab/CodeBlocks/OrBlock") as GameObject;
+            case "equal":
+                return Resources.Load("Prefab/CodeBlocks/EqualBlock") as GameObject;
+            case "larger":
+                return Resources.Load("Prefab/CodeBlocks/LargerBlock") as GameObject;
+            case "larger_equal":
+                return Resources.Load("Prefab/CodeBlocks/LargerEqualBlock") as GameObject;
+            case "smaller":
+                return Resources.Load("Prefab/CodeBlocks/SmallerBlock") as GameObject;
+            case "smaller_equal":
+                return Resources.Load("Prefab/CodeBlocks/SmallerEqualBlock") as GameObject;
+            case "plus":
+                return Resources.Load("Prefab/CodeBlocks/PlusBlock") as GameObject;
+            case "minus":
+                return Resources.Load("Prefab/CodeBlocks/MinusBlock") as GameObject;
+            case "multiply":
+                return Resources.Load("Prefab/CodeBlocks/MultiplyBlock") as GameObject;
+            case "divide":
+                return Resources.Load("Prefab/CodeBlocks/DivideBlock") as GameObject;
+            case "remainder":
+                return Resources.Load("Prefab/CodeBlocks/RemainderBlock") as GameObject;
+        }
+        return null;
     }
 }

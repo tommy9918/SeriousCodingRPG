@@ -344,6 +344,7 @@ public class FadeControl : MonoBehaviour
         }
     }
 
+    [ContextMenu("StartFadeIn")]
     public void StartFadeIn()
     {
         GetAllComponenets();
@@ -353,6 +354,7 @@ public class FadeControl : MonoBehaviour
         current = 0;       
     }
 
+    [ContextMenu("StartFadeOut")]
     public void StartFadeOut()
     {
         GetAllComponenets();

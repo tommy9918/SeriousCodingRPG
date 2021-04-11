@@ -74,7 +74,7 @@ public class MonsterManager : MonoBehaviour
             real_attack = Random.Range(1, 6);
         }
         transform.parent.GetComponent<BattleManager>().damage(real_attack);
-        Debug.Log("Monster attacked with " + real_attack.ToString() + " damage!");
+        //Debug.Log("Monster attacked with " + real_attack.ToString() + " damage!");
     }
 
     public void damage(int damage_amt)

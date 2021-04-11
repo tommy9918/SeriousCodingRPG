@@ -223,7 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedByTime: 0
   XYSeparate: 0
-  finalScale: 0.52
+  finalScale: 1
   startScale: 0
   moveTime: 10
   auto_start: 0

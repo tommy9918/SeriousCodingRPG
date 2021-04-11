@@ -636,6 +636,7 @@ GameObject:
   - component: {fileID: 8066887186696347800}
   - component: {fileID: 8066887186696347807}
   - component: {fileID: 8066887186696347806}
+  - component: {fileID: 7440027957478163528}
   m_Layer: 0
   m_Name: QuestConfirmPanel
   m_TagString: Untagged
@@ -724,7 +725,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectedByTime: 0
   XYSeparate: 0
-  finalScale: 0.52
+  finalScale: 1
   startScale: 0
   moveTime: 10
   auto_start: 0
@@ -767,3 +768,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questID: 
+--- !u!114 &7440027957478163528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066887186696347803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed2168735b15d8468099a16784718c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+  texts: []
+  images: []
+  colors: []
+  colors2: []
+  colors3: []
+  FadeIn: 0
+  FadeOut: 0
+  FadeInFromStart: 1
+  FadeOutFromStart: 0
+  speed: 10
+  current: 1
+  unscaledTime: 0
+  debug: 0

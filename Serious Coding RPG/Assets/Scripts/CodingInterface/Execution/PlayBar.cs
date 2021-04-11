@@ -34,24 +34,27 @@ public class PlayBar : MonoBehaviour
         debug_bar.GetComponent<DebugBar>().PopUp();
     }
 
+    [ContextMenu("SwitchToCode")]
     public void SwitchToCode()
     {
         slide_button.SetActive(false);
         progress_bar.SetActive(false);
         play_button.GetComponent<PlayButton>().Reactivate();
+        debug_bar.GetComponent<DebugBar>().Collapse();
     }
 
     public void UpdateStep(float slide_value)
     {
-        int step = (int)(Mathf.Floor(slide_value * coding_manager.debug_space.current_step)+1);
-        if (step > coding_manager.debug_space.current_step) step = coding_manager.debug_space.current_step;
+        int current_space_index = coding_manager.current_space_index;
+        int step = (int)(Mathf.Floor(slide_value * coding_manager.debug_space[current_space_index].current_step)+1);
+        if (step > coding_manager.debug_space[current_space_index].current_step) step = coding_manager.debug_space[current_space_index].current_step;
         step_no = step;     
         //foreach(int stp in coding_manager.debug_space.jump_index)
-        for (int i = 0; i <= coding_manager.debug_space.jump_index.Count - 1; i++)
+        for (int i = 0; i <= coding_manager.debug_space[current_space_index].jump_index.Count - 1; i++)
         {
-            if (step_no >= coding_manager.debug_space.jump_index[i])
+            if (step_no >= coding_manager.debug_space[current_space_index].jump_index[i])
             {
-                step += coding_manager.debug_space.jump_amount[i];
+                step += coding_manager.debug_space[current_space_index].jump_amount[i];
             }
         }       
         coding_manager.SetDebugStep(step);

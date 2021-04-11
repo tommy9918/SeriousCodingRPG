@@ -10,11 +10,35 @@ public class BattleSpell : ScriptableObject
     public string spell_id;
     public string required_skill;
 
-    public int average_steps;
-    public int average_memory;
+    //public int average_steps;
+    //public int average_memory;
 
     public string usage;
     public float effect_value;
 
     public GameObject instance_reference;
+
+    public int GetAverageStep()
+    {
+        foreach(PlayerSpell spell in Player.Instance.data.all_spells)
+        {
+            if(spell_id == spell.spell_id)
+            {
+                return spell.average_steps;
+            }
+        }
+        return 1;
+    }
+
+    public int GetAverageMemory()
+    {
+        foreach (PlayerSpell spell in Player.Instance.data.all_spells)
+        {
+            if (spell_id == spell.spell_id)
+            {
+                return spell.average_memory;
+            }
+        }
+        return 1;
+    }
 }
