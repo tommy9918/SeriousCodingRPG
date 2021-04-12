@@ -6,6 +6,7 @@ public class SetZConstant : MonoBehaviour
 {
     public float original_z;
     Vector2 limit = new Vector2(-100, 100);
+    public bool constant;
 
     void Start()
     {
@@ -18,8 +19,7 @@ public class SetZConstant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float y = transform.position.y;
-        transform.position = new Vector3(transform.position.x, transform.position.y, original_z + squish(y));
+        UpdateZ();
 
     }
 
@@ -28,5 +28,12 @@ public class SetZConstant : MonoBehaviour
         float final_max_range = 0.5f;
         float percent = (real - limit.x) / (limit.y - limit.x) - 0.5f;
         return final_max_range * percent;
+    }
+
+    [ContextMenu("SetZ")]
+    public void UpdateZ()
+    {
+        float y = transform.position.y;
+        transform.position = new Vector3(transform.position.x, transform.position.y, original_z + squish(y));
     }
 }

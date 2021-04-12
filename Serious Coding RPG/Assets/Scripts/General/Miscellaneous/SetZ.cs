@@ -10,10 +10,7 @@ public class SetZ : MonoBehaviour
 
     void Start()
     {
-        original_z = transform.position.z;
-        //Debug.Log(squish(-100));
-        float y = transform.position.y;
-        transform.position = new Vector3(transform.position.x, transform.position.y, original_z + squish(y));
+        UpdateZ();
     }
 
     
@@ -22,5 +19,14 @@ public class SetZ : MonoBehaviour
         float final_max_range = 0.5f;
         float percent = (real - limit.x) / (limit.y - limit.x) - 0.5f;
         return final_max_range * percent;
+    }
+
+    [ContextMenu("SetZ")]
+    public void UpdateZ()
+    {
+        original_z = transform.position.z;
+        //Debug.Log(squish(-100));
+        float y = transform.position.y;
+        transform.position = new Vector3(transform.position.x, transform.position.y, original_z + squish(y));
     }
 }
