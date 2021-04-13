@@ -10,7 +10,7 @@ public class SetZ : MonoBehaviour
 
     void Start()
     {
-        UpdateZ();
+        //UpdateZ();
     }
 
     
