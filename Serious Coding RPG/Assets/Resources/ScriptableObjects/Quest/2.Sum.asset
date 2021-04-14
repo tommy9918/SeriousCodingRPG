@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 2.Sum
   m_EditorClassIdentifier: 
   questNPCId: ELDER
-  questId: 2
+  questId: MAIN2
   input:
   - 1,2
   - 5,6
@@ -40,3 +40,4 @@ MonoBehaviour:
   rewardGold: 0
   skill_name: 
   input_slots_length: 0
+  prerequisite: 

@@ -16,7 +16,15 @@ public class CodeRequirment : MonoBehaviour
 
     public void SetRequirementText(string questID)
     {
-        QuestID.text = MasterTextManager.Instance.LoadText("QUEST")+" "+questID+":";
+        if (questID.Contains("MAIN"))
+        {
+            QuestID.text = MasterTextManager.Instance.LoadText("MAINQUEST");
+        }
+        else
+        {
+            QuestID.text = MasterTextManager.Instance.LoadText("SIDEQUEST");
+        }
+        
         description_title.text = MasterTextManager.Instance.LoadText("DESCRIPTION");
         example_title.text = MasterTextManager.Instance.LoadText("EXAMPLE");
 

@@ -25,7 +25,7 @@ public class PlayerData
     public int level;
     public int EXP;
     public int gold;
-    public List<int> completedTask;
+    public List<string> completedTask;
     public List<Skill> skills;
     public List<string> equiped_spells_id;
     public List<PlayerSpell> all_spells;
@@ -62,7 +62,7 @@ public class PlayerData
         level = 1;
         EXP = 0;
         gold = 0;
-        completedTask = new List<int>();
+        completedTask = new List<string>();
         skills = new List<Skill>();
         equiped_spells_id = new List<string>();
         all_spells = new List<PlayerSpell>();
@@ -81,7 +81,7 @@ public class PlayerData
         this.level = player.data.level;
         this.EXP = player.data.EXP;
         this.gold = player.data.gold;
-        this.completedTask = new List<int>(player.data.completedTask);
+        this.completedTask = new List<string>(player.data.completedTask);
         this.skills = new List<Skill>(player.data.skills);
         this.equiped_spells_id = new List<string>(player.data.equiped_spells_id);
         this.all_spells = new List<PlayerSpell>(player.data.all_spells);

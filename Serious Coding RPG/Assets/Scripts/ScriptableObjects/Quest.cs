@@ -17,4 +17,6 @@ public class Quest : ScriptableObject
 
     public string skill_name;
     public int input_slots_length;
+
+    public string prerequisite;
 }

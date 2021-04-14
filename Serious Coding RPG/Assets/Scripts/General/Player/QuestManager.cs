@@ -40,7 +40,7 @@ public class QuestManager : MonoBehaviour
         foreach(Quest quest in all_quests)
         {
             
-            if(string.Compare(NPCid, quest.questNPCId) == 0 && !Player.Instance.checkQuestStatus(int.Parse(quest.questId)))
+            if(string.Compare(NPCid, quest.questNPCId) == 0 && !Player.Instance.checkQuestStatus(quest.questId))
             {
                 
                 return quest.questId;
@@ -67,8 +67,8 @@ public class QuestManager : MonoBehaviour
 
     public void FinishQuest(string questID)
     {
-        int id = int.Parse(questID);
-        Player.Instance.data.completedTask.Add(id);
+        //int id = int.Parse(questID);
+        Player.Instance.data.completedTask.Add(questID);
         Vector3 pos = transform.position;
         GameObject temp = Instantiate(RewardPanel, new Vector3(pos.x, pos.y, questUI.transform.position.z), Quaternion.identity);
         temp.GetComponent<QuestRewardPanel>().questID = questID;

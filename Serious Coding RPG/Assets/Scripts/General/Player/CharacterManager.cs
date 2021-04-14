@@ -83,7 +83,7 @@ public class CharacterManager : MonoBehaviour
                 if (CanWalk(new_pos)) transform.position = new_pos;
             }
         }
-        cam.transform.position = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
+        cam.transform.position = new Vector3(transform.position.x, transform.position.y+1.13f, cam.transform.position.z);
 
     }
 

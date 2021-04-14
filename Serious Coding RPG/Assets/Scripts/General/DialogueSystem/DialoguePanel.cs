@@ -127,7 +127,7 @@ public class DialoguePanel : MonoBehaviour
 
     IEnumerator Finish()
     {
-        Debug.Log(finish);
+        //Debug.Log(finish);
         started = false;
         finish = true;
         panel.GetComponent<BoxCollider2D>().enabled = false;

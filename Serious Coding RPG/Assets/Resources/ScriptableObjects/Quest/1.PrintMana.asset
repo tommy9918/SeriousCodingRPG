@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1.PrintMana
   m_EditorClassIdentifier: 
   questNPCId: ELDER
-  questId: 1
+  questId: MAIN1
   input:
   - 
   output:
@@ -22,3 +22,4 @@ MonoBehaviour:
   rewardGold: 0
   skill_name: print_mana
   input_slots_length: 0
+  prerequisite: 

@@ -57,12 +57,17 @@ public class Player : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         data = LoadData();     //load player data
+        if(data.language == "" || data.language == null)
+        {
+            data.language = LanguageFileTarget(Application.systemLanguage);
+            //data.language = "en";
+        }
         InitializeCalculatableData();
     }   
 
-    public bool checkQuestStatus(int id)    //0 = not finished, 1 = finished
+    public bool checkQuestStatus(string id)    //0 = not finished, 1 = finished
     {
-        foreach(int questid in data.completedTask)
+        foreach(string questid in data.completedTask)
         {
             if(id == questid)
             {
@@ -161,5 +166,17 @@ public class Player : MonoBehaviour
             return false;        //cast spell fail, not enough mana
         }
         return true;      //cast spell successfully, mana consumed
+    }
+
+    string LanguageFileTarget(SystemLanguage language)
+    {
+        switch (language)
+        {
+            case SystemLanguage.English:
+                return "en";
+            case SystemLanguage.Chinese:
+                return "ch";
+        }
+        return "en";
     }
 }

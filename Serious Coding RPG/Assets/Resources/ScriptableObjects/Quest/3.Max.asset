@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 3.Max
   m_EditorClassIdentifier: 
   questNPCId: ELDER
-  questId: 3
+  questId: MAIN3
   input:
   - 1,2
   - 2,3
@@ -30,3 +30,4 @@ MonoBehaviour:
   rewardGold: 200
   skill_name: 
   input_slots_length: 0
+  prerequisite: 

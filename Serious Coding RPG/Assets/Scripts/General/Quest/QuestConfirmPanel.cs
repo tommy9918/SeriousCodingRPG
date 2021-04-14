@@ -16,7 +16,7 @@ public class QuestConfirmPanel : MonoBehaviour
 
     void ClickedYes()
     {
-        Debug.Log("Yes");
+        //Debug.Log("Yes");
         GetComponent<ScaleChange>().StartAnimateReverse();
         Destroy(gameObject, 1f);
         QuestManager.Instance.QuestUIStart(questID);
@@ -25,7 +25,7 @@ public class QuestConfirmPanel : MonoBehaviour
 
     void ClickedNo()
     {
-        Debug.Log("No");
+        //Debug.Log("No");
         GetComponent<ScaleChange>().StartAnimateReverse();
         Destroy(gameObject, 1f);
     }
