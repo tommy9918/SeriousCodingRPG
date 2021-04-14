@@ -31,6 +31,7 @@ public class PlayerData
     public List<PlayerSpell> all_spells;
     public List<int> channel_chanting_speed;
     public List<PlayerSpellList> spells_in_channels;
+    public List<string> unlocked_blocks;
     public int spell_channels;
     public string language;
 
@@ -68,6 +69,7 @@ public class PlayerData
         all_spells = new List<PlayerSpell>();
         channel_chanting_speed = new List<int>();
         spells_in_channels = new List<PlayerSpellList>();
+        unlocked_blocks = new List<string>();
         spell_channels = 1;
 
         language = "en";
@@ -87,6 +89,7 @@ public class PlayerData
         this.all_spells = new List<PlayerSpell>(player.data.all_spells);
         this.channel_chanting_speed = new List<int>(player.data.channel_chanting_speed);
         this.spells_in_channels = new List<PlayerSpellList>(player.data.spells_in_channels);
+        this.unlocked_blocks = new List<string>(player.data.unlocked_blocks);
         this.spell_channels = 1;
 
         this.language = player.data.language;

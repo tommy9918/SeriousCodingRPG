@@ -294,6 +294,10 @@ public class CodeBlockReconstructor : MonoBehaviour
                 return Resources.Load("Prefab/CodeBlocks/DivideBlock") as GameObject;
             case "remainder":
                 return Resources.Load("Prefab/CodeBlocks/RemainderBlock") as GameObject;
+            case "at":
+                return Resources.Load("Prefab/CodeBlocks/AtBlock") as GameObject;
+            case "not":
+                return Resources.Load("Prefab/CodeBlocks/NotBlock") as GameObject;
         }
         return null;
     }

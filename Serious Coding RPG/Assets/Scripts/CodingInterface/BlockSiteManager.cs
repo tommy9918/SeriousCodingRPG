@@ -443,6 +443,13 @@ public class BlockSiteManager : MonoBehaviour
 
             else if (inserted_type == SubBlockManager.BlockType.VARIABLE && type == SiteType.VARIABLE)
             {
+                if(block_inserted.GetComponent<SubBlockManager>().block_type == "at")
+                {
+                    if(transform.parent.GetComponent<SubBlockManager>() != null && transform.parent.GetComponent<SubBlockManager>().block_type == "at")
+                    {
+                        return false;
+                    }
+                }
                 if (block_inserted.GetComponent<SubBlockManager>().value_type.Equals(value_type))
                 {
                     return true;

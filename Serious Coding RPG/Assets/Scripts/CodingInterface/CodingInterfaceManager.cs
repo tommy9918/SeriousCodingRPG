@@ -13,7 +13,7 @@ public class CodingInterfaceManager : MonoBehaviour
     public GameObject magic_circle;
     public GameObject coding_area;
     public PlayBar playbar;
-
+    [Space(10)]
     public GameObject block_selection;
     public GameObject block_selection_scroll_list;
     public GameObject coding_scroll_list;
@@ -21,23 +21,23 @@ public class CodingInterfaceManager : MonoBehaviour
     public GameObject DarkLayer;
     public GameObject detail_requirement;
     public MainCodeArea main_code_area;
-    
+    [Space(10)]
     public List<CommandBlock> coding_blocks;
     public List<string> quest_inputs;
     public List<string> expect_outputs;
-
+    [Space(10)]
     public GameObject step_indicator;
     public DebugBar debug_bar;
-    
 
+    [Space(10)]
     public GameObject active_dragging_block;
-
+    [Space(10)]
     public List<ExecutionSpace> debug_space;
     public List<string> debug_expected_output;
     public List<string> debug_real_output;
     public List<bool> passed;
     public int current_space_index;
-
+    [Space(10)]
     public CodeRequirment code_req;
     public GameObject finish_button;
     public GameObject add_icon;
@@ -48,7 +48,7 @@ public class CodingInterfaceManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //InitializeCodingUI();
+        InitializeCodingUI();
         
     }
 

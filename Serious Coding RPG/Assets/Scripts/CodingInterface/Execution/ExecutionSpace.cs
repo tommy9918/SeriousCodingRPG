@@ -47,6 +47,21 @@ public class NumVariable
         if (step >= step_log[step_log.Count - 1]) return GetLatestValue();
         return null;
     }
+
+    string SpaceString(int length)
+    {
+        string temp = "";
+        for (int i = 0; i <= length - 1; i++)
+        {
+            temp += " ";
+        }
+        return temp;
+    }
+
+    public string ToCharValue()
+    {
+        return SpaceString(int.Parse(this.GetLatestValue()));
+    }
 }
 
 public class CharVariable
@@ -82,6 +97,13 @@ public class CharVariable
         return variable_value[variable_value.Count - 1];
     }
 
+    public string GetLatestValueAt(int index)
+    {
+        string latest = variable_value[variable_value.Count - 1];
+        if (index > latest.Length - 1) return "";
+        else return latest[index].ToString();
+    }
+
     public string GetValueAtStep(int step)
     {
         for (int i = 0; i <= step_log.Count - 2; i++)
@@ -93,6 +115,11 @@ public class CharVariable
         }
         if(step >= step_log[step_log.Count - 1]) return GetLatestValue();
         return null;
+    }
+
+    public string ToNumValue()
+    {
+        return this.GetLatestValue().Length.ToString();
     }
 }
 public class ExecutionSpace
@@ -138,13 +165,23 @@ public class ExecutionSpace
                 case "assign":
                     //Debug.Log("Running assign");
                     current_step++;
-                    string var_name = commands[current_line_number - 1].value_blocks[0].value;
-                    //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
-                    string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
-                    string type = commands[current_line_number - 1].value_blocks[1].value_type;
-                    //Debug.Log(var_name+' '+value+' '+type);
-                    if (type == "") type = "num";
-                    ExecuteAssign(var_name, value, type, current_step);
+                    if (commands[current_line_number - 1].value_blocks[0].value_operation != "at")
+                    {
+                        string var_name = commands[current_line_number - 1].value_blocks[0].value;
+                        //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
+                        string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
+                        string type = commands[current_line_number - 1].value_blocks[1].value_type;
+                        ExecuteAssign(var_name, value, type, current_step);
+                        //current_step++;
+                        //i++;
+                    }
+                    else
+                    {
+                        string var_name = commands[current_line_number - 1].value_blocks[0].value_blocks[0].value;
+                        string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
+                        string index = TranslateToValue(commands[current_line_number - 1].value_blocks[0].value_blocks[1]);
+                        ExecuteAssignAt(var_name, index, value, current_step);
+                    }
                     current_line_number++;                 
                     break;
                 case "output":
@@ -203,13 +240,23 @@ public class ExecutionSpace
             {
                 case "assign":
                     current_step++;
-                    string var_name = commands[i].value_blocks[0].value;
-                    //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
-                    string value = TranslateToValue(commands[i].value_blocks[1]);
-                    string type = commands[i].value_blocks[1].value_type;
-                    ExecuteAssign(var_name, value, type, current_step);
-                    //current_step++;
-                    //i++;
+                    if (commands[i].value_blocks[0].value_operation != "at")
+                    {
+                        string var_name = commands[i].value_blocks[0].value;
+                        //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
+                        string value = TranslateToValue(commands[i].value_blocks[1]);
+                        string type = commands[i].value_blocks[1].value_type;
+                        ExecuteAssign(var_name, value, type, current_step);
+                        //current_step++;
+                        //i++;
+                    }
+                    else
+                    {
+                        string var_name = commands[i].value_blocks[0].value_blocks[0].value;
+                        string value = TranslateToValue(commands[i].value_blocks[1]);
+                        string index = TranslateToValue(commands[i].value_blocks[0].value_blocks[1]);
+                        ExecuteAssignAt(var_name, index, value, current_step);
+                    }
                     break;
                 case "output":
                     current_step++;
@@ -300,6 +347,16 @@ public class ExecutionSpace
             }
             else return null;
         }
+        else if (value_blk.value_operation.Equals("at"))    //value block is an at block
+        {
+            if (GetCharVariable(value_blk.value_blocks[0].value) != null)
+            {
+                int index = int.Parse(TranslateToValue(value_blk.value_blocks[1]));
+                //Debug.Log(index);
+                return GetCharVariable(value_blk.value_blocks[0].value).GetLatestValueAt(index);
+            }
+            return null;
+        }
         else
         {
             switch (value_blk.value_operation)      //recursively calculate the value of value block
@@ -329,9 +386,6 @@ public class ExecutionSpace
                 case "larger":
                     return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) > double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
                 case "larger_equal":
-                    //Debug.Log("Comparing:");
-                    //Debug.Log(double.Parse(TranslateToValue(value_blk.value_blocks[0])));
-                    //Debug.Log(double.Parse(TranslateToValue(value_blk.value_blocks[1])));
                     return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) >= double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
                 case "and":
                     return (bool.Parse(TranslateToValue(value_blk.value_blocks[0])) && bool.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
@@ -419,16 +473,20 @@ public class ExecutionSpace
         return null;
     }
 
+    
+    
+
     public void ExecuteAssign(string var_name, string value, string value_type, int step)
     {
         string var_type = "";
         if (containsVariable(var_name, out var_type))
         {
-            if (value_type.Equals("num"))
+            //Debug.Log(var_type);
+            if (value_type.Equals("num") && value_type == var_type)
             {
                 GetNumVariable(var_name).ModifyValue(value, step);
             }
-            else if (value_type.Equals("char"))
+            else if (value_type.Equals("char") && value_type == var_type)
             {
                 GetCharVariable(var_name).ModifyValue(value, step);
             }
@@ -446,5 +504,45 @@ public class ExecutionSpace
         }
     }
 
+
+    public void ExecuteAssignAt(string var_name, string index_value, string string_value, int step)
+    {
+        string original_string = GetCharVariable(var_name).GetLatestValue();
+        int total_length = Mathf.Max(original_string.Length, int.Parse(index_value) + string_value.Length);
+        char[] new_string = new char[total_length];
+        for(int i = 0; i <= total_length - 1; i++)
+        {
+            if(i < int.Parse(index_value))
+            {
+                if(i <= original_string.Length - 1)
+                {
+                    new_string[i] = original_string[i];
+                }
+                else
+                {
+                    new_string[i] = ' ';
+                }
+            }
+            else
+            {
+                if(i- int.Parse(index_value) <= string_value.Length - 1)
+                {
+                    new_string[i] = string_value[i - int.Parse(index_value)];
+                }
+                else new_string[i] = original_string[i];
+            }
+        }
+        GetCharVariable(var_name).ModifyValue(string.Join("",new_string), step);
+    }
+
+    string SpaceString(int length)
+    {
+        string temp = "";
+        for(int i = 0; i <= length-1; i++)
+        {
+            temp += " ";
+        }
+        return temp;
+    }
     
 }
