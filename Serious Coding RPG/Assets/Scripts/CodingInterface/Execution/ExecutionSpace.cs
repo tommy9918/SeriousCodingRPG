@@ -152,6 +152,7 @@ public class ExecutionSpace
 
     public string StartExecution(List<CommandBlock> commands, string input_long_string)
     {
+        if (commands.Count == 0) return "";
         input_index = 0;
         input_array = input_long_string.Split(',');
 
@@ -165,22 +166,25 @@ public class ExecutionSpace
                 case "assign":
                     //Debug.Log("Running assign");
                     current_step++;
-                    if (commands[current_line_number - 1].value_blocks[0].value_operation != "at")
+                    if (commands[current_line_number - 1].value_blocks[0].value_operation != "empty")
                     {
-                        string var_name = commands[current_line_number - 1].value_blocks[0].value;
-                        //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
-                        string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
-                        string type = commands[current_line_number - 1].value_blocks[1].value_type;
-                        ExecuteAssign(var_name, value, type, current_step);
-                        //current_step++;
-                        //i++;
-                    }
-                    else
-                    {
-                        string var_name = commands[current_line_number - 1].value_blocks[0].value_blocks[0].value;
-                        string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
-                        string index = TranslateToValue(commands[current_line_number - 1].value_blocks[0].value_blocks[1]);
-                        ExecuteAssignAt(var_name, index, value, current_step);
+                        if (commands[current_line_number - 1].value_blocks[0].value_operation != "at")
+                        {
+                            string var_name = commands[current_line_number - 1].value_blocks[0].value;
+                            //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
+                            string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
+                            string type = commands[current_line_number - 1].value_blocks[1].value_type;
+                            ExecuteAssign(var_name, value, type, current_step);
+                            //current_step++;
+                            //i++;
+                        }
+                        else
+                        {
+                            string var_name = commands[current_line_number - 1].value_blocks[0].value_blocks[0].value;
+                            string value = TranslateToValue(commands[current_line_number - 1].value_blocks[1]);
+                            string index = TranslateToValue(commands[current_line_number - 1].value_blocks[0].value_blocks[1]);
+                            ExecuteAssignAt(var_name, index, value, current_step);
+                        }
                     }
                     current_line_number++;                 
                     break;
@@ -191,11 +195,14 @@ public class ExecutionSpace
                 case "input":
                     //Debug.Log("Running input");
                     current_step++;
-                    string var_name2 = commands[current_line_number - 1].value_blocks[0].value;
-                    string value2 = input_array[input_index];
-                    input_index++;
-                    string type2 = "num";
-                    ExecuteAssign(var_name2, value2, type2, current_step);
+                    if (commands[current_line_number - 1].value_blocks[0].value_operation != "empty")
+                    {
+                        string var_name2 = commands[current_line_number - 1].value_blocks[0].value;
+                        string value2 = input_array[input_index];
+                        input_index++;
+                        string type2 = "num";
+                        ExecuteAssign(var_name2, value2, type2, current_step);
+                    }
                     current_line_number++;                 
                     break;
                 case "if":
@@ -218,7 +225,16 @@ public class ExecutionSpace
                 case "jump":
                     //Debug.Log("Running jump");
                     current_step++;
-                    current_line_number = int.Parse(TranslateToValue(commands[current_line_number - 1].value_blocks[0]));
+                    int final_number = int.Parse(TranslateToValue(commands[current_line_number - 1].value_blocks[0]));
+                    if(final_number > 0)
+                    {
+                        current_line_number = final_number;
+                    }
+                    else
+                    {
+                        current_line_number += final_number;
+                    }
+                    //current_line_number = int.Parse(TranslateToValue(commands[current_line_number - 1].value_blocks[0]));
                     break;
             }
             //DebugAllVariable();
@@ -313,6 +329,7 @@ public class ExecutionSpace
 
     public string DebugTextAtStep(int step)
     {
+        if (line_number_traversed.Count == 0) return "Empty spell!";
         //Debug.Log(step);
         if (step == 0) step = 1;
         string debugtext = "Finish executing line " + line_number_traversed[step - 1] + ".\n";
@@ -333,8 +350,25 @@ public class ExecutionSpace
         return debugtext;
     }
 
+    ValueBlock SetEmptySubElementToVoid(ValueBlock value_blk)
+    {
+        ValueBlock new_blk = new ValueBlock(value_blk);
+        for(int i = 0; i <= new_blk.value_blocks.Count - 1; i++)
+        {
+            //Debug.Log(new_blk.value_operation);
+            if(new_blk.value_blocks[i] == null || new_blk.value_blocks[i].value_operation == "empty")
+            {
+                //Debug.Log("empty found!");
+                new_blk.value_blocks[i] = null;
+            }
+        }
+        return new_blk;
+    }
+
     public string TranslateToValue(ValueBlock value_blk)
-    {        
+    {
+        if (value_blk == null) return null;
+        value_blk = SetEmptySubElementToVoid(value_blk);
         if (value_blk.value_operation.Equals("variable"))   //value block is a variable
         {           
             if (GetNumVariable(value_blk.value) != null)     //get the value of the variable in the main memory
@@ -362,37 +396,56 @@ public class ExecutionSpace
             switch (value_blk.value_operation)      //recursively calculate the value of value block
             {
                 case "":
-                    return value_blk.value;
+                    return value_blk.value ?? "0";
                 case "num":
-                    return value_blk.value;
+                    return value_blk.value ?? "0";
                 case "char":
-                    return value_blk.value;
+                    return value_blk.value ?? "0";
                 case "plus":
-                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) + double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") + double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0")).ToString();
                 case "minus":
-                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) - double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") - double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0")).ToString();
                 case "multiply":
-                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) * double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") * double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0")).ToString();
                 case "divide":
-                    return ((int)(double.Parse(TranslateToValue(value_blk.value_blocks[0])) / double.Parse(TranslateToValue(value_blk.value_blocks[1])))).ToString();
+                    if (double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0") != 0)
+                    {
+                        return ((int)(double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") / double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0"))).ToString();
+                    }
+                    else
+                    {
+                        Debug.Log("Curse by zero-division!");
+                        //trigger zero-division curse
+                        return "0";
+                    }
                 case "remainder":
-                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) % double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                    if (double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0") != 0)
+                    {
+                        return (double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") % double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0")).ToString();
+                    }
+                    else
+                    {
+                        Debug.Log("Curse by zero-division!");
+                        //trigger zero-division curse
+                        return "0";
+                    }
                 case "equal":
-                    return TranslateToValue(value_blk.value_blocks[0]).Equals(TranslateToValue(value_blk.value_blocks[1])).ToString();
+                    return TranslateToValue(value_blk.value_blocks[0]) ?? "0".Equals(TranslateToValue(value_blk.value_blocks[1]) ?? "0").ToString();
                 case "smaller":
-                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) < double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") < double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0")).ToString();
                 case "smaller_equal":
-                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) <= double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") <= double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0")).ToString();
                 case "larger":
-                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) > double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") > double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0")).ToString();
                 case "larger_equal":
-                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0])) >= double.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                    return (double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") >= double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0")).ToString();
                 case "and":
-                    return (bool.Parse(TranslateToValue(value_blk.value_blocks[0])) && bool.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                    return (bool.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "False") && bool.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "False")).ToString();
                 case "or":
-                    return (bool.Parse(TranslateToValue(value_blk.value_blocks[0])) || bool.Parse(TranslateToValue(value_blk.value_blocks[1]))).ToString();
+                    return (bool.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "False") || bool.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "False")).ToString();
                 case "not":
-                    return (!bool.Parse(TranslateToValue(value_blk.value_blocks[0]))).ToString();
+                    return (!bool.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "False")).ToString();
+                    //return "False";
                 case "skill":
                     string input_string = "";
                     for (int i = 0; i <= value_blk.value_blocks.Count - 1; i++)
@@ -543,6 +596,16 @@ public class ExecutionSpace
             temp += " ";
         }
         return temp;
+    }
+
+    string CharToNum(string input)
+    {
+        return input.Length.ToString();
+    }
+
+    string NumToChar(string input)
+    {
+        return SpaceString(int.Parse(input));
     }
     
 }

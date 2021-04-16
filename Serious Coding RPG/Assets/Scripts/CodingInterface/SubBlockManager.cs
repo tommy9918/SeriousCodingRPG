@@ -21,11 +21,15 @@ public class SubBlockManager : MonoBehaviour
     public List<GameObject> block_sites;
     public GameObject value_reference;
 
+    public GameObject delete_button;
 
     public bool horizontal;
     public bool vertical;
 
     public string block_type;
+    public bool can_delete;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,10 +41,48 @@ public class SubBlockManager : MonoBehaviour
         if (horizontal) SetSubBlockPositionHorizontal();
         else if (vertical) SetSubBlockPositionVertical();
 
+        //width = GetComponent<SpriteRenderer>().size.x;
+        //height = GetComponent<SpriteRenderer>().size.y;
+
+
+    }
+
+    [ContextMenu("GetOriginalSize")]
+    public void GetOriginalSize()
+    {
+        if (horizontal) SetSubBlockPositionHorizontal();
+        else if (vertical) SetSubBlockPositionVertical();
+
+        foreach (BlockSiteManager bsm in GetComponentsInChildren<BlockSiteManager>())
+        {
+            bsm.width = bsm.gameObject.GetComponent<SpriteRenderer>().size.x;
+            bsm.height = bsm.gameObject.GetComponent<SpriteRenderer>().size.y;
+        }
         width = GetComponent<SpriteRenderer>().size.x;
         height = GetComponent<SpriteRenderer>().size.y;
 
+    }
 
+    public void StartDeleteBlock()
+    {
+        if (GetComponent<LongPressDrag>().accepted)
+        {
+            GameObject temp = Instantiate(delete_button, transform);
+            temp.transform.localPosition = new Vector3(0, 0, -0.5f);
+            temp.GetComponent<ScaleChange>().StartAnimate();
+        }
+    }
+
+    public void DeleteBlock()
+    {
+        //Debug.Log("deleteblock!");
+        GetComponent<ScaleChange>().StartAnimateReverse();
+        if (transform.parent.GetComponent<BlockSiteManager>() != null && transform.parent.GetComponent<BlockSiteManager>().horizontal)
+        {
+            transform.parent.GetComponent<BlockSiteManager>().inserted_block = null;
+            transform.parent.GetComponent<BlockSiteManager>().DeleteBlock();
+            Destroy(gameObject, 0.5f);
+        }
     }
 
     // Update is called once per frame
@@ -117,8 +159,8 @@ public class SubBlockManager : MonoBehaviour
 
     public void AutoUpdateSize()
     {
-        width = GetComponent<SpriteRenderer>().size.x;
-        height = GetComponent<SpriteRenderer>().size.y;
+        //width = GetComponent<SpriteRenderer>().size.x;
+        //height = GetComponent<SpriteRenderer>().size.y;
     }
 
     public void SetSubBlockPositionHorizontal()

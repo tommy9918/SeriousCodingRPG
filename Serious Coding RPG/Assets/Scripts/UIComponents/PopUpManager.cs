@@ -11,11 +11,11 @@ public class PopUpManager : MonoBehaviour
 
     public static PopUpManager Instance;
 
-    public GameObject test;
+    public GameObject unlock_block;
 
     int base_layer = 10;
     int current_max_layer = 10;
-    //float current_max_z = 0f;
+    float current_max_z = 0f;
 
     private void Awake()
     {
@@ -41,14 +41,18 @@ public class PopUpManager : MonoBehaviour
         {
             ps.sortingOrder = current_max_layer;
         }
+        foreach(Canvas c in obj.GetComponentsInChildren<Canvas>())
+        {
+            c.sortingOrder = current_max_layer;
+        }
         current_max_layer++;
-        //obj.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y, current_max_z);
-        //current_max_z -= 0.5f;
+        obj.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y, current_max_z);
+        current_max_z -= 0.5f;
     }
     [ContextMenu("OpenPopUpTest")]
     public void OpenPopUpTest()
     {
-        OpenPopUp(Instantiate(test));
+        OpenPopUp(Instantiate(unlock_block));
     }
 
     [ContextMenu("ClosePopUp")]
@@ -70,7 +74,7 @@ public class PopUpManager : MonoBehaviour
         dim_instance.RemoveAt(dim_instance.Count - 1);
         pop_up_instance.RemoveAt(pop_up_instance.Count - 1);
         current_max_layer -= 2;
-        //current_max_z += 1f;
+        current_max_z += 1f;
 
         if(dim_instance.Count == 0)
         {
@@ -80,7 +84,7 @@ public class PopUpManager : MonoBehaviour
 
     public void OpenPopUp(GameObject pop_up)
     {
-        dim_instance.Add(Instantiate(dim_reference));
+        dim_instance.Add(Instantiate(dim_reference, Player.Instance.gameObject.transform.position, Quaternion.identity));
         dim_instance[dim_instance.Count - 1].GetComponent<FadeControl>().StartFadeIn();
         SetLayer(dim_instance[dim_instance.Count - 1]);
 
@@ -88,5 +92,10 @@ public class PopUpManager : MonoBehaviour
         SetLayer(pop_up_instance[pop_up_instance.Count - 1]);
 
         confirm_layer.enabled = true;
+    }
+
+    public void UnlockBlockPopUp()
+    {
+        OpenPopUp(Instantiate(unlock_block, (Vector2)Player.Instance.gameObject.transform.position, Quaternion.identity));
     }
 }

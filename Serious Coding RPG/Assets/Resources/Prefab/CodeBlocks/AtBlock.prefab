@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4120326012713324326}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.46, y: -0.1, z: -0.01}
+  m_LocalPosition: {x: 1.492471, y: -0.1, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4120326013929939001}
@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 1
+  height: 1
   horizontal: 1
   vertical: 0
   highlighted: 0
@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 7965946920365390766}
   - component: {fileID: 5225527117804523687}
   - component: {fileID: 4120326013929939006}
+  - component: {fileID: -7553843973969440450}
   m_Layer: 0
   m_Name: AtBlock
   m_TagString: Untagged
@@ -241,7 +242,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 3.7444217, y: 1.2}
+  m_Size: {x: 3.6924708, y: 1.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -265,7 +266,7 @@ BoxCollider2D:
     border: {x: 0.21, y: 0.21, z: 0.21, w: 0.21}
     pivot: {x: 0, y: 1}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 3.7444217, y: 1.2}
+    newSize: {x: 3.6924708, y: 1.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
@@ -418,8 +419,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ba83b609324b340b936130d12fcca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 3.6924708
+  height: 1.2
   skill_name_text: {fileID: 0}
   type: 0
   value_type: 
@@ -428,9 +429,25 @@ MonoBehaviour:
   - {fileID: 4120326012713324326}
   - {fileID: 4565814274163283966}
   value_reference: {fileID: 0}
+  delete_button: {fileID: 2354682794844909738, guid: 6c9438f6cb3f68243ad376d7e6ed2452,
+    type: 3}
   horizontal: 1
   vertical: 0
   block_type: at
+  can_delete: 0
+--- !u!114 &-7553843973969440450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4120326013929939007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f201ffa7f6dd7a64f80fcc21a7ff3276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonUse: StartDeleteBlock
 --- !u!1 &4120326013964282849
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,7 +557,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4565814274163283966}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.61, y: -0.1, z: -0.01}
+  m_LocalPosition: {x: 2.592471, y: -0.1, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4120326013929939001}
@@ -646,8 +663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 1
+  height: 1
   horizontal: 1
   vertical: 0
   highlighted: 0

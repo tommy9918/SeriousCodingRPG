@@ -109,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1550336594180715789}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.02, y: -0.1, z: -0.01}
+  m_LocalPosition: {x: 3.17, y: -0.1, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1550336594683564042}
@@ -215,8 +215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 1
+  height: 1
   horizontal: 1
   vertical: 0
   highlighted: 0
@@ -227,6 +227,11 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 0}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
+  animating: 0
   type: 2
   value_type: 
 --- !u!1 &1550336594683564084
@@ -249,6 +254,7 @@ GameObject:
   - component: {fileID: -6695271983062181568}
   - component: {fileID: -4714340370993399378}
   - component: {fileID: -6472266460212085662}
+  - component: {fileID: -2144501549527258373}
   m_Layer: 0
   m_Name: AndBlock
   m_TagString: Untagged
@@ -317,7 +323,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 4.15, y: 1.2}
+  m_Size: {x: 4.27, y: 1.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -341,7 +347,7 @@ BoxCollider2D:
     border: {x: 0.21, y: 0.21, z: 0.21, w: 0.21}
     pivot: {x: 0, y: 1}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 4.15, y: 1.2}
+    newSize: {x: 4.27, y: 1.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
@@ -387,8 +393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ba83b609324b340b936130d12fcca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 4.27
+  height: 1.2
   skill_name_text: {fileID: 0}
   type: 2
   value_type: and
@@ -397,9 +403,12 @@ MonoBehaviour:
   - {fileID: 1550336594045306044}
   - {fileID: 1550336594180715789}
   value_reference: {fileID: 0}
+  delete_button: {fileID: 2354682794844909738, guid: 6c9438f6cb3f68243ad376d7e6ed2452,
+    type: 3}
   horizontal: 1
   vertical: 0
   block_type: and
+  can_delete: 0
 --- !u!114 &2679579806269884564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +425,8 @@ MonoBehaviour:
   XYSeparate: 0
   finalScale: 1
   startScale: 0
+  startXY: {x: 0, y: 0}
+  finalXY: {x: 0, y: 0}
   moveTime: 20
   auto_start: 0
 --- !u!114 &-6819512675523100740
@@ -505,6 +516,19 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &-2144501549527258373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550336594683564084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f201ffa7f6dd7a64f80fcc21a7ff3276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonUse: StartDeleteBlock
 --- !u!1 &1550336595690752589
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,8 +663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 1
+  height: 1
   horizontal: 1
   vertical: 0
   highlighted: 0
@@ -651,5 +675,10 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 0}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
+  animating: 0
   type: 2
   value_type: 

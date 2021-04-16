@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LongPressDrag : MonoBehaviour
 {
@@ -121,5 +122,14 @@ public class LongPressDrag : MonoBehaviour
         coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block = null;
         coding_manager.GetComponent<CodingInterfaceManager>().EnableScrolling();
         this.enabled = false;
+
+        foreach (InputField ipf in GetComponentsInChildren<InputField>())
+        {
+            ipf.interactable = true;
+        }
+        foreach (Collider2D c in GetComponentsInChildren<Collider2D>())
+        {
+            c.enabled = true;
+        }
     }
 }

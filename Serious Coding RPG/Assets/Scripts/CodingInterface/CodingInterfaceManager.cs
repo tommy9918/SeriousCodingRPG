@@ -69,6 +69,25 @@ public class CodingInterfaceManager : MonoBehaviour
         code_req.SetRequirementText(questID);
         debug_space = new List<ExecutionSpace>();
 
+        switch (questID)
+        {
+            case "MAIN1":     //hello mana mission
+                Player.Instance.UnlockHelloWorldBlock();
+                break;
+            case "MAIN2":     //sum mission
+                Player.Instance.UnlockCalculateBlock();
+                break;
+            case "MAIN3":     //max mission
+                Player.Instance.UnlockIfRelatedBlock();
+                break;
+            case "MAIN5":     //loop apple mission
+                Player.Instance.UnlockJumpBlock();
+                break;
+            case "MAIN???":     //array-related mission 1, tbc
+                Player.Instance.UnlockAtBlock();
+                break;
+        }
+
         //Debug.Log(coding_blocks);
     }
 

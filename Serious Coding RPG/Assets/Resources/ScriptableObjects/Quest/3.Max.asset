@@ -28,6 +28,6 @@ MonoBehaviour:
   - 10
   rewardEXP: 200
   rewardGold: 200
-  skill_name: 
-  input_slots_length: 0
+  skill_name: max
+  input_slots_length: 2
   prerequisite: 

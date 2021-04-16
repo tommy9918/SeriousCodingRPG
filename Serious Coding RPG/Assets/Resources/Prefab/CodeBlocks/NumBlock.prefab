@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: -5219442603736641052}
   - component: {fileID: -1512511652766517452}
   - component: {fileID: -2446672435830484107}
+  - component: {fileID: -3062878010263790461}
   m_Layer: 0
   m_Name: NumBlock
   m_TagString: Untagged
@@ -168,7 +169,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 2, y: 1.2}
+  m_Size: {x: 1.8000001, y: 1.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -192,7 +193,7 @@ BoxCollider2D:
     border: {x: 0.21, y: 0.21, z: 0.21, w: 0.21}
     pivot: {x: 0, y: 1}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 2, y: 1.2}
+    newSize: {x: 1.8000001, y: 1.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
@@ -224,8 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ba83b609324b340b936130d12fcca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 1.8000001
+  height: 1.2
   skill_name_text: {fileID: 0}
   type: 1
   value_type: num
@@ -233,9 +234,12 @@ MonoBehaviour:
   - {fileID: 6516508537011149144}
   - {fileID: 6516508537660182760}
   value_reference: {fileID: 6516508538490611801}
+  delete_button: {fileID: 2354682794844909738, guid: 6c9438f6cb3f68243ad376d7e6ed2452,
+    type: 3}
   horizontal: 1
   vertical: 0
   block_type: num
+  can_delete: 0
 --- !u!114 &6516508537125884351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +270,8 @@ MonoBehaviour:
   XYSeparate: 0
   finalScale: 1
   startScale: 0
+  startXY: {x: 0, y: 0}
+  finalXY: {x: 0, y: 0}
   moveTime: 20
   auto_start: 0
 --- !u!114 &-7489589030419859467
@@ -355,6 +361,19 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &-3062878010263790461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6516508537125884341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f201ffa7f6dd7a64f80fcc21a7ff3276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonUse: StartDeleteBlock
 --- !u!1 &6516508537444319970
 GameObject:
   m_ObjectHideFlags: 0

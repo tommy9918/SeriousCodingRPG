@@ -311,8 +311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 1
+  height: 1
   horizontal: 1
   vertical: 0
   highlighted: 0
@@ -323,6 +323,11 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 0}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
+  animating: 0
   type: 3
   value_type: num
 --- !u!1 &8438257898308570992
@@ -346,6 +351,7 @@ GameObject:
   - component: {fileID: 8438257898308570996}
   - component: {fileID: 8438257898308571003}
   - component: {fileID: 9059710986786466477}
+  - component: {fileID: -6386696615474122803}
   m_Layer: 0
   m_Name: SkillBlock
   m_TagString: Untagged
@@ -487,6 +493,8 @@ MonoBehaviour:
   XYSeparate: 0
   finalScale: 1
   startScale: 0
+  startXY: {x: 0, y: 0}
+  finalXY: {x: 0, y: 0}
   moveTime: 20
   auto_start: 0
 --- !u!114 &9044995826940494889
@@ -577,8 +585,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ba83b609324b340b936130d12fcca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 3.7
+  height: 1.5
   skill_name_text: {fileID: 7720342098283792033}
   type: 1
   value_type: 
@@ -586,9 +594,12 @@ MonoBehaviour:
   - {fileID: 7720342098283792028}
   - {fileID: 8438257898149978217}
   value_reference: {fileID: 7720342098283792028}
+  delete_button: {fileID: 2354682794844909738, guid: 6c9438f6cb3f68243ad376d7e6ed2452,
+    type: 3}
   horizontal: 0
   vertical: 0
   block_type: skill
+  can_delete: 0
 --- !u!114 &8438257898308571003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -607,6 +618,8 @@ MonoBehaviour:
     command_blocks: []
     value_blocks: []
     command_index: 
+    average_steps: 0
+    average_memory: 0
   skill_text: {fileID: 7720342098283792033}
   slots_ref: {fileID: 8438257898149978217}
 --- !u!210 &9059710986786466477
@@ -620,3 +633,16 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &-6386696615474122803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8438257898308570992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f201ffa7f6dd7a64f80fcc21a7ff3276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonUse: StartDeleteBlock

@@ -179,4 +179,90 @@ public class Player : MonoBehaviour
         }
         return "en";
     }
+
+    public void UnlockHelloWorldBlock()
+    {
+        if (!data.unlocked_blocks.Contains("output"))
+        {
+            data.unlocked_blocks.Add("output");
+            data.unlocked_blocks.Add("char");
+            data.unlocked_blocks.Add("num");
+            PopUpManager.Instance.UnlockBlockPopUp();
+        }
+        
+    }
+
+    public void UnlockCalculateBlock()
+    {
+        if (!data.unlocked_blocks.Contains("plus"))
+        {
+            data.unlocked_blocks.Add("input");
+            data.unlocked_blocks.Add("variable");
+            data.unlocked_blocks.Add("assign");
+            data.unlocked_blocks.Add("plus");
+            data.unlocked_blocks.Add("minus");
+            data.unlocked_blocks.Add("multiply");
+            data.unlocked_blocks.Add("divide");
+            data.unlocked_blocks.Add("remainder");
+            PopUpManager.Instance.UnlockBlockPopUp();
+        }
+        
+    }
+
+    public void UnlockIfRelatedBlock()
+    {
+        if (!data.unlocked_blocks.Contains("if"))
+        {
+            data.unlocked_blocks.Add("if");
+            data.unlocked_blocks.Add("not");
+            data.unlocked_blocks.Add("and");
+            data.unlocked_blocks.Add("or");
+            data.unlocked_blocks.Add("equal");
+            data.unlocked_blocks.Add("larger");
+            data.unlocked_blocks.Add("smaller");
+            data.unlocked_blocks.Add("larger_equal");
+            data.unlocked_blocks.Add("smaller_equal");
+            PopUpManager.Instance.UnlockBlockPopUp();
+        }
+        
+    }
+
+    public void UnlockJumpBlock()
+    {
+        if (!data.unlocked_blocks.Contains("jump"))
+        {
+            data.unlocked_blocks.Add("jump");
+            PopUpManager.Instance.UnlockBlockPopUp();
+        }
+        
+    }
+
+    public void UnlockAtBlock()
+    {
+        if (!data.unlocked_blocks.Contains("at"))
+        {
+            data.unlocked_blocks.Add("at");
+            PopUpManager.Instance.UnlockBlockPopUp();
+        }
+        
+    }
+
+    [ContextMenu("UnlockAllBlock")]
+    public void UnlockAllBlock()
+    {
+        data.unlocked_blocks.Clear();
+        UnlockHelloWorldBlock();
+        UnlockCalculateBlock();
+        UnlockIfRelatedBlock();
+        UnlockJumpBlock();
+        UnlockAtBlock();
+    }
+
+    [ContextMenu("ClearAllBlock")]
+    public void ClearAllBlock()
+    {
+        data.unlocked_blocks.Clear();
+    }
+
+    
 }

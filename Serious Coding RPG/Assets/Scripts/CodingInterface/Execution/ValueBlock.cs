@@ -14,7 +14,7 @@ public class ValueBlock
     public ValueBlock()
     {
         value_type = "";
-        value_operation = "";
+        value_operation = "empty";
         value_blocks = new List<ValueBlock>();
         value = "";
     }
@@ -32,8 +32,16 @@ public class ValueBlock
         {
             if(blk.block_sites[i].GetComponent<BlockSiteManager>() != null)
             {
-                SubBlockManager child_sub_blk = blk.block_sites[i].GetComponent<BlockSiteManager>().inserted_block.GetComponent<SubBlockManager>();
-                value_blocks.Add(new ValueBlock(child_sub_blk));
+                if (blk.block_sites[i].GetComponent<BlockSiteManager>().inserted_block != null)
+                {
+                    SubBlockManager child_sub_blk = blk.block_sites[i].GetComponent<BlockSiteManager>().inserted_block.GetComponent<SubBlockManager>();
+                    value_blocks.Add(new ValueBlock(child_sub_blk));
+                }
+                else
+                {
+                    value_blocks.Add(new ValueBlock());
+                    //value_blocks[value_blocks.Count - 1] = null;
+                }
             }
         }
         if (blk.value_reference != null)
@@ -41,8 +49,15 @@ public class ValueBlock
             value = blk.value_reference.GetComponent<Text>().text;
         }
         else value = "";
-        //else value = this.GetValue();
-        
+        //else value = this.GetValue();      
+    }
+
+    public ValueBlock(ValueBlock vblk)
+    {
+        value_type = vblk.value_type;
+        value_operation = vblk.value_operation;
+        value_blocks = vblk.value_blocks;
+        value = vblk.value;
     }
 
     public string GetValue()

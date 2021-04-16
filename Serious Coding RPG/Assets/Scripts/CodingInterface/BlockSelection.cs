@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BlockSelection : MonoBehaviour
 {
@@ -196,37 +197,62 @@ public class BlockSelection : MonoBehaviour
         //GetComponent<FadeControl>().GetAllComponenets();
     }
 
-
+    bool BlockUnlocked(GameObject blk)
+    {
+        if(blk.GetComponent<BlockManager>() != null)
+        {
+            string type = blk.GetComponent<BlockManager>().StringBlockType();
+            if (Player.Instance.data.unlocked_blocks.Contains(type)) return true;
+        }
+        if (blk.GetComponent<SubBlockManager>() != null)
+        {
+            string type = blk.GetComponent<SubBlockManager>().block_type;
+            if (Player.Instance.data.unlocked_blocks.Contains(type)) return true;
+        }
+        return false;
+    }
 
     IEnumerator SummonBlocksSequence(GameObject[] blocks)
     {
         float total_y_offset = 0f;
         for (int i = 0; i <= blocks.Length - 1; i++)
         {
-            total_y_offset -= 0.3f;
-            GameObject temp = Instantiate(blocks[i], scroll_list.transform);
-            temp.transform.localPosition = new Vector3(-3.17f, total_y_offset, -0.01f);
-
-            if (temp.GetComponent<BlockManager>() != null)
+            if (BlockUnlocked(blocks[i]))
             {
-                temp.GetComponent<BlockManager>().InititiateBlockSize();
+                total_y_offset -= 0.3f;
+                GameObject temp = Instantiate(blocks[i], scroll_list.transform);
+                foreach(InputField ipf in temp.GetComponentsInChildren<InputField>())
+                {
+                    ipf.interactable = false;
+                }
+                foreach(Collider2D c in temp.GetComponentsInChildren<Collider2D>())
+                {
+                    c.enabled = false;
+                }
+                temp.GetComponent<Collider2D>().enabled = true;
+                temp.transform.localPosition = new Vector3(-3.17f, total_y_offset, -0.01f);
+
+                if (temp.GetComponent<BlockManager>() != null)
+                {
+                    temp.GetComponent<BlockManager>().InititiateBlockSize();
+                }
+                else if (temp.GetComponent<SubBlockManager>() != null)
+                {
+                    temp.GetComponent<SubBlockManager>().InititiateBlockSize();
+                }
+                temp.GetComponent<LongPressDrag>().coding_manager = transform.parent.gameObject;
+                temp.GetComponent<ScaleChange>().StartAnimate();
+                total_y_offset -= temp.GetComponent<SpriteRenderer>().size.y;
+
+                summoned_blocks.Add(temp);
+
+                temp.GetComponent<SetMaskInteration>().InitializeSpritesArray();
+                temp.GetComponent<SetMaskInteration>().SetMask("Default", 0);
+                temp.GetComponent<SetMaskInteration>().SetInteraction("inside");
+
+
+                yield return new WaitForSeconds(0.05f);
             }
-            else if (temp.GetComponent<SubBlockManager>() != null)
-            {
-                temp.GetComponent<SubBlockManager>().InititiateBlockSize();
-            }
-            temp.GetComponent<LongPressDrag>().coding_manager = transform.parent.gameObject;
-            temp.GetComponent<ScaleChange>().StartAnimate();
-            total_y_offset -= temp.GetComponent<SpriteRenderer>().size.y;
-
-            summoned_blocks.Add(temp);
-
-            temp.GetComponent<SetMaskInteration>().InitializeSpritesArray();
-            temp.GetComponent<SetMaskInteration>().SetMask("Default", 0);
-            temp.GetComponent<SetMaskInteration>().SetInteraction("inside");
-
-
-            yield return new WaitForSeconds(0.05f);
         }
         //GetComponent<FadeControl>().GetAllComponenets();
     }

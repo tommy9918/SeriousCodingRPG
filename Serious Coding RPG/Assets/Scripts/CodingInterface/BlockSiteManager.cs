@@ -78,6 +78,12 @@ public class BlockSiteManager : MonoBehaviour
         }
     }
 
+    public void DeleteBlock()
+    {
+        Vector2 s = GetComponent<SpriteRenderer>().size;
+        GetComponent<BlockResizeAnimator>().StartAnimate(s, new Vector2(width, height));
+    }
+
     public void SetSubBlockPositionHorizontal()
     {
         if (inserted_block != null)
@@ -337,7 +343,7 @@ public class BlockSiteManager : MonoBehaviour
         Dehighlight();
         if (incoming_insertion != null)
         {
-            incoming_insertion.GetComponent<LongPressDrag>().accepted = false;
+            //incoming_insertion.GetComponent<LongPressDrag>().accepted = false;
             if (BlockMatch(incoming_insertion) == false)
             {
                 incoming_insertion.GetComponent<ErrorBlock>().StartFadeBack();
@@ -379,6 +385,7 @@ public class BlockSiteManager : MonoBehaviour
             
             //GameObject insertion = coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block;
             incoming_insertion.transform.parent = gameObject.transform;
+            //incoming_insertion.GetComponent<LongPressDrag>().accepted = true;
             //incoming_insertion.transform.localPosition = new Vector3(0.1f, -0.1f, -0.03f);
             incoming_insertion.transform.localPosition = new Vector3(incoming_insertion.transform.localPosition.x, incoming_insertion.transform.localPosition.y, -0.03f);
             incoming_insertion.GetComponent<MoveTo>().startPosition = incoming_insertion.transform.localPosition;

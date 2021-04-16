@@ -26,9 +26,17 @@ public class CommandBlock
         {
             if (blk.block_sites[i].GetComponent<BlockSiteManager>() != null && blk.block_sites[i].GetComponent<BlockSiteManager>().horizontal == true)
             {
-                SubBlockManager child_sub_blk = blk.block_sites[i].GetComponent<BlockSiteManager>().inserted_block.GetComponent<SubBlockManager>();
-                //Debug.Log(child_sub_blk);
-                value_blocks.Add(new ValueBlock(child_sub_blk));
+                if (blk.block_sites[i].GetComponent<BlockSiteManager>().inserted_block != null)
+                {
+                    SubBlockManager child_sub_blk = blk.block_sites[i].GetComponent<BlockSiteManager>().inserted_block.GetComponent<SubBlockManager>();
+                    //Debug.Log(child_sub_blk);
+                    value_blocks.Add(new ValueBlock(child_sub_blk));
+                }
+                else
+                {
+                    value_blocks.Add(new ValueBlock());
+                    //value_blocks[value_blocks.Count - 1] = null;
+                }
             }
         }
         if(command == "if")

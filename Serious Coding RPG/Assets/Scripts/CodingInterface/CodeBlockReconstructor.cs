@@ -100,8 +100,11 @@ public class CodeBlockReconstructor : MonoBehaviour
             for (int i = 0; i <= blk.value_blocks.Count - 1; i++)
             {
                 GameObject sub_value_blk = FillValueBlock(blk.value_blocks[i], value_slots[i].gameObject);
-                value_slots[i].inserted_block = sub_value_blk;
-                value_slots[i].SetSubBlockPositionHorizontal();
+                if (sub_value_blk != null)
+                {
+                    value_slots[i].inserted_block = sub_value_blk;
+                    value_slots[i].SetSubBlockPositionHorizontal();
+                }
             }
             
         }
@@ -109,10 +112,25 @@ public class CodeBlockReconstructor : MonoBehaviour
         return temp;
     }
 
+    Skill GetSkillFromSkillName(string name)
+    {
+        foreach(Skill skill in Player.Instance.data.skills)
+        {
+            if (name == skill.name) return skill;
+        }
+        return null;
+    }
+
     public GameObject FillValueBlock(ValueBlock blk, GameObject parent)
     {
+        if (TypeToGameObject(blk.value_operation) == null) return null;
         //GameObject temp = Instantiate(all_blocks_reference[TypeToIndex(blk.value_operation)]);
         GameObject temp = Instantiate(TypeToGameObject(blk.value_operation));
+        if (blk.value_operation == "skill")
+        {
+            temp.GetComponent<SkillBlockInit>().skill = GetSkillFromSkillName(blk.value);
+            temp.GetComponent<SkillBlockInit>().InitializeSkillBlock();
+        }
         temp.transform.parent = parent.transform;
         temp.transform.localPosition = new Vector3(0.1f, -0.1f, -0.03f);
         List<BlockSiteManager> value_slots = new List<BlockSiteManager>();
@@ -122,8 +140,11 @@ public class CodeBlockReconstructor : MonoBehaviour
             for (int i = 0; i <= blk.value_blocks.Count - 1; i++)
             {
                 GameObject sub_value_blk = FillValueBlock(blk.value_blocks[i], value_slots[i].gameObject);
-                value_slots[i].inserted_block = sub_value_blk;
-                value_slots[i].SetSubBlockPositionHorizontal();
+                if (sub_value_blk != null)
+                {
+                    value_slots[i].inserted_block = sub_value_blk;
+                    value_slots[i].SetSubBlockPositionHorizontal();
+                }
             }
         }
         else if(temp.GetComponentInChildren<InputField>() != null && blk.value != "" && blk.value != null)
@@ -298,6 +319,8 @@ public class CodeBlockReconstructor : MonoBehaviour
                 return Resources.Load("Prefab/CodeBlocks/AtBlock") as GameObject;
             case "not":
                 return Resources.Load("Prefab/CodeBlocks/NotBlock") as GameObject;
+            case "skill":
+                return Resources.Load("Prefab/CodeBlocks/SkillBlock") as GameObject;
         }
         return null;
     }
