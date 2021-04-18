@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Extensions;
+using Google;
 using UnityEngine.SceneManagement;
 
 
@@ -55,7 +56,7 @@ public class AccountHandler : MonoBehaviour
     
 
 
-    public  void onSignIn()
+    public void onSignIn()
     {
          auth.SignInWithEmailAndPasswordAsync(emailText.text, passwordText.text).ContinueWithOnMainThread(task => {
             if (task.IsCanceled) {
@@ -87,6 +88,41 @@ public class AccountHandler : MonoBehaviour
         
         // SceneManager.LoadScene("UploadUserProfile", LoadSceneMode.Single);
 
+    }
+
+    public void onGoogleSignIn()
+    {
+        GoogleSignIn.Configuration = new GoogleSignInConfiguration {
+            RequestIdToken = true,
+            // Copy this value from the google-service.json file.
+            // oauth_client with type == 3
+            // WebClientId = "1072123000000-iacvb7489h55760s3o2nf1xxxxxxxx.apps.googleusercontent.com"
+            // WebClientId = "320930175122-0dbmppjll7ln7vfd8f88b82gerrigmgo.apps.googleusercontent.com"
+            WebClientId = "320930175122-jk18h4huuh1f76rfmc1qddfk81v2ocs8.apps.googleusercontent.com"
+        };
+
+        Task<GoogleSignInUser> signIn = GoogleSignIn.DefaultInstance.SignIn ();
+
+        TaskCompletionSource<FirebaseUser> signInCompleted = new TaskCompletionSource<FirebaseUser> ();
+        signIn.ContinueWith (task => {
+            if (task.IsCanceled) {
+                signInCompleted.SetCanceled ();
+            } else if (task.IsFaulted) {
+                signInCompleted.SetException (task.Exception);
+            } else {
+
+                Credential credential = Firebase.Auth.GoogleAuthProvider.GetCredential (((Task<GoogleSignInUser>)task).Result.IdToken, null);
+                auth.SignInWithCredentialAsync (credential).ContinueWith (authTask => {
+                    if (authTask.IsCanceled) {
+                        signInCompleted.SetCanceled();
+                    } else if (authTask.IsFaulted) {
+                        signInCompleted.SetException(authTask.Exception);
+                    } else {
+                        signInCompleted.SetResult(((Task<FirebaseUser>)authTask).Result);
+                    }
+                });
+            }
+        });
     }
 
     public void onVerifierChange()
