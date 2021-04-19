@@ -27,8 +27,14 @@ public class DatabaseHandler : MonoBehaviour
     // private string AuthKey = "AIzaSyDh9qM2YHYAwd-F6uEwW6LmJj4p3yotduc";
     void Start()
     {
-        if(AccountHandler.getUser() !=null)
+        if (AccountHandler.getUser() != null)
+        {
             user =  AccountHandler.getUser();
+            Debug.Log("getUser() NOT NULL");
+        }else Debug.Log("getUser() NULL");
+        
+        
+        
         emailText.text += user.Email;
         uidText.text += user.UserId;
     }

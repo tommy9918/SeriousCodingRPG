@@ -24,6 +24,29 @@ public class AccountHandler : MonoBehaviour
     void Start()
     {
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        auth.StateChanged += AuthStateChanged;
+        AuthStateChanged(this, null);
+    }
+    
+    void AuthStateChanged(object sender, System.EventArgs eventArgs)
+    {
+        if (auth.CurrentUser != user)
+        {
+            bool signedIn = user != auth.CurrentUser && auth.CurrentUser != null;
+            if (!signedIn && user != null)
+            {
+                Debug.Log("Signed out " + user.UserId);
+            }
+
+            user = auth.CurrentUser;
+            if (signedIn)
+            {
+                Debug.Log("Signed in " + user.UserId);
+                // displayName = user.DisplayName ?? "";
+                // emailAddress = user.Email ?? "";
+                // photoUrl = user.PhotoUrl ?? "";
+            }
+        }
     }
 
     public void onSignUp()
@@ -97,29 +120,38 @@ public class AccountHandler : MonoBehaviour
             // Copy this value from the google-service.json file.
             // oauth_client with type == 3
             // WebClientId = "1072123000000-iacvb7489h55760s3o2nf1xxxxxxxx.apps.googleusercontent.com"
-            // WebClientId = "320930175122-0dbmppjll7ln7vfd8f88b82gerrigmgo.apps.googleusercontent.com"
-            WebClientId = "320930175122-jk18h4huuh1f76rfmc1qddfk81v2ocs8.apps.googleusercontent.com"
+            // WebClientId = "320930175122-0dbmppjll7ln7vfd8f88b82gerrigmgo.apps.googleusercontent.com" //From Google API Console
+            WebClientId = "320930175122-jk18h4huuh1f76rfmc1qddfk81v2ocs8.apps.googleusercontent.com" //From firebase
         };
 
         Task<GoogleSignInUser> signIn = GoogleSignIn.DefaultInstance.SignIn ();
 
         TaskCompletionSource<FirebaseUser> signInCompleted = new TaskCompletionSource<FirebaseUser> ();
-        signIn.ContinueWith (task => {
+        signIn.ContinueWithOnMainThread (task => {
             if (task.IsCanceled) {
                 signInCompleted.SetCanceled ();
+                Debug.Log("GoogleLogIn: task canceled");
             } else if (task.IsFaulted) {
                 signInCompleted.SetException (task.Exception);
+                Debug.Log("GoogleLogIn: task faulted, " + task.Exception);
             } else {
+                Debug.Log("GoogleLogIn: task completed");
 
                 Credential credential = Firebase.Auth.GoogleAuthProvider.GetCredential (((Task<GoogleSignInUser>)task).Result.IdToken, null);
-                auth.SignInWithCredentialAsync (credential).ContinueWith (authTask => {
+                auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread (authTask => {
                     if (authTask.IsCanceled) {
                         signInCompleted.SetCanceled();
+                        Debug.Log("GoogleLogIn: auth task canceled");
                     } else if (authTask.IsFaulted) {
                         signInCompleted.SetException(authTask.Exception);
+                        Debug.Log("GoogleLogIn: auth task faulted");
                     } else {
                         signInCompleted.SetResult(((Task<FirebaseUser>)authTask).Result);
+                        user = ((Task<FirebaseUser>) authTask).Result;
+                        SceneManager.LoadScene("UploadUserProfile", LoadSceneMode.Single);
+                        Debug.Log("GoogleLogIn: auth task completed");
                     }
+                    
                 });
             }
         });
@@ -142,7 +174,7 @@ public class AccountHandler : MonoBehaviour
 
     public static FirebaseUser getUser()
     {
-        return  user;
+        return user;
     }
 
     public void createNewAccount()
