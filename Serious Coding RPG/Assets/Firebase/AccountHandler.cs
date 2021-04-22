@@ -26,6 +26,7 @@ public class AccountHandler : MonoBehaviour
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         auth.StateChanged += AuthStateChanged;
         AuthStateChanged(this, null);
+        Debug.Log("Path =========== "+Application.persistentDataPath);
     }
     
     void AuthStateChanged(object sender, System.EventArgs eventArgs)

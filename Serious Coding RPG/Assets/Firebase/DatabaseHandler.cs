@@ -63,16 +63,20 @@ public class DatabaseHandler : MonoBehaviour
     public void onPushFile()
     {
         string filename = "save.game";
-        string filename2 = "playground.jpg";
-        string filePath = "E:\\Downloads\\"+filename;
-        string filePath2 = "E:\\Downloads\\"+filename2;
+        // string filename2 = "playground.jpg";
+        string filePath = Application.persistentDataPath+"/" + filename;
+        // string filePath2 = "E:\\Downloads\\"+filename2;
         
         if (File.Exists(filePath))
         {
             Debug.Log("local file found");
             // var fs = File.OpenRead(filePath);
+            if (AccountHandler.getUser() != null)
+            {
+                user =  AccountHandler.getUser();
+            }
             var url2file =
-                "https://firebasestorage.googleapis.com/v0/b/spelloverflow.appspot.com/o/UserProfile%2F"+filename;
+                "https://firebasestorage.googleapis.com/v0/b/spelloverflow.appspot.com/o/UserProfile%2F"+user.UserId+"%2F"+filename;
             // string headers = {"Content-Type": "image/png"};
             RestClient.Post(new RequestHelper
             {
@@ -83,8 +87,12 @@ public class DatabaseHandler : MonoBehaviour
             {
                 Debug.LogFormat("Rest Post {0} succeeded",filename);
             }).Catch(exception => Debug.Log(exception));
-        } 
-        
+        }
+        else
+        {
+            Debug.Log("Potato: File not found = "+ filePath);
+        }
+
     }
     
     [ContextMenu("onDownloadFile")]
