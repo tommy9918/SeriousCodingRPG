@@ -15,6 +15,17 @@ public class BlockResizeAnimator : MonoBehaviour
             //transform.localScale = new Vector3(newScale, newScale, newScale);
             Vector2 new_size = motion.UpdatePositionValue();
             GetComponent<SpriteRenderer>().size = new_size;
+            if(GetComponent<BlockSiteManager>() != null)
+            {
+                GetComponent<BlockSiteManager>().animating = true;
+            }
+        }
+        else
+        {
+            if (GetComponent<BlockSiteManager>() != null)
+            {
+                GetComponent<BlockSiteManager>().animating = false;
+            }
         }
     }
 

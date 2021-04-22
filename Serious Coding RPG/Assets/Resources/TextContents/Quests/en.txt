@@ -1,0 +1,6 @@
+QUESTMAIN1_NAME=HELLO MANA!
+QUESTMAIN1_DESCRIPTION=Use the OUT block to output some mana!
+QUESTMAIN2_NAME=SUM OF TWO NUMBERS
+QUESTMAIN2_DESCRIPTION=This spell takes 2 numbers as input and output their sum.
+QUESTMAIN3_NAME=MAXIMUM HEAT
+QUESTMAIN3_DESCRIPTION=This spell takes in 2 numbers and output the larger one.

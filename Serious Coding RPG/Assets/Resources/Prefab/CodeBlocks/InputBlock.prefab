@@ -296,8 +296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 1
+  height: 1
   horizontal: 1
   vertical: 0
   highlighted: 0
@@ -308,6 +308,11 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 0}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
+  animating: 0
   type: 0
   value_type: 
 --- !u!1 &1894218052830540289
@@ -329,6 +334,8 @@ GameObject:
   - component: {fileID: -4387782556343735035}
   - component: {fileID: -8280559860514381198}
   - component: {fileID: 1532941354028475114}
+  - component: {fileID: 5541139169080087281}
+  - component: {fileID: -1857071365917416134}
   m_Layer: 0
   m_Name: InputBlock
   m_TagString: Untagged
@@ -397,7 +404,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 3.4, y: 1.2}
+  m_Size: {x: 3.3999999, y: 1.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -415,8 +422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ca0914e37bb9f49ac7fc6eb8e4a311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 3.3999999
+  height: 1.2
   dragging: 0
   pressed: 0
   ScrollTarget: {fileID: 0}
@@ -427,6 +434,8 @@ MonoBehaviour:
   block_line_number: 0
   horizontal: 1
   vertical: 0
+  delete_button: {fileID: 2354682794844909738, guid: 6c9438f6cb3f68243ad376d7e6ed2452,
+    type: 3}
   type: 1
 --- !u!61 &1894218052830540290
 BoxCollider2D:
@@ -446,7 +455,7 @@ BoxCollider2D:
     border: {x: 0.21, y: 0.21, z: 0.21, w: 0.21}
     pivot: {x: 0, y: 1}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 3.4, y: 1.2}
+    newSize: {x: 3.3999999, y: 1.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
@@ -478,7 +487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0472d15dc6ce00d42b2db764eb8f7d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirm_duration: 30
+  accepted: 0
   coding_manager: {fileID: 0}
 --- !u!114 &-5837701840656268223
 MonoBehaviour:
@@ -496,6 +505,8 @@ MonoBehaviour:
   XYSeparate: 0
   finalScale: 1
   startScale: 0
+  startXY: {x: 0, y: 0}
+  finalXY: {x: 0, y: 0}
   moveTime: 20
   auto_start: 0
 --- !u!114 &-1791208404053383176
@@ -574,3 +585,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
+--- !u!210 &5541139169080087281
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894218052830540289}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &-1857071365917416134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894218052830540289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f201ffa7f6dd7a64f80fcc21a7ff3276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonUse: StartDeleteBlock

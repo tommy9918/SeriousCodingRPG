@@ -21,6 +21,13 @@ public class BlockSiteManager : MonoBehaviour
     public GameObject inserted_block;
     public List<GameObject> inserted_vertical_blocks;
 
+    public GameObject outline_reference;
+    public List<GameObject> summoned_outline;
+    public int current_line_number;
+
+    public Vector3 block_destination;
+    public bool animating;
+
     public enum SiteType
     {
         VARIABLE,
@@ -35,7 +42,7 @@ public class BlockSiteManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inserted_vertical_blocks = new List<GameObject>();
+        //inserted_vertical_blocks = new List<GameObject>();
         AutoUpdateSize();
     }
 
@@ -53,7 +60,10 @@ public class BlockSiteManager : MonoBehaviour
         }
 
         if (horizontal) SetSubBlockPositionHorizontal();
-        else if (vertical) SetSubBlockPositionVertical();
+        else if (vertical && !highlighted && !animating) SetSubBlockPositionVertical();
+        
+
+       
 
     }
 
@@ -66,6 +76,12 @@ public class BlockSiteManager : MonoBehaviour
             initial_y -= inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
             initial_y -= 0.1f;
         }
+    }
+
+    public void DeleteBlock()
+    {
+        Vector2 s = GetComponent<SpriteRenderer>().size;
+        GetComponent<BlockResizeAnimator>().StartAnimate(s, new Vector2(width, height));
     }
 
     public void SetSubBlockPositionHorizontal()
@@ -99,7 +115,7 @@ public class BlockSiteManager : MonoBehaviour
                 }
 
             }
-            GetComponent<SpriteRenderer>().size = new Vector2(max_x_size + 0.2f, -total_y_offset + 0.1f);
+            GetComponent<SpriteRenderer>().size = new Vector2(max_x_size + 1f, -total_y_offset + 0.1f);
         }
     }
 
@@ -139,9 +155,110 @@ public class BlockSiteManager : MonoBehaviour
             highlighted = true;
 
             GameObject insertion = coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block;
-            Resize(insertion.GetComponent<SpriteRenderer>().size+ new Vector2(0.2f, 0.2f));
+
+            if (horizontal)
+            {
+                Resize(insertion.GetComponent<SpriteRenderer>().size + new Vector2(0.2f, 0.2f));
+            }
+            else if (vertical)
+            {
+                Resize(FullExtendLength());
+                
+            }
 
         }
+    }
+
+    Vector2 FullExtendLength()
+    {
+        float initial_y = 0.1f;
+        float max_x = -1f;
+        for (int i = 0; i <= inserted_vertical_blocks.Count - 1; i++)
+        {          
+            initial_y += inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
+            initial_y += 0.1f;
+            if (inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.x > max_x)
+            {
+                max_x = inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.x;
+            }
+        }
+        if (highlighted)
+        {
+            initial_y += incoming_insertion.GetComponent<SpriteRenderer>().size.y;
+            if (incoming_insertion.GetComponent<SpriteRenderer>().size.x > max_x)
+            {
+                max_x = incoming_insertion.GetComponent<SpriteRenderer>().size.x;
+            }
+            initial_y += 0.1f;
+        }
+        return new Vector2(max_x + 1f, initial_y);
+
+    }
+
+    int InsertLinePosition(float y_pos)
+    {
+        //Debug.Log("calculating");
+        if (inserted_vertical_blocks.Count == 0) return 1;
+        //float offset = 4.6692f + (transform.localPosition.y - 6.1946f);
+        float offset = transform.position.y;
+        float initial_y = offset;
+        for (int i = 0; i <= inserted_vertical_blocks.Count - 1; i++)
+        {
+            float length = inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
+            if (y_pos <= initial_y && y_pos > initial_y - length - 0.1f)
+            {
+                return i + 1;
+            }
+            initial_y -= 0.1f;
+            initial_y -= length;
+
+        }
+        return inserted_vertical_blocks.Count + 1;
+    }
+
+    void AnimateBlocks(int line_number, float block_size)
+    {
+        float initial_y = -0.1f;
+        for (int i = 0; i <= line_number - 2; i++)
+        {
+            inserted_vertical_blocks[i].GetComponent<MoveTo>().startPosition = inserted_vertical_blocks[i].transform.localPosition;
+            inserted_vertical_blocks[i].GetComponent<MoveTo>().destination = new Vector3(inserted_vertical_blocks[i].transform.localPosition.x, initial_y, inserted_vertical_blocks[i].transform.localPosition.z);
+            inserted_vertical_blocks[i].GetComponent<MoveTo>().ReplayMotion();
+            initial_y -= inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
+            initial_y -= 0.1f;
+        }
+
+        initial_y -= block_size;
+        if (block_size > 0) initial_y -= 0.1f;
+
+        for (int i = line_number - 1; i <= inserted_vertical_blocks.Count - 1; i++)
+        {
+            inserted_vertical_blocks[i].GetComponent<MoveTo>().startPosition = inserted_vertical_blocks[i].transform.localPosition;
+            inserted_vertical_blocks[i].GetComponent<MoveTo>().destination = new Vector3(inserted_vertical_blocks[i].transform.localPosition.x, initial_y, inserted_vertical_blocks[i].transform.localPosition.z);
+            inserted_vertical_blocks[i].GetComponent<MoveTo>().ReplayMotion();
+            initial_y -= inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
+            initial_y -= 0.1f;
+        }
+    }
+
+    Vector3 GetBlockPosition(int line_number)
+    {
+        float total_y_offset = -0.1f;
+        for (int i = 0; i <= line_number - 2; i++)
+        {
+            total_y_offset -= inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
+            total_y_offset -= 0.1f;
+
+        }
+        return new Vector3(0.1f, total_y_offset, -0.1f);
+    }
+
+    Vector2 FingerPos()
+    {
+        float distance = 0f;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 rayPoint = ray.GetPoint(distance);
+        return new Vector2(rayPoint.x, rayPoint.y);
     }
 
     [ContextMenu("dehighlight")]
@@ -151,7 +268,19 @@ public class BlockSiteManager : MonoBehaviour
         {
             highlighted = false;
             highlight_outline.GetComponent<FadeControl>().StartFadeOut();
-            if(inserted_block == null) Resize(width, height);
+            if(inserted_block == null && horizontal) Resize(width, height);
+            if (vertical)
+            {
+                if(inserted_vertical_blocks.Count == 0)
+                {
+                    Resize(width, height);
+                }
+                else
+                {
+                    //incoming_insertion = null;
+                    Resize(FullExtendLength());
+                }
+            }
             Destroy(highlight_outline, 0.6f);
         }
     }
@@ -172,11 +301,37 @@ public class BlockSiteManager : MonoBehaviour
                         //Debug.Log("match!");
                         Highlight();
                         incoming_insertion.GetComponent<LongPressDrag>().accepted = true;
+
+                        
                     }
                     else
                     {
                         //Debug.Log("not match!");
                         incoming_insertion.GetComponent<ErrorBlock>().StartFadeError();
+                    }
+                }
+
+                if (vertical && BlockMatch(incoming_insertion))
+                {
+                    float finger_y = FingerPos().y;
+                    int line_num = InsertLinePosition(finger_y);
+                    if (current_line_number == 0 || line_num != current_line_number)
+                    {
+                        foreach (GameObject outline in summoned_outline)
+                        {
+                            outline.GetComponent<FadeControl>().StartFadeOut();
+                            Destroy(outline, 0.5f);
+                        }
+                        summoned_outline.Clear();
+                        current_line_number = line_num;
+                        Vector2 dragging_block_size = coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block.GetComponent<SpriteRenderer>().size;
+                        GameObject temp = Instantiate(outline_reference, GetBlockPosition(line_num), Quaternion.identity, gameObject.transform);
+                        temp.transform.localPosition = GetBlockPosition(line_num);
+                        block_destination = GetBlockPosition(line_num);
+                        temp.GetComponent<SpriteRenderer>().size = dragging_block_size;
+                        temp.GetComponent<FadeControl>().StartFadeIn();
+                        summoned_outline.Add(temp);
+                        AnimateBlocks(current_line_number, dragging_block_size.y);
                     }
                 }
             }
@@ -188,12 +343,38 @@ public class BlockSiteManager : MonoBehaviour
         Dehighlight();
         if (incoming_insertion != null)
         {
-            incoming_insertion.GetComponent<LongPressDrag>().accepted = false;
+            //incoming_insertion.GetComponent<LongPressDrag>().accepted = false;
             if (BlockMatch(incoming_insertion) == false)
             {
                 incoming_insertion.GetComponent<ErrorBlock>().StartFadeBack();
             }
             incoming_insertion = null;
+
+            if (vertical)
+            {
+                foreach (GameObject outline in summoned_outline)
+                {
+                    outline.GetComponent<FadeControl>().StartFadeOut();
+                    Destroy(outline, 0.5f);
+                }
+                summoned_outline.Clear();
+                current_line_number = 0;
+                RepositionBlocks();
+            }
+        }
+    }
+
+    void RepositionBlocks()
+    {
+        //Debug.Log("Repositioning");
+        float initial_y = -0.1f;
+        for (int i = 0; i <= inserted_vertical_blocks.Count - 1; i++)
+        {
+            inserted_vertical_blocks[i].GetComponent<MoveTo>().startPosition = inserted_vertical_blocks[i].transform.localPosition;
+            inserted_vertical_blocks[i].GetComponent<MoveTo>().destination = new Vector3(inserted_vertical_blocks[i].transform.localPosition.x, initial_y, inserted_vertical_blocks[i].transform.localPosition.z);
+            inserted_vertical_blocks[i].GetComponent<MoveTo>().ReplayMotion();
+            initial_y -= inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
+            initial_y -= 0.1f;
         }
     }
 
@@ -204,16 +385,25 @@ public class BlockSiteManager : MonoBehaviour
             
             //GameObject insertion = coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block;
             incoming_insertion.transform.parent = gameObject.transform;
+            //incoming_insertion.GetComponent<LongPressDrag>().accepted = true;
             //incoming_insertion.transform.localPosition = new Vector3(0.1f, -0.1f, -0.03f);
             incoming_insertion.transform.localPosition = new Vector3(incoming_insertion.transform.localPosition.x, incoming_insertion.transform.localPosition.y, -0.03f);
             incoming_insertion.GetComponent<MoveTo>().startPosition = incoming_insertion.transform.localPosition;
-            incoming_insertion.GetComponent<MoveTo>().destination = new Vector3(0.1f, -0.1f, -0.03f);
+
+            if (horizontal)
+            {
+                incoming_insertion.GetComponent<MoveTo>().destination = new Vector3(0.1f, -0.1f, -0.03f);
+            }
+            if (vertical)
+            {
+                incoming_insertion.GetComponent<MoveTo>().destination = new Vector3(block_destination.x, block_destination.y, -0.03f);
+            }
             incoming_insertion.GetComponent<MoveTo>().ReplayMotion();
 
             incoming_insertion.GetComponent<LongPressDrag>().accepted = true;
 
             if (horizontal) inserted_block = incoming_insertion;
-            else if (vertical) inserted_vertical_blocks.Add(incoming_insertion);
+            else if (vertical) inserted_vertical_blocks.Insert(current_line_number - 1, incoming_insertion);
 
             if (horizontal) SetSubBlockPositionHorizontal();
             else if (vertical) SetSubBlockPositionVertical();
@@ -260,6 +450,13 @@ public class BlockSiteManager : MonoBehaviour
 
             else if (inserted_type == SubBlockManager.BlockType.VARIABLE && type == SiteType.VARIABLE)
             {
+                if(block_inserted.GetComponent<SubBlockManager>().block_type == "at")
+                {
+                    if(transform.parent.GetComponent<SubBlockManager>() != null && transform.parent.GetComponent<SubBlockManager>().block_type == "at")
+                    {
+                        return false;
+                    }
+                }
                 if (block_inserted.GetComponent<SubBlockManager>().value_type.Equals(value_type))
                 {
                     return true;

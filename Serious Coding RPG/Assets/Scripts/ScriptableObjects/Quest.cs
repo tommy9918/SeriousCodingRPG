@@ -14,4 +14,9 @@ public class Quest : ScriptableObject
 
     public int rewardEXP;
     public int rewardGold;
+
+    public string skill_name;
+    public int input_slots_length;
+
+    public string prerequisite;
 }

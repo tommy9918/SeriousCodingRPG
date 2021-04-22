@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LongPressDrag : MonoBehaviour
 {
@@ -51,10 +52,12 @@ public class LongPressDrag : MonoBehaviour
         
         else if((Input.touchCount == 0 || !Input.GetMouseButton(0)) && dragging)
         {
+            //Debug.Log("dump");
             endDragging();
             //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             if (!accepted)
             {
+                GetComponent<SetMaskInteration>().SetInteraction("none");
                 GetComponent<ScaleChange>().StartAnimateReverse();
                 Destroy(gameObject, 0.5f);
             }
@@ -65,6 +68,12 @@ public class LongPressDrag : MonoBehaviour
     {
         finger_start_position = FingerPos();
         pressed = true;
+    }
+
+    void OnTouchUp()
+    {
+        current = 0;
+        pressed = false;
     }
 
     
@@ -100,11 +109,12 @@ public class LongPressDrag : MonoBehaviour
         }
 
         GetComponent<SetMaskInteration>().SetInteraction("none");
-        GetComponent<SetMaskInteration>().SetMask("Default", 1);
+        GetComponent<SetMaskInteration>().SetMask("Default", 0);
     }
 
     void endDragging()
     {
+        GetComponent<SetMaskInteration>().SetInteraction("inside");
         dragging = false;
         pressed = false;
         current = 0;
@@ -112,5 +122,14 @@ public class LongPressDrag : MonoBehaviour
         coding_manager.GetComponent<CodingInterfaceManager>().active_dragging_block = null;
         coding_manager.GetComponent<CodingInterfaceManager>().EnableScrolling();
         this.enabled = false;
+
+        foreach (InputField ipf in GetComponentsInChildren<InputField>())
+        {
+            ipf.interactable = true;
+        }
+        foreach (Collider2D c in GetComponentsInChildren<Collider2D>())
+        {
+            c.enabled = true;
+        }
     }
 }

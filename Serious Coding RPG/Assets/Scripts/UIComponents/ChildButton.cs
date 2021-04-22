@@ -28,7 +28,7 @@ public class ChildButton : MonoBehaviour
     {
         if (pressed)
         {
-            parent.SendMessage(ButtonUse);
+            parent.SendMessage(ButtonUse, options: SendMessageOptions.DontRequireReceiver);
         }
         pressed = false;
     }

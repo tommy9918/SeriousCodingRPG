@@ -114,7 +114,11 @@ public class MoveTo : MonoBehaviour
         motion = new Motion(moveTime, transform.localPosition, destination);
         moving = true;
 
+    }
 
-
+    public void ReplayStartEndMotion()
+    {
+        motion = new Motion(moveTime, startPosition, destination);
+        moving = true;
     }
 }

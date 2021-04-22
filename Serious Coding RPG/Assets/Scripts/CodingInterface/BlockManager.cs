@@ -20,6 +20,8 @@ public class BlockManager : MonoBehaviour
     public bool horizontal;
     public bool vertical;
 
+    public GameObject delete_button;
+
     //public string block_type;
     public enum BlockType
     {
@@ -37,13 +39,51 @@ public class BlockManager : MonoBehaviour
         InititiateBlockSize();
     }
 
+    [ContextMenu("GetOriginalSize")]
+    public void GetOriginalSize()
+    {
+        if (horizontal) SetSubBlockPositionHorizontal();
+        else if (vertical) SetSubBlockPositionVertical();
+
+        foreach (BlockSiteManager bsm in GetComponentsInChildren<BlockSiteManager>())
+        {
+            bsm.width = bsm.gameObject.GetComponent<SpriteRenderer>().size.x;
+            bsm.height = bsm.gameObject.GetComponent<SpriteRenderer>().size.y;
+        }
+        width = GetComponent<SpriteRenderer>().size.x;
+        height = GetComponent<SpriteRenderer>().size.y;
+
+    }
+
+    public void StartDeleteBlock()
+    {
+        if (GetComponent<LongPressDrag>().accepted)
+        {
+            GameObject temp = Instantiate(delete_button, transform);
+            temp.transform.localPosition = new Vector3(0, 0, -0.5f);
+            temp.GetComponent<ScaleChange>().StartAnimate();
+        }
+    }
+
+    public void DeleteBlock()
+    {
+        //Debug.Log("deleteblock!");
+        GetComponent<ScaleChange>().StartAnimateReverse();
+        if(transform.parent.GetComponent<BlockSiteManager>() != null && transform.parent.GetComponent<BlockSiteManager>().horizontal)
+        {
+            transform.parent.GetComponent<BlockSiteManager>().inserted_block = null;
+            transform.parent.GetComponent<BlockSiteManager>().DeleteBlock();
+            Destroy(gameObject, 0.5f);
+        }
+    }
+
     public void InititiateBlockSize()
     {
         if (horizontal) SetSubBlockPositionHorizontal();
         else if (vertical) SetSubBlockPositionVertical();
 
-        width = GetComponent<SpriteRenderer>().size.x;
-        height = GetComponent<SpriteRenderer>().size.y;
+        //width = GetComponent<SpriteRenderer>().size.x;
+        //height = GetComponent<SpriteRenderer>().size.y;
 
         
     }
@@ -131,6 +171,24 @@ public class BlockManager : MonoBehaviour
         }
     }
 
+    public string StringBlockType()
+    {
+        switch (type)
+        {
+            case BlockType.ASSIGN:
+                return "assign";
+            case BlockType.INPUT:
+                return "input";
+            case BlockType.OUTPUT:
+                return "output";
+            case BlockType.IF:
+                return "if";
+            case BlockType.JUMP:
+                return "jump";
+        }
+        return null;
+    }
+
     public void UpdateSize(float x, float y)
     {
         width = x;
@@ -139,8 +197,8 @@ public class BlockManager : MonoBehaviour
 
     public void AutoUpdateSize()
     {
-        width = GetComponent<SpriteRenderer>().size.x;
-        height = GetComponent<SpriteRenderer>().size.y;
+        //width = GetComponent<SpriteRenderer>().size.x;
+        //height = GetComponent<SpriteRenderer>().size.y;
     }
 
     public void Resize(float x, float y)

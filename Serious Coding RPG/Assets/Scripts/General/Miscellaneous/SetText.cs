@@ -7,6 +7,8 @@ using System;
 public class SetText : MonoBehaviour
 {
     public string Textkey;
+    public bool bold;
+    public bool italic;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,15 @@ public class SetText : MonoBehaviour
     public void setText()
     {
         Text text_comp = GetComponent<Text>();
-        text_comp.text = LoadText(Textkey);
+        if (LoadText(Textkey) != null)
+        {
+            //text_comp.text = LoadText(Textkey);     
+            string temp = LoadText(Textkey);
+            if (bold) temp = "<b>" + temp + "</b>";
+            if (italic) temp = "<i>" + temp + "</i>";
+            text_comp.text = temp;
+        }
+        //else text_comp.text = "Fuck!"; 
 
     }
 

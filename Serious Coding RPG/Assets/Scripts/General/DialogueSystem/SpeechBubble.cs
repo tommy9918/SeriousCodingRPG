@@ -23,7 +23,7 @@ public class SpeechBubble : MonoBehaviour
         if (pressed)
         {
             pressed = false;
-            Debug.Log("Dialogue Start!");
+            //Debug.Log("Dialogue Start!");
             NPC.GetComponent<NPCManager>().StartDialogue();
         }
     }

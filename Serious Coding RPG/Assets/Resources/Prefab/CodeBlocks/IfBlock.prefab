@@ -109,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6979680748839749413}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -5.24, z: -0.01}
+  m_LocalPosition: {x: 0.1, y: -5.5999994, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6979680749101020286}
@@ -215,8 +215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 3
+  height: 1
   horizontal: 0
   vertical: 1
   highlighted: 0
@@ -227,6 +227,12 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 7338461728906115624, guid: fec1f33e085a1f041b90cf9c6d6b9d5a,
+    type: 3}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
+  animating: 0
   type: 5
   value_type: 
 --- !u!1 &6979680749098543676
@@ -254,7 +260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6979680749098543676}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -4.24, z: -0.01}
+  m_LocalPosition: {x: 0.1, y: -4.4999995, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6979680749101020286}
@@ -329,6 +335,8 @@ GameObject:
   - component: {fileID: 688435709312881194}
   - component: {fileID: 1159095736493013846}
   - component: {fileID: 2938143946814789761}
+  - component: {fileID: 4590142047761869024}
+  - component: {fileID: 3099588139844233048}
   m_Layer: 0
   m_Name: IfBlock
   m_TagString: Untagged
@@ -400,7 +408,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 3.4, y: 6.44}
+  m_Size: {x: 3.2, y: 6.6999993}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -418,8 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ca0914e37bb9f49ac7fc6eb8e4a311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 3.2
+  height: 6.6999993
   dragging: 0
   pressed: 0
   ScrollTarget: {fileID: 0}
@@ -433,6 +441,8 @@ MonoBehaviour:
   block_line_number: 0
   horizontal: 0
   vertical: 1
+  delete_button: {fileID: 2354682794844909738, guid: 6c9438f6cb3f68243ad376d7e6ed2452,
+    type: 3}
   type: 3
 --- !u!61 &6979680749101026179
 BoxCollider2D:
@@ -452,7 +462,7 @@ BoxCollider2D:
     border: {x: 0.21, y: 0.21, z: 0.21, w: 0.21}
     pivot: {x: 0, y: 1}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 3.4, y: 6.44}
+    newSize: {x: 3.2, y: 6.6999993}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
@@ -484,7 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0472d15dc6ce00d42b2db764eb8f7d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirm_duration: 30
+  accepted: 0
   coding_manager: {fileID: 0}
 --- !u!114 &2313499620307341633
 MonoBehaviour:
@@ -502,6 +512,8 @@ MonoBehaviour:
   XYSeparate: 0
   finalScale: 1
   startScale: 0
+  startXY: {x: 0, y: 0}
+  finalXY: {x: 0, y: 0}
   moveTime: 20
   auto_start: 0
 --- !u!114 &-770680801757610013
@@ -580,6 +592,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
+--- !u!210 &4590142047761869024
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6979680749101026176}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &3099588139844233048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6979680749101026176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f201ffa7f6dd7a64f80fcc21a7ff3276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonUse: StartDeleteBlock
 --- !u!1 &6979680749159153261
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +644,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6979680749159153261}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -3.13, z: -0.01}
+  m_LocalPosition: {x: 0.1, y: -3.3999999, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6979680749101020286}
@@ -714,8 +750,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 3
+  height: 1
   horizontal: 0
   vertical: 1
   highlighted: 0
@@ -726,6 +762,12 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 7338461728906115624, guid: fec1f33e085a1f041b90cf9c6d6b9d5a,
+    type: 3}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
+  animating: 0
   type: 5
   value_type: 
 --- !u!1 &6979680749696601307
@@ -753,7 +795,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6979680749696601307}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -2.13, z: -0.01}
+  m_LocalPosition: {x: 0.1, y: -2.3, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6979680749101020286}
@@ -837,7 +879,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6979680749724275880}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -1.1, z: -0.01}
+  m_LocalPosition: {x: 0.1, y: -1.2, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6979680749101020286}
@@ -943,8 +985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 3
+  height: 1
   horizontal: 1
   vertical: 0
   highlighted: 0
@@ -955,5 +997,10 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 0}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
+  animating: 0
   type: 2
   value_type: 

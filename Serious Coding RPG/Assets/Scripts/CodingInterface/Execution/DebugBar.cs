@@ -11,6 +11,7 @@ public class DebugBar : MonoBehaviour
 
     public PlayBar play_bar;
     public Sprite wrong_bg;
+    public Sprite right_bg;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,11 @@ public class DebugBar : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = wrong_bg;
     }
 
+    public void SetRight()
+    {
+        GetComponent<SpriteRenderer>().sprite = right_bg;
+    }
+
     IEnumerator PopUpCoroutine()
     {
         motion = new Motion(moveTime, 0, 4);
@@ -46,6 +52,14 @@ public class DebugBar : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         SetDebugText();
         debugText.gameObject.GetComponent<FadeControl>().StartFadeIn();
+    }
+
+    [ContextMenu("Collapse")]
+    public void Collapse()
+    {
+        motion = new Motion(moveTime, GetComponent<SpriteRenderer>().size.y, 0);
+        //GetComponent<SpriteRenderer>().size = new Vector2(GetComponent<SpriteRenderer>().size.x, 4);       
+        debugText.gameObject.GetComponent<FadeControl>().StartFadeOut();
     }
 
     public void SetDebugText()

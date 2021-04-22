@@ -17,7 +17,7 @@ public class QuestManager : MonoBehaviour
         if (Instance == null)   //singleton Quest instance, easy for referencing in other scripts
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -40,7 +40,7 @@ public class QuestManager : MonoBehaviour
         foreach(Quest quest in all_quests)
         {
             
-            if(string.Compare(NPCid, quest.questNPCId) == 0 && !Player.Instance.checkQuestStatus(int.Parse(quest.questId)))
+            if(string.Compare(NPCid, quest.questNPCId) == 0 && !Player.Instance.checkQuestStatus(quest.questId))
             {
                 
                 return quest.questId;
@@ -59,15 +59,16 @@ public class QuestManager : MonoBehaviour
 
     public void QuestUIStart(string questID)
     {
-        Vector3 pos = transform.position;
-        GameObject temp = Instantiate(questUI, new Vector3(pos.x, pos.y, questUI.transform.position.z), Quaternion.identity);
-        temp.GetComponent<QuestUI>().questID = questID;
+        //Vector3 pos = transform.position;
+        //GameObject temp = Instantiate(questUI, new Vector3(pos.x, pos.y, questUI.transform.position.z), Quaternion.identity);
+        //temp.GetComponent<QuestUI>().questID = questID;
+        StartCoroutine(GameManager.Instance.StartMission(questID));
     }
 
     public void FinishQuest(string questID)
     {
-        int id = int.Parse(questID);
-        Player.Instance.data.completedTask.Add(id);
+        //int id = int.Parse(questID);
+        Player.Instance.data.completedTask.Add(questID);
         Vector3 pos = transform.position;
         GameObject temp = Instantiate(RewardPanel, new Vector3(pos.x, pos.y, questUI.transform.position.z), Quaternion.identity);
         temp.GetComponent<QuestRewardPanel>().questID = questID;

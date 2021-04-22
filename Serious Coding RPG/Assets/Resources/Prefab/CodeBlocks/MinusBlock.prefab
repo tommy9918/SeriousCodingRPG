@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 1
+  height: 1
   horizontal: 1
   vertical: 0
   highlighted: 0
@@ -146,6 +146,11 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 0}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
+  animating: 0
   type: 3
   value_type: num
 --- !u!1 &8598836602179859803
@@ -176,7 +181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8598836602179859803}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.32, y: -0.1, z: -0.01}
+  m_LocalPosition: {x: 2.3, y: -0.1, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8598836602353019562}
@@ -282,8 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d24b6db7ebaa469e544497545301a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 1
+  height: 1
   horizontal: 1
   vertical: 0
   highlighted: 0
@@ -294,6 +299,11 @@ MonoBehaviour:
   incoming_insertion: {fileID: 0}
   inserted_block: {fileID: 0}
   inserted_vertical_blocks: []
+  outline_reference: {fileID: 0}
+  summoned_outline: []
+  current_line_number: 0
+  block_destination: {x: 0, y: 0, z: 0}
+  animating: 0
   type: 3
   value_type: num
 --- !u!1 &8598836602353019568
@@ -315,6 +325,8 @@ GameObject:
   - component: {fileID: 3715034582855230922}
   - component: {fileID: 6638975343114812731}
   - component: {fileID: 3100496818569902482}
+  - component: {fileID: -554352178050069758}
+  - component: {fileID: 3181378676240240807}
   m_Layer: 0
   m_Name: MinusBlock
   m_TagString: Untagged
@@ -383,7 +395,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 3.46, y: 1.2}
+  m_Size: {x: 3.3999999, y: 1.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -407,7 +419,7 @@ BoxCollider2D:
     border: {x: 0.21, y: 0.21, z: 0.21, w: 0.21}
     pivot: {x: 0, y: 1}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 3.46, y: 1.2}
+    newSize: {x: 3.3999999, y: 1.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
@@ -439,7 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0472d15dc6ce00d42b2db764eb8f7d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirm_duration: 30
+  accepted: 0
   coding_manager: {fileID: 0}
 --- !u!114 &8598836602353019569
 MonoBehaviour:
@@ -453,17 +465,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ba83b609324b340b936130d12fcca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 3.3999999
+  height: 1.2
+  skill_name_text: {fileID: 0}
   type: 1
   value_type: num
   block_sites:
   - {fileID: 8598836601322554593}
   - {fileID: 8598836602837401577}
   - {fileID: 8598836602179859803}
+  value_reference: {fileID: 0}
+  delete_button: {fileID: 2354682794844909738, guid: 6c9438f6cb3f68243ad376d7e6ed2452,
+    type: 3}
   horizontal: 1
   vertical: 0
   block_type: minus
+  can_delete: 0
 --- !u!114 &-1022376809411413058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,6 +497,8 @@ MonoBehaviour:
   XYSeparate: 0
   finalScale: 1
   startScale: 0
+  startXY: {x: 0, y: 0}
+  finalXY: {x: 0, y: 0}
   moveTime: 20
   auto_start: 0
 --- !u!114 &7514278734428126019
@@ -558,6 +577,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
+--- !u!210 &-554352178050069758
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598836602353019568}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &3181378676240240807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598836602353019568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f201ffa7f6dd7a64f80fcc21a7ff3276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonUse: StartDeleteBlock
 --- !u!1 &8598836602837401577
 GameObject:
   m_ObjectHideFlags: 0
