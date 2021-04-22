@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "320930175122",
+	"firebase_url": "https://spelloverflow-default-rtdb.firebaseio.com",
+    "project_id": "spelloverflow",
+    "storage_bucket": "spelloverflow.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320930175122:android:e0a89420b29d1617f86e4b",
+        "android_client_info": {
+          "package_name": "com.cuhk.spelloverflow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320930175122-jk18h4huuh1f76rfmc1qddfk81v2ocs8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh9qM2YHYAwd-F6uEwW6LmJj4p3yotduc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320930175122-jk18h4huuh1f76rfmc1qddfk81v2ocs8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
