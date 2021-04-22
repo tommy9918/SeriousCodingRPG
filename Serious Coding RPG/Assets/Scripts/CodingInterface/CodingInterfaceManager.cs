@@ -6,6 +6,8 @@ using System;
 
 public class CodingInterfaceManager : MonoBehaviour
 {
+    public static CodingInterfaceManager Instance;
+
     public string questID;
     public Sprite[] runes;
     public GameObject rune_ref;
@@ -44,6 +46,14 @@ public class CodingInterfaceManager : MonoBehaviour
     public Sprite add;
     public Sprite edit;
     public bool all_passed;
+
+    void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -113,7 +123,7 @@ public class CodingInterfaceManager : MonoBehaviour
     public void SaveSkill()
     {
         GetAllCommand();
-        string skill_name = "print_mana";
+        string skill_name = "power";
         int input_slots = 2;
         Player.Instance.data.skills.Add(new Skill(coding_blocks, skill_name, input_slots));
     }
@@ -131,6 +141,7 @@ public class CodingInterfaceManager : MonoBehaviour
         {
             debug_bar.SetWrong();
         }
+        step_indicator.GetComponent<StepIndicator>().Summon(1, debug_space[current_space_index].TotalStep());
         Debug.Log(index);
     }
 
@@ -141,6 +152,7 @@ public class CodingInterfaceManager : MonoBehaviour
             coding_area.SetActive(false);
             //playbar.SwitchToDebug();
             debug_bar.Collapse();
+            step_indicator.GetComponent<StepIndicator>().Hide();
         }
     }
 
@@ -148,6 +160,7 @@ public class CodingInterfaceManager : MonoBehaviour
     {
         add_icon.GetComponent<SpriteRenderer>().sprite = add;
         add_icon.GetComponent<ChildButton>().ButtonUse = "OpenBlockSelection";
+        step_indicator.GetComponent<StepIndicator>().Hide();
         coding_area.SetActive(true);
         finish_button.SetActive(false);
         foreach(GameObject rune in runes_summoned)
@@ -176,7 +189,7 @@ public class CodingInterfaceManager : MonoBehaviour
         {
             ExecutionSpace exec = new ExecutionSpace();
             string output = exec.StartExecution(coding_blocks, quest_inputs[i]);
-            if (output.Length > 0)
+            if (output != null && output.Length > 0)
             {
                 Debug.Log("The program output: " + output+"    Expected output: "+expect_outputs[i]);               
             }
@@ -375,6 +388,21 @@ public class CodingInterfaceManager : MonoBehaviour
     public void FinishQuest()
     {
         Debug.Log("Quest " + questID + " finished!");
+        if(QuestManager.Instance.getQuestFromID(questID).skill_name != null && QuestManager.Instance.getQuestFromID(questID).skill_name != "")
+        {
+            GetAllCommand();
+            string skill_name = QuestManager.Instance.getQuestFromID(questID).skill_name;
+            int input_slots = QuestManager.Instance.getQuestFromID(questID).input_slots_length;
+            Skill new_skill = new Skill(coding_blocks, skill_name, input_slots);
+            int total_step = 0;
+            foreach(ExecutionSpace space in debug_space)
+            {
+                total_step += space.TotalStep();
+            }
+            total_step /= debug_space.Count;
+            new_skill.average_steps = total_step;
+            Player.Instance.data.skills.Add(new_skill);
+        }
         StartCoroutine(GameManager.Instance.FinishMission(questID));
     }
 

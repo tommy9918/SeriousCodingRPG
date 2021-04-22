@@ -10,6 +10,8 @@ public class SpellManager : MonoBehaviour
     public Text spell_name;
     public GameObject name_part;
     public GameObject black_mist;
+    public bool can_expand_information;
+    public bool can_buy;
 
     [ContextMenu("InitializeSpell")]
     public void InitializeSpell()
@@ -40,6 +42,14 @@ public class SpellManager : MonoBehaviour
             string spell_name = spell.required_skill;
             Debug.Log(spell_name);
             BattleManager.Instance.RepairSpell(spell_name, gameObject);
+        }
+        else if (can_buy)
+        {
+
+        }
+        else if (can_expand_information)
+        {
+
         }
     }
 

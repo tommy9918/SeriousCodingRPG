@@ -180,6 +180,24 @@ public class Player : MonoBehaviour
         return "en";
     }
 
+    public bool HaveSkill(string skill_name)
+    {
+        foreach(Skill skill in data.skills)
+        {
+            if (skill.name == skill_name) return true;
+        }
+        return false;
+    }
+
+    public bool HaveSpell(string spell_name)
+    {
+        foreach(PlayerSpell spell in data.all_spells)
+        {
+            if (spell_name == spell.spell_id) return true;
+        }
+        return false;
+    }
+
     public void UnlockHelloWorldBlock()
     {
         if (!data.unlocked_blocks.Contains("output"))

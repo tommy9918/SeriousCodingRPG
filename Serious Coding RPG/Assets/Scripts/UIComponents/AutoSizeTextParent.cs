@@ -9,8 +9,12 @@ public class AutoSizeTextParent : MonoBehaviour
     
     // Start is called before the first frame update
     void Start()
-    {       
-        theText = GetComponent<Text>();
+    {
+        if (theText == null)
+        {
+            theText = GetComponent<Text>();
+        }
+        
     }
 
     // Update is called once per frame
@@ -20,10 +24,20 @@ public class AutoSizeTextParent : MonoBehaviour
         UpdateSize();
     }
 
+    [ContextMenu("UpdateSize")]
     void UpdateSize()
     {
+        //Debug.Log(CalculateTextWidth());
         int width = CalculateTextWidth() + 50;
-        transform.parent.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(width, transform.parent.gameObject.GetComponent<RectTransform>().sizeDelta.y);
+
+        if (transform.parent.gameObject.GetComponent<RectTransform>() != null)
+        {
+            transform.parent.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(width, transform.parent.gameObject.GetComponent<RectTransform>().sizeDelta.y);
+        }
+        else if(GetComponent<SpriteRenderer>() != null)
+        {
+            GetComponent<SpriteRenderer>().size = new Vector2((width - 50) * 0.0416f, GetComponent<SpriteRenderer>().size.y);
+        }
     }
 
     int CalculateTextWidth()
@@ -34,6 +48,7 @@ public class AutoSizeTextParent : MonoBehaviour
         CharacterInfo characterInfo = new CharacterInfo();
 
         string real_text = theText.text;
+        //Debug.Log(real_text);
         if(transform.parent.gameObject.GetComponent<InputField>() != null)
         {
             real_text = transform.parent.gameObject.GetComponent<InputField>().text;

@@ -30,4 +30,4 @@ MonoBehaviour:
   rewardGold: 200
   skill_name: max
   input_slots_length: 2
-  prerequisite: 
+  prerequisite: MAIN3

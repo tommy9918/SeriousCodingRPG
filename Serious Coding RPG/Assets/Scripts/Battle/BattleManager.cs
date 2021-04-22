@@ -104,9 +104,8 @@ public class BattleManager : MonoBehaviour
 
     public void ActivateSpell(BattleSpell spell, GameObject origin)
     {
-        if (consume(spell.GetAverageStep()))
+        if (consume(spell.GetAverageStep())) //player have enough mana
         {
-            //Debug.Log(origin.transform.childCount);
             if (origin.transform.childCount < 3)
             {
                 switch (spell.usage)

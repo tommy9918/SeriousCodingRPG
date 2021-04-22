@@ -5,6 +5,7 @@ using UnityEngine;
 public class NPCManager : MonoBehaviour
 {
     public GameObject speechBubble;
+    public List<GameObject> interact_button;
     public GameObject quest_icon;
     public DialogueManager dialogue_manager;
     public float react_radius;
@@ -54,11 +55,19 @@ public class NPCManager : MonoBehaviour
         if (!canTalkTo)
         {
             canTalkTo = true;
-            speechBubble.GetComponent<ScaleChange>().StartAnimate();          
+            //speechBubble.GetComponent<ScaleChange>().StartAnimate(); 
+            foreach(GameObject ib in interact_button)
+            {
+                ib.GetComponent<ScaleChange>().StartAnimate();
+            }
         }
         else
         {
-            speechBubble.GetComponent<BoxCollider2D>().enabled = true;
+            //speechBubble.GetComponent<BoxCollider2D>().enabled = true;
+            foreach (GameObject ib in interact_button)
+            {
+                ib.GetComponent<BoxCollider2D>().enabled = true;
+            }
         }
     }
 
@@ -67,8 +76,14 @@ public class NPCManager : MonoBehaviour
         if (canTalkTo)
         {
             canTalkTo = false;
-            speechBubble.GetComponent<BoxCollider2D>().enabled = false;
-            speechBubble.GetComponent<ScaleChange>().StartAnimateReverse();
+            //speechBubble.GetComponent<BoxCollider2D>().enabled = false;
+            //speechBubble.GetComponent<ScaleChange>().StartAnimateReverse();
+            foreach (GameObject ib in interact_button)
+            {
+                ib.GetComponent<BoxCollider2D>().enabled = false;
+                ib.GetComponent<ScaleChange>().StartAnimateReverse();
+            }
+
         }
     }
 

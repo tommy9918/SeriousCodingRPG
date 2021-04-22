@@ -55,6 +55,7 @@ public class QuestManager : MonoBehaviour
         Vector3 pos = transform.position;
         GameObject temp = Instantiate(QuestConfirmPanel, new Vector3(pos.x, pos.y, QuestConfirmPanel.transform.position.z), Quaternion.identity);
         temp.GetComponent<QuestConfirmPanel>().questID = questID;
+        PopUpManager.Instance.OpenComplexPopUp(temp);
     }
 
     public void QuestUIStart(string questID)
@@ -77,6 +78,8 @@ public class QuestManager : MonoBehaviour
             manager.UpdateQuest();
         }
     }
+
+    
 
     public Quest getQuestFromID(string questID)
     {

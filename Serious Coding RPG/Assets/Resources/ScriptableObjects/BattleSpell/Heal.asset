@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 3e38dda353c392b458d098343f5310c6, type: 3}
   spell_id: HEAL
-  required_skill: sort
+  required_skill: sum
   usage: heal
-  effect_value: 15
+  effect_value: 10
   instance_reference: {fileID: 0}

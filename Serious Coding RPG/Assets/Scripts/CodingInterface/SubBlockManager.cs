@@ -67,8 +67,9 @@ public class SubBlockManager : MonoBehaviour
     {
         if (GetComponent<LongPressDrag>().accepted)
         {
-            GameObject temp = Instantiate(delete_button, transform);
-            temp.transform.localPosition = new Vector3(0, 0, -0.5f);
+            GameObject temp = Instantiate(delete_button);
+            temp.transform.localPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1f);
+            temp.GetComponent<DeleteIcon>().block = gameObject;
             temp.GetComponent<ScaleChange>().StartAnimate();
         }
     }

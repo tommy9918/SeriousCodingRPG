@@ -1,10 +1,15 @@
-HELLO=Hello! Welcome to the game!
+HELLO=Hello! Welcome to the game! You’re a young adventurer who just entered a magic world, in this world the magic spells are casted by coding, are you ready to start the journey?  
 GOLD=Gold
 REWARD=Reward
 EXP=EXP
 OK=OK
 NPCNAMEELDER=Elder Wizard
+NPCNAMEELENA=Elena
 ELDER=Hi again! Young man! Have a nice day!
+ELENA=You must become stronger to face the monsters!
+CHEF=Thank you for helping me before, Fire Spell is amazing!
+DORIS=I believe that you are the chosen wizard. Please save our world...
+POTTER=Talented young wizard, the more you learn, the stronger you are! 
 STARTQUEST=Start quest now?
 YES=Yes
 NO=No
@@ -20,55 +25,85 @@ OUTPUT=Output:
 MAINQUEST=MAIN QUEST
 SIDEQUEST=SIDE QUEST
 
-#-----------------------------------------QUEST DIALOGUES-------------------------------------------------
-QUESTMAIN1-1=Oh! Hey there......
-QUESTMAIN1-2=I haven't seen your face before...... You must be a new comer!
-QUESTMAIN1-3=Welcome to our world. Huh, You don't know any magic? Fortunately, magical energy is everywhere in the atmosphere of our world, anyone can learn magic if he/she wants to.
-QUESTMAIN1-4=Let's try the simplest magic first, close your eyes and feel the magical energy in the air, take a breath to let them flow into your body
-QUESTMAIN1-5=Then cast this spell, when you see the blue light appear in your hands, you succeed!
-QUESTMAIN2-1=Congrats! You have learnt how to realize the magical energy! Next, you just need to learn more about the spell language, which is how we command the magical energy to transform to different forms and do the job for us!
-QUESTMAIN2-2=Hm? You don't seem to believe, well, let me teach you a simple magic that even a 3-year-old kid can do, get the summation of two numbers! 
-QUESTMAIN2-3=Let me ask you what is the sum of 18974563 and 6427859?
-QUESTMAIN2-4=[Great Wizard suddenly waves his both hands two blue in the air. Two blue lights appears in the middle of the air and merge together into one, there is a number shown on it: "25402422"]
-QUESTMAIN2-5=Ho Ho Ho, See? With the magic power, we don't need any pens or papers to do the calculations, the magic will do it for us! 
-QUESTMAIN2-6=The computational ability of the great ancient magical energy is hundreds, thousands of times more powerful than humans!  By using the magic power, this kind of calculation can be done in no time.
-QUESTMAIN2-7=I just mentioned, you have to learn a language to command the magical energy.
-QUESTMAIN2-8=They are alive, you have to express your command spell correctly, otherwise the magical energy will not act as you expect, what even worse is that the energy may go wild and hurt the commander!
-QUESTMAIN2-9=Ho ho ho, don't worry, this is just a simple magic that even a 3-year-old kid can do without effort. 
-QUESTMAIN2-10=Firstly, realize two splits of magical energy and make it into container form. They are called variables in this form.
-QUESTMAIN2-11=It can be used to store data which can be digital numbers. You can name the variable, and the value inside the variable can be changed as you wish.
-QUESTMAIN2-12=When you finish building your spell command, press the button, I will use the random numbers to test if your spelled magic can do the calculation right.
-QUESTMAIN3-1=Now you have learnt a spell, you can use it to command the magical energy to do this job for you anytime.
-QUESTMAIN3-2=[Stomach growling....]
-QUESTMAIN3-3=Ho Ho Ho, I guess you are hungry. This is normal, continuous uses of spell is very exhausting to newbies. Follow me.
-QUESTMAIN3-4=[Walking to a restaurant]
-QUESTMAIN3-5=Huh? You don't have money?
-QUESTMAIN3-6=What, magic to make golds out of nowhere?
-QUESTMAIN3-7=There is no such magic. In this world, surprisingly enough, people need to work to earn money as well. 
-QUESTMAIN3-8=Magical energy is powerful in calculations but it cannot produce food or gold for you out of nowhere.
-QUESTMAIN3-9=Well I guess you cannot have dinner here if you do not have money.
-QUESTMAIN3-10=Chef: [seems worried ] What should I do, the restaurant won't be able to serve food tonight if I cannot solve the problem.
-QUESTMAIN3-11=I just accidentally let the fire in the stove go out, I am trying to find the fire cracker but I just cannot find it.
-QUESTMAIN3-12=What should I do, if the fire cannot be started, I won't be able to serve food to the customers.
-QUESTMAIN3-13=I would not be a problem if I knew how to cast the fire spell.
-QUESTMAIN3-14=Fire spell?
-QUESTMAIN3-15=Great Wizard: Ho Ho Ho, yes. With a proper command and a wand, you can cast a fire spell.
-QUESTMAIN3-16=Well, I can teach you the fire spell, but you have to do me a favor tomorrow.
-QUESTMAIN3-17=A wand will be needed to do the fire spell, I guess you don't have one, I will lend mine to you. 
-QUESTMAIN3-18=This is a wand made of special volcanic rock, when condensed magical energy go through the wand,
-QUESTMAIN3-19=A fireball can be released from the tip and shoot forward! The key is to choose the magical energy with high density, let's filter the energy by a spell.
-QUESTMAIN3-20=We have the fire finally! Let me treat you two with a free dinner!
-QUESTMAIN4-1=Great Wizard: Ho Ho Ho, you haven't forgotten that you own me a favor, do you?
-QUESTMAIN4-2= I have a granddaughter who is living in a village in the east. There is a thing I need to deliver to her in a hurry. But I am too old to hurry on the long journey. 
-QUESTMAIN4-3= I want you to deliver this package to Lupe village, give it to my granddaughter Doris.
-QUESTMAIN4-4=Ho ho ho, you can keep the wand. I believe you will need it tomorrow. On the way to Lupe Village, there will be some monsters attacking passengers,
-QUESTMAIN4-5=Use the fire spell to kill them if you meet any. When you arrive at the village, go directly to Doris's Apple Orchard, you will find her there.
-QUESTMAIN5-6=Doris: Seriously? Today is the most important trading day of the year, the truck chooses to break down today? Crap!
-QUESTMAIN5-7=Wait! You are one of my grandpa's friends, so you can do magic as well?
-QUESTMAIN5-8=Finally, there is someone who can help! My truck breaks down, please use the Loop Spell to transfer these apples to the warehouse for me.
-QUESTMAIN5-9=You don't know Loop Spell yet? Let me teach you, it won't be hard.
-QUESTMAIN5-10=Because I have used a lot of spells to handle the farm work today, my body is overloaded, I cannot do any extra spells. Please, you will be paid!
-QUESTMAIN5-11=Command the magical energy to hold the apples from here, move towards the warehouse and drop the apples, command it to repeat this routine until all the apples here are gone. 
-FIREBALL=Fireball
-HEAL=Heal
-MIRACLE=Miracle
+#Quest 1
+QUESTMAIN1-1-ELDER=Oh! Hey there......
+QUESTMAIN1-2-ELDER=I haven't seen your face before...... You must be a new comer!
+QUESTMAIN1-3-ELDER=Welcome to our world. Huh, You don’t know any magic? Fortunately, magical energy is everywhere in the atmosphere of our world, anyone can learn magic if he/she wants to.
+QUESTMAIN1-4-ELDER=Let’s try the simplest magic first, close your eyes and feel the magical energy in the air, take a breath to let them flow into your body
+QUESTMAIN1-5-ELDER=then cast this spell, when you see the blue light appear in your hands, you succeed!
+
+#Quest 2
+QUESTMAIN2-1-ELDER=Congrats! You have learnt how to realize the magical energy! Next, you just need to learn more about the spell language, which is how we command the magical energy to transform to different forms and do the job for us!
+QUESTMAIN2-2-ELDER=Hm? You don’t seem to believe. Well, let me ask you what is the sum of 18974563 and 6427859?
+QUESTMAIN2-3-ELDER=[Elder Wizard waves his both hands in the air. Two blue lights appears from nowhere and merge together into one, there is a number shown on it: “25402422”]
+QUESTMAIN2-4-ELDER=Ho Ho Ho, See? With the magic power, we don’t need any pens or papers to do the calculations, the magic will do it for us! 
+QUESTMAIN2-5-ELDER=I just mentioned, you have to learn the language to command the magical energy.
+QUESTMAIN2-6-ELDER=Magical energy is alive, you have to express your command spell correctly, otherwise the magical energy will not act as you expect, what even worse is that the energy may go wild and hurt the commander!
+QUESTMAIN2-7-ELDER=Don’t worry, this is just a simple magic that even a 3-year-old kid can do without effort. 
+QUESTMAIN2-8-ELDER=Firstly, realize two splits of magical energy and make it into container form. They are called variables in this form.
+QUESTMAIN2-9-ELDER=They can be used to store data which can be digital numbers. The value inside the variable can be changed as you wish, and you can name the variables to differentiate them.
+QUESTMAIN2-10-ELDER=When you finish building your spell command, press the play button, I will use some random numbers to test if your spelled magic can do the calculation right.
+
+#Quest 3
+QUESTMAIN3-1-ELDER=Now you have learnt a spell, you can use it to command the magical energy to do this job for you anytime.
+QUESTMAIN3-2-ELDER=[Stomach growling....]
+QUESTMAIN3-3-ELDER=Ho Ho Ho, I guess you are hungry. This is normal, continuous use of spells is very exhausting to newbies. Follow me.
+QUESTMAIN3-4-ELDER=[Walking to a restaurant]
+QUESTMAIN3-5-ELDER=Huh? You don't have money?
+QUESTMAIN3-6-ELDER=What,  magic to make golds out of nowhere?
+QUESTMAIN3-7-ELDER=There is no such magic! Magical energy is powerful in calculations but it cannot produce food or gold for you out of nowhere.
+QUESTMAIN3-8-ELDER=In this world, people need to work to earn money as well. I guess you cannot have dinner here if you do not have money.
+QUESTMAIN3-9-CHEF=[seems worried ] What should I do? the restaurant won’t be able to serve food tonight if I cannot solve the problem.
+QUESTMAIN3-10-CHEF=I just accidentally let the fire in the stove go out, I am trying to find the fire cracker but I just cannot find it.
+QUESTMAIN3-11-CHEF=If the fire cannot be started, I won’t be able to serve food to the customers.
+QUESTMAIN3-12-CHEF=I would not be a problem if I knew how to cast the fire spell.
+QUESTMAIN3-13-ELDER=Ho Ho Ho, yes. With a proper command and a wand, we can cast a fire spell.
+QUESTMAIN3-14-ELDER=Well, I can teach you the fire spell, but you have to do me a favor tomorrow.
+QUESTMAIN3-15-CHEF=I will treat you two with a feast if you can set the fire up for me!
+QUESTMAIN3-16-ELDER=A wand will be needed to do the fire spell, I guess you don’t have one, I will lend mine to you. 
+QUESTMAIN3-17-ELDER=This is a wand made of special volcanic rock, when condensed magical energy goes through the wand, A fireball can be released from the tip and shoot forward!
+QUESTMAIN3-18-ELDER=The key is to choose the magical energy with high density, let’s filter the energy by a spell.
+
+#Quest 4
+QUESTMAIN4-1-ELDER=What a delicious dinner. Ho Ho Ho, you haven't forgotten that you own me a favor, do you?
+QUESTMAIN4-2-ELDER=I have a granddaughter who is living in a village in the east. There is a thing I need to deliver to her in a hurry. But I am too old to hurry on the long journey. 
+QUESTMAIN4-3-ELDER=I want you to deliver this package to Lupe village, give it to my granddaughter Doris.
+QUESTMAIN4-4-ELDER=Ho ho ho, you can keep the wand. I believe you will need it tomorrow. On the way to Lupe Village, there will be some monsters attacking passengers,
+QUESTMAIN4-5-ELDER=Use the fire spell to kill them if you meet any. When you arrive at the village, go directly to Doris’s Apple Orchard, you will find her there.
+
+#Quest 5
+QUESTMAIN5-1-DORIS=Seriously? Today is the most important trading day of the year, the truck chooses to break down today? Crap!
+QUESTMAIN5-2-DORIS=Hey, you. What can I help you with? Please come to me later if it is not urgent, I am in big trouble.
+QUESTMAIN5-3-DORIS=A package from my grandfather? You can just leave the package on the floor first.
+QUESTMAIN5-4-DORIS=Wait! You are one of my grandpa’s friends, so you can do magic as well?
+QUESTMAIN5-5-DORIS=Finally, there is someone who can help! My truck breaks down, please use the Loop Spell to transfer these apples to the warehouse for me.
+QUESTMAIN5-6-DORIS=You don’t know Loop Spell yet? Let me teach you, it won’t be hard.
+QUESTMAIN5-7-DORIS=Because I have used a lot of spells to handle the farm work today, my body is overloaded, I cannot do any extra spells. Please, you will be paid!
+QUESTMAIN5-8-DORIS=Command the magical energy to hold the apples from here, move towards the warehouse and drop the apples, command it to repeat this routine until all the apples here are gone.
+
+#Quest 6
+QUESTMAIN6-1-DORIS=Thank you so much! I will need to check the warehouse, please follow me.
+QUESTMAIN6-2-DORIS=OMG! I forgot something really important. The apples are separated in different piles, I haven't counted the total number of all the apples.
+QUESTMAIN6-3-DORIS=Young magician, please help me again. This is just as simple as the Loop Spell. Count the number of each pile, add them together.
+
+#Quest 7
+QUESTMAIN7-1-DORIS=You saved my life, twice! You are truly a talented wizard, you should visit Rray Village. Perhaps, you are the chosen one we are waiting for! 
+QUESTMAIN7-2-DORIS=Grandfather didn’t tell you about the Prophecy? It’s said by the Grand Wizard, he saw the destiny of our world, the end of the world is coming because of the inflation of the dark magical energy. There is only one way to save our world, find the chosen wizard who can command the ancient magical energy sealed in Sage's Stone.
+QUESTMAIN7-3-DORIS=Please visit my brother Potter who is living in the Rray Village. He will lead you to the Grand Wizard and maybe you will take the Sage’s Trial there.
+QUESTMAIN7-4-DORIS=Rray Village is at the north of this village, be careful of the monsters on the way. Now you are stronger, if you’re injured during the battles, you can use the Loop Spell to heal yourself, I believe you will make it!
+
+#Quest 8
+QUESTMAIN8-1-POTTER=Hi, I am practicing my Array Spell. Is there anything I can help?
+Oh, Doris asks you to visit me? I guess she thinks you may be the chosen wizard. Hmm, you don’t seem very strong. Let me give you two tests first, can you do Array Spell?
+QUESTMAIN8-2-POTTER=OK, then I will teach you. Let’s see if you are really talented.
+QUESTMAIN8-3-POTTER=Array is a collection of data, e.g. a number array of size 5, is a container that holds 5 numbers. 
+QUESTMAIN8-4-POTTER=An Array can be stored as a long text, including all elements that are separated by comma. E.g. “1,2,3,4,5”. Using the new block at() to obtain the characters in the different positions in the long text.
+QUESTMAIN8-5-POTTER=at(“1,2,3,4,5”, 0) = 1 ; at(“1,2,3,4,5”, 1) = “,” ; at(“1,2,3,4,5”, 2) = “2” ;  at(“1,2,3,4,5”, 3) = “,” ; at(“1,2,3,4,5”, 4) = “3” …...
+QUESTMAIN8-6-POTTER=Here comes the first challenge: when I give you an array,  tell me the size of the array, in other words, the number of total elements in the array.
+
+#Quest 9
+QUESTMAIN9-1-POTTER=Second challenge: when I give you an array,  tell me the only element in a desired position from an array. You will gain my recognition if you can do this.
+
+#Quest 10
+QUESTMAIN10-1-POTTER=Wow! You learned the two Array spells in such a short period of time, you are really talented! No wonder Doris thinks you are the chosen one. 
+QUESTMAIN10-2-POTTER=Please come with me to meet the Grand Wizard. I believe that he will let you take the Sage’s Trial.

@@ -33,6 +33,7 @@ public class PopUpManager : MonoBehaviour
 
     void SetLayer(GameObject obj)
     {
+        
         foreach(SpriteRenderer sr in obj.GetComponentsInChildren<SpriteRenderer>())
         {
             sr.sortingOrder = current_max_layer;
@@ -46,9 +47,9 @@ public class PopUpManager : MonoBehaviour
             c.sortingOrder = current_max_layer;
         }
         current_max_layer++;
-        obj.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y, current_max_z);
-        current_max_z -= 0.5f;
+        
     }
+
     [ContextMenu("OpenPopUpTest")]
     public void OpenPopUpTest()
     {
@@ -58,21 +59,24 @@ public class PopUpManager : MonoBehaviour
     [ContextMenu("ClosePopUp")]
     public void ClosePopUp()
     {
-        StartCoroutine(ClosePopUpRoutine());
+        StartCoroutine(ClosePopUpRoutine(pop_up_instance.Count - 1));
     }
 
-    IEnumerator ClosePopUpRoutine()
+    
+
+    IEnumerator ClosePopUpRoutine(int index)
     {
-        dim_instance[dim_instance.Count - 1].GetComponent<FadeControl>().StartFadeOut();
-        if (pop_up_instance[pop_up_instance.Count - 1].GetComponent<FadeControl>() != null)
+        //Debug.Log(index);
+        dim_instance[index].GetComponent<FadeControl>().StartFadeOut();
+        if (pop_up_instance[index].GetComponent<FadeControl>() != null)
         {
-            pop_up_instance[pop_up_instance.Count - 1].GetComponent<FadeControl>().StartFadeOut();
+            pop_up_instance[index].GetComponent<FadeControl>().StartFadeOut();
         }
         yield return new WaitForSeconds(0.6f);
-        Destroy(dim_instance[dim_instance.Count - 1]);
-        Destroy(pop_up_instance[pop_up_instance.Count - 1]);
-        dim_instance.RemoveAt(dim_instance.Count - 1);
-        pop_up_instance.RemoveAt(pop_up_instance.Count - 1);
+        Destroy(dim_instance[index]);
+        Destroy(pop_up_instance[index]);
+        dim_instance.RemoveAt(index);
+        pop_up_instance.RemoveAt(index);
         current_max_layer -= 2;
         current_max_z += 1f;
 
@@ -84,7 +88,7 @@ public class PopUpManager : MonoBehaviour
 
     public void OpenPopUp(GameObject pop_up)
     {
-        dim_instance.Add(Instantiate(dim_reference, Player.Instance.gameObject.transform.position, Quaternion.identity));
+        dim_instance.Add(Instantiate(dim_reference, (Vector2)Player.Instance.gameObject.transform.position, Quaternion.identity));
         dim_instance[dim_instance.Count - 1].GetComponent<FadeControl>().StartFadeIn();
         SetLayer(dim_instance[dim_instance.Count - 1]);
 
@@ -92,6 +96,32 @@ public class PopUpManager : MonoBehaviour
         SetLayer(pop_up_instance[pop_up_instance.Count - 1]);
 
         confirm_layer.enabled = true;
+    }
+
+    public void OpenComplexPopUp(GameObject pop_up)
+    {
+        dim_instance.Add(Instantiate(dim_reference, (Vector2)Player.Instance.gameObject.transform.position, Quaternion.identity));
+        dim_instance[dim_instance.Count - 1].GetComponent<FadeControl>().StartFadeIn();
+        SetLayer(dim_instance[dim_instance.Count - 1]);
+
+        pop_up_instance.Add(pop_up);
+        SetLayer(pop_up_instance[pop_up_instance.Count - 1]);
+
+        //confirm_layer.enabled = true;
+    }
+
+    public void RemoveDim()
+    {
+        StartCoroutine(RemoveDimRoutine(pop_up_instance.Count - 1));
+    }
+
+    IEnumerator RemoveDimRoutine(int index)
+    {
+        dim_instance[index].GetComponent<FadeControl>().StartFadeOut();
+        yield return new WaitForSeconds(0.6f);
+        Destroy(dim_instance[index]);
+        dim_instance.RemoveAt(index);
+        pop_up_instance.RemoveAt(index);
     }
 
     public void UnlockBlockPopUp()
