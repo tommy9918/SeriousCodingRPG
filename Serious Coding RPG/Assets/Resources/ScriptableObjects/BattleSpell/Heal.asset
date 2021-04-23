@@ -16,5 +16,6 @@ MonoBehaviour:
   spell_id: HEAL
   required_skill: sum
   usage: heal
-  effect_value: 10
+  effect_value: 5
+  price: 15
   instance_reference: {fileID: 0}

@@ -229,7 +229,13 @@ MonoBehaviour:
   spell_sprite_ren: {fileID: 968371060271973762}
   spell_name: {fileID: 968371061237930757}
   name_part: {fileID: 968371060099336030}
-  black_mist: {fileID: 0}
+  black_mist: {fileID: 593566143965653019, guid: 4adacdb0e48b5db489c8b512641a54f5,
+    type: 3}
+  in_battle: 0
+  can_expand_information: 0
+  can_buy: 0
+  detail_panel: {fileID: 593566143965653019, guid: 4adacdb0e48b5db489c8b512641a54f5,
+    type: 3}
 --- !u!114 &6118951402420721765
 MonoBehaviour:
   m_ObjectHideFlags: 0

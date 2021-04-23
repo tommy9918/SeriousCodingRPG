@@ -17,5 +17,6 @@ MonoBehaviour:
   required_skill: max
   usage: attack
   effect_value: 15
+  price: 30
   instance_reference: {fileID: 2521144199312413028, guid: bcd3c4cbbdcc94a49b2d3c910d4f814e,
     type: 3}

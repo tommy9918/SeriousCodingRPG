@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class BattleMagicLearn : MonoBehaviour
 {
+    public static BattleMagicLearn Instance;
+
     public GameObject skill_ref;
     public List<GameObject> buyable_skills;
     public List<GameObject> learned_skills;
@@ -12,15 +14,43 @@ public class BattleMagicLearn : MonoBehaviour
     public GameObject learned_parent;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
+    private void Start()
+    {
+        InitializeLearningPanel();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void CloseWindow()
+    {
+        GetComponent<FadeControl>().StartFadeOut();
+        GetComponent<ScaleChange>().StartAnimateReverse();
+        Destroy(gameObject, 0.6f);
+    }
+
+    public void Refresh()
+    {
+        foreach(GameObject obj in buyable_skills)
+        {
+            Destroy(obj);
+        }
+        foreach(GameObject obj in learned_skills)
+        {
+            Destroy(obj);
+        }
+        InitializeLearningPanel();
     }
 
     [ContextMenu("InitializeLearningPanel")]

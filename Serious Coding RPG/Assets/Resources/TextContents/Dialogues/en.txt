@@ -107,3 +107,22 @@ QUESTMAIN9-1-POTTER=Second challenge: when I give you an array,  tell me the onl
 #Quest 10
 QUESTMAIN10-1-POTTER=Wow! You learned the two Array spells in such a short period of time, you are really talented! No wonder Doris thinks you are the chosen one. 
 QUESTMAIN10-2-POTTER=Please come with me to meet the Grand Wizard. I believe that he will let you take the Sage’s Trial.
+
+#-------------------Skill related-------------------------------------------
+REQUIREDSKILL=REQUIRED SKILL: 
+EFFECT=EFFECTS: 
+AVERAGELENGTH=AVERAGE LENGTH
+#------------Effects---------------------------------------
+ATTACK=ATTACK WITH <value> EXTRA DAMAGE.
+HEAL=RESTORE <value> HEALTH POINTS.
+RESTORE=RESTORE <value> MANA POINTS.
+
+#-------------------------NAMES---------------------------------------
+FIREBALL=Fireball
+HEAL=Heal
+MIRACLE=Miracle
+
+#-----------------------Skill description--------------------------------
+FIREBALL_DESCRIPTION=This is what happens when you only extract the hottest magical enery!
+HEAL_DESCRIPTION=Adding this spell on top of your wounds should stop the bleeding temporarily.
+MIRACLE_DESCRIPTION=This spell can produce mana out of nothing. What a miracle!

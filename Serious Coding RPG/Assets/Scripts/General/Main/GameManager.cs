@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public GameObject battle_ui;
     public GameObject main_ui;
 
+    public GameObject learn_window;
+
     public GameObject black_transition;
 
     void Awake()
@@ -35,6 +37,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    public void OpenLearnWindow()
+    {
+        Vector3 pos = Player.Instance.transform.position;
+        GameObject temp = Instantiate(learn_window, new Vector3(pos.x, pos.y, learn_window.transform.position.z), Quaternion.identity);
         
     }
 
@@ -75,6 +84,15 @@ public class GameManager : MonoBehaviour
         foreach (BattleSpell bs in Resources.LoadAll("ScriptableObjects/BattleSpell") as BattleSpell[])
         {
             if (skill == bs.required_skill) return bs;
+        }
+        return null;
+    }
+
+    public Skill GetSkillByName(string name)
+    {
+        foreach(Skill skill in Player.Instance.data.skills)
+        {
+            if (name == skill.name) return skill;
         }
         return null;
     }

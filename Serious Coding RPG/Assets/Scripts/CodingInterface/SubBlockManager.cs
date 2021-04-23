@@ -92,7 +92,7 @@ public class SubBlockManager : MonoBehaviour
         AutoUpdateSize();
         if (GetComponent<SkillBlockInit>() != null)
         {
-            SetSkillBlockPosition();
+            //SetSkillBlockPosition();
         }
         else
         {
@@ -101,11 +101,13 @@ public class SubBlockManager : MonoBehaviour
         }
     }
 
+    [ContextMenu("SetSkillBlock!")]
     public void SetSkillBlockPosition()
     {
         float max_x_size = -1f;
         float max_y_size = -1f;
         float total_x_offset = CalculateTextWidth() / 100f + 0.65f;
+        //Debug.Log(total_x_offset);
         for (int i = 1; i <= block_sites.Count - 1; i++)
         {
             total_x_offset += 0.1f;
@@ -134,12 +136,16 @@ public class SubBlockManager : MonoBehaviour
                 }
             }          
         }
-        GetComponent<SpriteRenderer>().size = new Vector2(total_x_offset + 0.3f, max_y_size + 0.5f);
+        //Debug.Log(total_x_offset);
+        GetComponent<SpriteRenderer>().size = new Vector2(total_x_offset + 0.3f, Mathf.Max(1.5f, max_y_size + 0.5f));
     }
 
     int CalculateTextWidth()
     {
+        //Vector3 old_scale = transform.localScale;
+        //transform.localScale = Vector3.one;
         Text theText = skill_name_text;
+        //Debug.Log(theText.text);
         int totalLength = 0;
         //Text theText = GetComponentInChildren<Text>();
         Font myFont = theText.font;  //chatText is my Text component
@@ -147,14 +153,15 @@ public class SubBlockManager : MonoBehaviour
 
         string real_text = theText.text;
         char[] arr = real_text.ToCharArray();
-
+        Canvas.ForceUpdateCanvases();
         foreach (char c in arr)
         {
             myFont.GetCharacterInfo(c, out characterInfo, theText.fontSize);
-
+            //Debug.Log(characterInfo.advance);
             totalLength += characterInfo.advance;
         }
-
+        //transform.localScale = old_scale;
+        //Debug.Log(totalLength);
         return totalLength;
     }
 
