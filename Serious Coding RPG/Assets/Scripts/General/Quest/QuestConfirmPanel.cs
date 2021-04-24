@@ -61,6 +61,7 @@ public class QuestConfirmPanel : MonoBehaviour
         GetComponent<FadeControl>().StartFadeOut();
         Destroy(gameObject, 1f);
         QuestManager.Instance.QuestUIStart(questID);
+        PopUpManager.Instance.RemoveDim();
         //start quest with quest id
     }
 
@@ -68,6 +69,7 @@ public class QuestConfirmPanel : MonoBehaviour
     {
         //Debug.Log("No");
         GetComponent<ScaleChange>().StartAnimateReverse();
+        PopUpManager.Instance.RemoveDim();
         Destroy(gameObject, 1f);
     }
 

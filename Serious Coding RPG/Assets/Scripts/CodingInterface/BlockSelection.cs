@@ -170,7 +170,7 @@ public class BlockSelection : MonoBehaviour
             GameObject temp = Instantiate(skill_block_reference, scroll_list.transform);
             temp.GetComponent<SkillBlockInit>().skill = Player.Instance.data.skills[i];
             temp.GetComponent<SkillBlockInit>().InitializeSkillBlock();
-            temp.GetComponent<SubBlockManager>().SetSkillBlockPosition();
+            //temp.GetComponent<SubBlockManager>().SetSkillBlockPosition();
             temp.transform.localPosition = new Vector3(-3.17f, total_y_offset, -0.01f);
 
             if (temp.GetComponent<BlockManager>() != null)

@@ -60,7 +60,7 @@ public class NumVariable
 
     public string ToCharValue()
     {
-        return SpaceString(int.Parse(this.GetLatestValue()));
+        return SpaceString(int.Parse(this.GetLatestValue()));  //8 to "        "
     }
 }
 
@@ -119,7 +119,7 @@ public class CharVariable
 
     public string ToNumValue()
     {
-        return this.GetLatestValue().Length.ToString();
+        return this.GetLatestValue().Length.ToString();  //"abcde" to 5
     }
 }
 public class ExecutionSpace
@@ -155,9 +155,15 @@ public class ExecutionSpace
         if (commands.Count == 0) return "";
         input_index = 0;
         input_array = input_long_string.Split(',');
+        int step_limit = 1000;
 
         while (!execution_end)
         {
+            if (current_step > step_limit - 1)
+            {
+                execution_end = true;
+                break;
+            }
             //Debug.Log(commands[current_line_number - 1].command);
             line_number_traversed.Add(current_line_number);
             //Debug.Log("Running line number:" + current_line_number);
@@ -191,17 +197,20 @@ public class ExecutionSpace
                 case "output":
                     //Debug.Log("Running output");
                     current_step++;
-                    return TranslateToValue(commands[current_line_number - 1].value_blocks[0]);
+                    return TranslateToValue(commands[current_line_number - 1].value_blocks[0]) ?? "";
                 case "input":
                     //Debug.Log("Running input");
                     current_step++;
                     if (commands[current_line_number - 1].value_blocks[0].value_operation != "empty")
                     {
-                        string var_name2 = commands[current_line_number - 1].value_blocks[0].value;
-                        string value2 = input_array[input_index];
-                        input_index++;
-                        string type2 = "num";
-                        ExecuteAssign(var_name2, value2, type2, current_step);
+                        if (commands[current_line_number - 1].value_blocks[0].value_operation != "empty")
+                        {
+                            string var_name2 = commands[current_line_number - 1].value_blocks[0].value;
+                            string value2 = input_array[input_index];
+                            input_index++;
+                            string type2 = "num";
+                            ExecuteAssign(var_name2, value2, type2, current_step);
+                        }
                     }
                     current_line_number++;                 
                     break;
@@ -240,7 +249,7 @@ public class ExecutionSpace
             //DebugAllVariable();
             //Debug.Log("Run Success");
             //current_step++;
-            if (current_step > 100) execution_end = true;
+            
             if(current_line_number - 1 > commands.Count-1) execution_end = true;
         }
         return "";
@@ -256,36 +265,42 @@ public class ExecutionSpace
             {
                 case "assign":
                     current_step++;
-                    if (commands[i].value_blocks[0].value_operation != "at")
+                    if (commands[i].value_blocks[0].value_operation != "empty")
                     {
-                        string var_name = commands[i].value_blocks[0].value;
-                        //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
-                        string value = TranslateToValue(commands[i].value_blocks[1]);
-                        string type = commands[i].value_blocks[1].value_type;
-                        ExecuteAssign(var_name, value, type, current_step);
-                        //current_step++;
-                        //i++;
-                    }
-                    else
-                    {
-                        string var_name = commands[i].value_blocks[0].value_blocks[0].value;
-                        string value = TranslateToValue(commands[i].value_blocks[1]);
-                        string index = TranslateToValue(commands[i].value_blocks[0].value_blocks[1]);
-                        ExecuteAssignAt(var_name, index, value, current_step);
+                        if (commands[i].value_blocks[0].value_operation != "at")
+                        {
+                            string var_name = commands[i].value_blocks[0].value;
+                            //string value = commands[current_line_number - 1].value_blocks[1].GetValue();
+                            string value = TranslateToValue(commands[i].value_blocks[1]);
+                            string type = commands[i].value_blocks[1].value_type;
+                            ExecuteAssign(var_name, value, type, current_step);
+                            //current_step++;
+                            //i++;
+                        }
+                        else
+                        {
+                            string var_name = commands[i].value_blocks[0].value_blocks[0].value;
+                            string value = TranslateToValue(commands[i].value_blocks[1]);
+                            string index = TranslateToValue(commands[i].value_blocks[0].value_blocks[1]);
+                            ExecuteAssignAt(var_name, index, value, current_step);
+                        }
                     }
                     break;
                 case "output":
                     current_step++;
-                    return TranslateToValue(commands[i].value_blocks[0]);
+                    return TranslateToValue(commands[i].value_blocks[0]) ?? "";
                 case "input":
                     current_step++;
-                    string var_name2 = commands[i].value_blocks[0].value;
-                    string value2 = input_array[input_index];
-                    input_index++;
-                    string type2 = "num";
-                    ExecuteAssign(var_name2, value2, type2, current_step);
-                    //current_step++;
-                    //i++;
+                    if (commands[i].value_blocks[0].value_operation != "empty")
+                    {
+                        string var_name2 = commands[i].value_blocks[0].value;
+                        string value2 = input_array[input_index];
+                        input_index++;
+                        string type2 = "num";
+                        ExecuteAssign(var_name2, value2, type2, current_step);
+                        //current_step++;
+                        //i++;
+                    }
                     break;
                 case "if":
                     current_step++;
@@ -303,7 +318,16 @@ public class ExecutionSpace
                     break;
                 case "jump":
                     current_step++;
-                    current_line_number = int.Parse(TranslateToValue(commands[i].value_blocks[0]));
+                    //current_line_number = int.Parse(TranslateToValue(commands[i].value_blocks[0]));
+                    int final_number = int.Parse(TranslateToValue(commands[i].value_blocks[0]));
+                    if (final_number > 0)
+                    {
+                        current_line_number = final_number;
+                    }
+                    else
+                    {
+                        current_line_number += final_number;
+                    }
                     //current_step++;
                     return "";                  
             }
@@ -408,7 +432,7 @@ public class ExecutionSpace
                 case "multiply":
                     return (double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") * double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0")).ToString();
                 case "divide":
-                    if (double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0") != 0)
+                    if ((int) double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0") != 0)
                     {
                         return ((int)(double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") / double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0"))).ToString();
                     }
@@ -419,7 +443,7 @@ public class ExecutionSpace
                         return "0";
                     }
                 case "remainder":
-                    if (double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0") != 0)
+                    if ((int) double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0") != 0)
                     {
                         return (double.Parse(TranslateToValue(value_blk.value_blocks[0]) ?? "0") % double.Parse(TranslateToValue(value_blk.value_blocks[1]) ?? "0")).ToString();
                     }

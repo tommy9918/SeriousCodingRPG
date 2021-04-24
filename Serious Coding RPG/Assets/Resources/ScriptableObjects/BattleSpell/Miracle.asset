@@ -17,4 +17,5 @@ MonoBehaviour:
   required_skill: print_mana
   usage: restore
   effect_value: 3
+  price: 10
   instance_reference: {fileID: 0}

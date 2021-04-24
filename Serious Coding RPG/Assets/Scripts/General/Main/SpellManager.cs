@@ -10,6 +10,10 @@ public class SpellManager : MonoBehaviour
     public Text spell_name;
     public GameObject name_part;
     public GameObject black_mist;
+    public bool in_battle;
+    public bool can_expand_information;
+    public bool can_buy;
+    public GameObject detail_panel;
 
     [ContextMenu("InitializeSpell")]
     public void InitializeSpell()
@@ -32,7 +36,7 @@ public class SpellManager : MonoBehaviour
 
     void OnTouchUp()
     {
-        if (black_mist != null)
+        if (in_battle && black_mist != null)
         {
             //Time.timeScale = 0;
 
@@ -40,6 +44,22 @@ public class SpellManager : MonoBehaviour
             string spell_name = spell.required_skill;
             Debug.Log(spell_name);
             BattleManager.Instance.RepairSpell(spell_name, gameObject);
+        }
+        else if (can_buy)
+        {
+            GameObject temp = Instantiate(detail_panel, Player.Instance.transform.position, Quaternion.identity);
+            temp.transform.position = new Vector3(temp.transform.position.x, temp.transform.position.y, detail_panel.transform.position.z);
+            temp.GetComponent<SpellDetail>().buyable = true;
+            temp.GetComponent<SpellDetail>().InitializeSpellDetail(spell);
+            //PopUpManager.Instance.OpenComplexPopUp(temp);
+        }
+        else if (can_expand_information)
+        {
+            GameObject temp = Instantiate(detail_panel, Player.Instance.transform.position, Quaternion.identity);
+            temp.transform.position = new Vector3(temp.transform.position.x, temp.transform.position.y, detail_panel.transform.position.z);
+            //temp.GetComponent<SpellDetail>().buyable = true;
+            temp.GetComponent<SpellDetail>().InitializeSpellDetail(spell);
+            //PopUpManager.Instance.OpenComplexPopUp(temp);
         }
     }
 

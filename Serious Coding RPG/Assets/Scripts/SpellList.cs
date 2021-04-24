@@ -14,6 +14,8 @@ public class SpellList : MonoBehaviour
     public int pop_index;
     public GameObject magic_effect;
     public GameObject black_mist;
+
+    float black_mist_probability = 0.3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,10 +30,10 @@ public class SpellList : MonoBehaviour
 
     public void InitializeSpellList()
     {
-        spell_info_list = new List<BattleSpell>();
+        //spell_info_list = new List<BattleSpell>();
         for(int i = 0; i <= Player.Instance.data.spells_in_channels[target_spell_list_id].spell_list.Count - 1; i++)
         {
-            spell_info_list.Add(Player.Instance.data.spells_in_channels[target_spell_list_id].spell_list[i].GetSpellObjInfo());
+            //spell_info_list.Add(Player.Instance.data.spells_in_channels[target_spell_list_id].spell_list[i].GetSpellObjInfo());
         }
         spell_list = new List<GameObject>();
         float y = -2.17f;
@@ -47,7 +49,7 @@ public class SpellList : MonoBehaviour
             y -= 1.44f;
             current_index = (current_index + 1) % spell_info_list.Count;
 
-            if (Random.Range(0f, 1f) < 0.6f)
+            if (Random.Range(0f, 1f) < black_mist_probability)
             {
                 GameObject temp_mist = Instantiate(black_mist, spell_list[i].transform);
                 temp_mist.transform.localPosition = new Vector3(0, 0, -0.1f);
@@ -71,7 +73,7 @@ public class SpellList : MonoBehaviour
         spell_list[6].GetComponent<SpellManager>().InitializeSpell();
         spell_list[6].GetComponent<SpellManager>().DisableNamePart();
         spell_list[6].transform.localPosition = new Vector3(this_x, -10.88f, -1.35f);
-        if (Random.Range(0f, 1f) < 0.6f)
+        if (Random.Range(0f, 1f) < black_mist_probability)
         {
             GameObject temp_mist = Instantiate(black_mist, spell_list[6].transform);
             temp_mist.transform.localPosition = new Vector3(0, 0, -0.1f);

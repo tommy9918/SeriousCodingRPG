@@ -36,6 +36,12 @@ public class AdventureProgressBar : MonoBehaviour
         }
         x_coors.Add(x_boundary.y);
         current = 0;
+
+        for (int i = 0; i <= stage - 1; i++)
+        {
+            GameObject temp = Instantiate(dot_reference, transform);
+            temp.transform.localPosition = new Vector3(x_coors[i], 0f, -0.1f);
+        }
     }
 
     [ContextMenu("Progress")]

@@ -16,6 +16,8 @@ public class BattleSpell : ScriptableObject
     public string usage;
     public float effect_value;
 
+    public int price;
+
     public GameObject instance_reference;
 
     public int GetAverageStep()

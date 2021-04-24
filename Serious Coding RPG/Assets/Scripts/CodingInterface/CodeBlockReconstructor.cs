@@ -24,13 +24,16 @@ public class CodeBlockReconstructor : MonoBehaviour
             main_code_area.GetComponent<MainCodeArea>().UpdateLineNumberList(true);
             temp.transform.localPosition = new Vector3(0.95f, -0.3f, -0.1f);
             temp.GetComponent<BlockManager>().InititiateBlockSize();
+            temp.GetComponent<LongPressDrag>().accepted = true;
             SetCodingManager(temp);
             //temp.GetComponent<SetMaskInteration>().SetMask("Default", 1);
             temp.GetComponent<SetMaskInteration>().SetInteraction("inside");
         }
         float y_length = -main_code_area.GetComponent<MainCodeArea>().AlignBlocks();
+        
         //Debug.Log(y_length);
-        code_block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(code_block_parent.GetComponent<RectTransform>().sizeDelta.x, y_length + 5f);
+        code_block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(main_code_area.GetComponent<MainCodeArea>().MaxXLength(), y_length + 5f);
+        main_code_area.GetComponent<MainCodeArea>().UpdateLineNumberPos();
 
     }
 
@@ -63,20 +66,22 @@ public class CodeBlockReconstructor : MonoBehaviour
         GameObject temp = Instantiate(TypeToGameObject(blk.command));
         temp.transform.parent = parent.transform;
         temp.transform.localPosition = new Vector3(0.1f, -0.1f, -0.03f);
+        temp.GetComponent<LongPressDrag>().accepted = true;
         List<BlockSiteManager> value_slots = new List<BlockSiteManager>();
         List<BlockSiteManager> command_slots = new List<BlockSiteManager>();
         GetAllValueSlots(value_slots, temp);
         GetAllCommandSlots(command_slots, temp);
         if (blk.command_blocks1 != null && blk.command_blocks1.Count > 0)
         {
-            for(int i = 0; i <= blk.command_blocks1.Count - 1; i++)
+            command_slots[0].inserted_vertical_blocks = new List<GameObject>();
+            for (int i = 0; i <= blk.command_blocks1.Count - 1; i++)
             {
                 //GameObject sub_command_blk = Instantiate(all_blocks_reference[TypeToIndex(blk.command_blocks1[i].command)]);
                 //temp.transform.parent = command_slots[0].gameObject.transform;
                 //temp.transform.localPosition = new Vector3(0.1f, -0.1f, -0.03f);
                 //Debug.Log(blk.command_blocks1[i].command);
                 GameObject sub_command_blk = FillCommandBlock(blk.command_blocks1[i], command_slots[0].gameObject);
-                command_slots[0].inserted_vertical_blocks = new List<GameObject>();
+                //sub_command_blk.GetComponent<LongPressDrag>().accepted = true;
                 command_slots[0].inserted_vertical_blocks.Add(sub_command_blk);
                 command_slots[0].inserted_block = sub_command_blk;
                 //Debug.Log(command_slots[0].inserted_vertical_blocks.Count);
@@ -85,11 +90,12 @@ public class CodeBlockReconstructor : MonoBehaviour
         }
         if (blk.command_blocks2 != null && blk.command_blocks2.Count > 0)
         {
+            command_slots[1].inserted_vertical_blocks = new List<GameObject>();
             for (int i = 0; i <= blk.command_blocks2.Count - 1; i++)
             {
                 //Debug.Log(blk.command_blocks2[i].command);
                 GameObject sub_command_blk = FillCommandBlock(blk.command_blocks2[i], command_slots[1].gameObject);
-                command_slots[1].inserted_vertical_blocks = new List<GameObject>();
+                //sub_command_blk.GetComponent<LongPressDrag>().accepted = true;
                 command_slots[1].inserted_vertical_blocks.Add(sub_command_blk);
                 //Debug.Log(command_slots[1].inserted_vertical_blocks.Count);
             }
@@ -102,6 +108,7 @@ public class CodeBlockReconstructor : MonoBehaviour
                 GameObject sub_value_blk = FillValueBlock(blk.value_blocks[i], value_slots[i].gameObject);
                 if (sub_value_blk != null)
                 {
+                    //sub_value_blk.GetComponent<LongPressDrag>().accepted = true;
                     value_slots[i].inserted_block = sub_value_blk;
                     value_slots[i].SetSubBlockPositionHorizontal();
                 }
@@ -126,6 +133,7 @@ public class CodeBlockReconstructor : MonoBehaviour
         if (TypeToGameObject(blk.value_operation) == null) return null;
         //GameObject temp = Instantiate(all_blocks_reference[TypeToIndex(blk.value_operation)]);
         GameObject temp = Instantiate(TypeToGameObject(blk.value_operation));
+        temp.GetComponent<LongPressDrag>().accepted = true;
         if (blk.value_operation == "skill")
         {
             temp.GetComponent<SkillBlockInit>().skill = GetSkillFromSkillName(blk.value);
@@ -133,6 +141,7 @@ public class CodeBlockReconstructor : MonoBehaviour
         }
         temp.transform.parent = parent.transform;
         temp.transform.localPosition = new Vector3(0.1f, -0.1f, -0.03f);
+
         List<BlockSiteManager> value_slots = new List<BlockSiteManager>();
         GetAllValueSlots(value_slots, temp);
         if (blk.value_blocks != null && blk.value_blocks.Count > 0)

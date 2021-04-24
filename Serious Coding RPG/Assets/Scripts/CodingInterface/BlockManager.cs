@@ -59,8 +59,9 @@ public class BlockManager : MonoBehaviour
     {
         if (GetComponent<LongPressDrag>().accepted)
         {
-            GameObject temp = Instantiate(delete_button, transform);
-            temp.transform.localPosition = new Vector3(0, 0, -0.5f);
+            GameObject temp = Instantiate(delete_button);
+            temp.transform.localPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1f);
+            temp.GetComponent<DeleteIcon>().block = gameObject;
             temp.GetComponent<ScaleChange>().StartAnimate();
         }
     }
@@ -68,12 +69,19 @@ public class BlockManager : MonoBehaviour
     public void DeleteBlock()
     {
         //Debug.Log("deleteblock!");
+        horizontal = false;
+        vertical = false;
         GetComponent<ScaleChange>().StartAnimateReverse();
-        if(transform.parent.GetComponent<BlockSiteManager>() != null && transform.parent.GetComponent<BlockSiteManager>().horizontal)
+        if(transform.parent.GetComponent<BlockSiteManager>() != null && transform.parent.GetComponent<BlockSiteManager>().vertical)
         {
-            transform.parent.GetComponent<BlockSiteManager>().inserted_block = null;
-            transform.parent.GetComponent<BlockSiteManager>().DeleteBlock();
-            Destroy(gameObject, 0.5f);
+            //Debug.Log("Here");
+            //transform.parent.GetComponent<BlockSiteManager>().inserted_vertical_blocks.Remove(gameObject);
+            StartCoroutine(transform.parent.GetComponent<BlockSiteManager>().DeleteVerticalBlock(gameObject));
+            //Destroy(gameObject, 1f);
+        }
+        else if(transform.parent.GetComponent<BlockSiteManager>() == null)
+        {
+            StartCoroutine(CodingInterfaceManager.Instance.main_code_area.DeleteVerticalBlock(gameObject));
         }
     }
 
@@ -133,7 +141,7 @@ public class BlockManager : MonoBehaviour
             {
                 total_y_offset -= 0.1f;
                 block_sites[i].transform.localPosition = new Vector3(0.1f, total_y_offset, block_sites[i].transform.localPosition.z);
-                total_y_offset -= block_sites[i].GetComponent<SpriteRenderer>().size.y;
+                total_y_offset -= block_sites[i].GetComponent<SpriteRenderer>().size.y * block_sites[i].transform.localScale.y;
                 if (block_sites[i].GetComponent<SpriteRenderer>().size.x > max_x_size)
                 {
                     max_x_size = block_sites[i].GetComponent<SpriteRenderer>().size.x;

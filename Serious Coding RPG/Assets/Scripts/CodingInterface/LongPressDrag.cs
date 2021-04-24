@@ -39,7 +39,10 @@ public class LongPressDrag : MonoBehaviour
             {
                 pressed = false;
                 current = 0;
-                startDragging();
+                if (!accepted)
+                {
+                    startDragging();
+                }
             }
         }
 

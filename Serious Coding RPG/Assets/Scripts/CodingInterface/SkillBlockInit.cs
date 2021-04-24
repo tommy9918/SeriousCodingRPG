@@ -12,11 +12,16 @@ public class SkillBlockInit : MonoBehaviour
     [ContextMenu("Init")]
     public void InitializeSkillBlock()
     {
+        //Debug.Log("Hi!");
+        GetComponent<SubBlockManager>().block_sites = new List<GameObject>();
+        GetComponent<SubBlockManager>().block_sites.Add(skill_text.gameObject);
         //skill = Player.Instance.data.skills[0];
         skill_text.text = skill.name.ToLower();
-        for(int i = 0; i <= skill.number_of_slots - 2; i++)
+        GetComponent<SubBlockManager>().skill_name_text = skill_text;
+        for (int i = 0; i <= skill.number_of_slots - 1; i++)
         {
             GetComponent<SubBlockManager>().block_sites.Add(Instantiate(slots_ref, gameObject.transform));
         }
+        GetComponent<SubBlockManager>().SetSkillBlockPosition();
     }
 }

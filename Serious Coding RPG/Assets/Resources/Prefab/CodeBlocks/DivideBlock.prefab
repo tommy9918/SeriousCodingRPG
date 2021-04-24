@@ -682,3 +682,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonUse: StartDeleteBlock
+  duration: 40

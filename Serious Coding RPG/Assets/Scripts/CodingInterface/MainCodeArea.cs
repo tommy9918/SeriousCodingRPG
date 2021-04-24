@@ -62,10 +62,24 @@ public class MainCodeArea : MonoBehaviour
             {
                 float y = -AlignBlocks();
                 if (y < 7.4f) y = 7.4f;
-                block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(block_parent.GetComponent<RectTransform>().sizeDelta.x, y + 5f);
+                block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxXLength(), y + 5f);
                 UpdateLineNumberPos();
             }
         }
+    }
+
+    public IEnumerator DeleteVerticalBlock(GameObject blk)
+    {
+        //Debug.Log("Here");
+        coding_blocks.Remove(blk);
+        UpdateLineNumberList(false);
+        
+        RepositionBlocks();
+        yield return new WaitForSeconds(0.5f);
+        Destroy(blk);
+        float y = -AlignBlocks();
+        if (y < 7.4f) y = 7.4f;
+        block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxXLength(), y + 5f);
     }
 
     public void UpdateLineNumberList(bool increase)
@@ -74,29 +88,49 @@ public class MainCodeArea : MonoBehaviour
         {
             GameObject temp = Instantiate(line_number_referene, block_parent.transform);
             line_numbers.Add(temp);
-            temp.SetActive(false);
+            //temp.SetActive(false);
         }
         else
         {
+            line_numbers[line_numbers.Count - 1].GetComponent<FadeControl>().StartFadeOut();
+            Destroy(line_numbers[line_numbers.Count - 1], 0.5f);
             line_numbers.RemoveAt(line_numbers.Count - 1);
         }
 
         UpdateLineNumberPos();
     }
 
+    public float MaxXLength()
+    {
+        float initial_x = -1f;
+        for (int i = 0; i <= coding_blocks.Count - 1; i++)
+        {
+            //Debug.Log(coding_blocks[i].GetComponent<SpriteRenderer>().size.y);
+            //coding_blocks[i].transform.localPosition = new Vector3(coding_blocks[i].transform.localPosition.x, initial_y, coding_blocks[i].transform.localPosition.z);
+            if(coding_blocks[i].GetComponent<SpriteRenderer>().size.x > initial_x)
+            {
+                initial_x = coding_blocks[i].GetComponent<SpriteRenderer>().size.x;
+            }
+            
+            //initial_x -= 0.3f;
+        }
+        return initial_x + 1.5f;
+    }
+
     public void UpdateLineNumberPos()
     {
-        float start_y = 4.4f + block_parent.GetComponent<RectTransform>().localPosition.y - 6.194598f; ;
+        //float start_y = 4.4f + block_parent.GetComponent<RectTransform>().localPosition.y - 6.194598f; 
+        float start_y = -0.619f;
 
         for (int i = 0; i <= coding_blocks.Count - 1; i++)
         {
-            Vector3 pos = line_numbers[i].transform.position;
+            Vector3 pos = line_numbers[i].transform.localPosition;
             //Debug.Log(pos);
 
             //Debug.Log(start_y);
-            line_numbers[i].transform.position = new Vector3(pos.x, start_y, pos.z);
+            line_numbers[i].transform.localPosition = new Vector3(pos.x, start_y, pos.z);
             //Debug.Log(line_numbers[i].GetComponent<RectTransform>().localPosition);
-            line_numbers[i].GetComponent<Text>().text = (i + 1).ToString();
+            line_numbers[i].GetComponentInChildren<Text>().text = (i + 1).ToString();
             start_y -= coding_blocks[i].GetComponent<SpriteRenderer>().size.y + 0.3f;
         }
     }
@@ -161,10 +195,11 @@ public class MainCodeArea : MonoBehaviour
 
     int InsertLinePosition(float y_pos)
     {
-        if (coding_blocks.Count == 0) return 1;        
-        float offset = 4.6692f + (block_parent.transform.localPosition.y - 6.1946f);
+        if (coding_blocks.Count == 0) return 1;
+        float offset = 4.6692f + (block_parent.transform.localPosition.y - 6.1946f) + Player.Instance.transform.position.y;
+        //float offset = 1.63f;
         float initial_y = offset;
-        for(int i=0; i<=coding_blocks.Count-1; i++)
+        for(int i = 0; i <= coding_blocks.Count-1; i++)
         {           
             float length = coding_blocks[i].GetComponent<SpriteRenderer>().size.y;
             if(y_pos <= initial_y && y_pos > initial_y - length - 0.3f)
@@ -227,7 +262,7 @@ public class MainCodeArea : MonoBehaviour
 
             float y = -AlignBlocks();
             if (y < 7.4f) y = 7.4f;
-            block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(block_parent.GetComponent<RectTransform>().sizeDelta.x, y + 5f);
+            block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxXLength(), y + 5f);
             UpdateLineNumberList(true);
 
             current_line_number = 0;
@@ -285,6 +320,7 @@ public class MainCodeArea : MonoBehaviour
         DeleteGameObjectList(summoned_outline);
         DeleteGameObjectList(coding_blocks);
         DeleteGameObjectList(line_numbers);
+        block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(9.515f, 12.398f);
     }
 
     void DeleteGameObjectList(List<GameObject> list)

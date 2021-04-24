@@ -84,6 +84,27 @@ public class BlockSiteManager : MonoBehaviour
         GetComponent<BlockResizeAnimator>().StartAnimate(s, new Vector2(width, height));
     }
 
+    public IEnumerator DeleteVerticalBlock(GameObject blk)
+    {
+        //Debug.Log(inserted_vertical_blocks.Count);
+        if(inserted_vertical_blocks.Count == 1)
+        {
+            //Debug.Log("Here2");
+            Vector2 s = GetComponent<SpriteRenderer>().size;
+            GetComponent<BlockResizeAnimator>().StartAnimate(s, new Vector2(width, height));
+            yield return new WaitForSeconds(0.5f);
+            inserted_vertical_blocks.Remove(blk);
+            Destroy(blk);
+        }
+        else
+        {
+            //Debug.Log("Here3");
+            yield return new WaitForSeconds(0.5f);
+            inserted_vertical_blocks.Remove(blk);
+            Destroy(blk);
+        }
+    }
+
     public void SetSubBlockPositionHorizontal()
     {
         if (inserted_block != null)
@@ -103,15 +124,16 @@ public class BlockSiteManager : MonoBehaviour
             for (int i = 0; i <= inserted_vertical_blocks.Count - 1; i++)
             {
                 total_y_offset -= 0.1f;
+                if (inserted_vertical_blocks[i].transform.localScale.y <= 0.95f) total_y_offset += 0.1f;
                 inserted_vertical_blocks[i].transform.localPosition = new Vector3(0.1f, total_y_offset, inserted_vertical_blocks[i].transform.localPosition.z);
-                total_y_offset -= inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
-                if (inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.x > max_x_size)
+                total_y_offset -= inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y * inserted_vertical_blocks[i].transform.localScale.y;
+                if (inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.x * inserted_vertical_blocks[i].transform.localScale.x > max_x_size)
                 {
-                    max_x_size = inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.x;
+                    max_x_size = inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.x * inserted_vertical_blocks[i].transform.localScale.x;
                 }
-                if (inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y > max_y_size)
+                if (inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y * inserted_vertical_blocks[i].transform.localScale.y > max_y_size)
                 {
-                    max_y_size = inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y;
+                    max_y_size = inserted_vertical_blocks[i].GetComponent<SpriteRenderer>().size.y * inserted_vertical_blocks[i].transform.localScale.y;
                 }
 
             }
@@ -300,9 +322,7 @@ public class BlockSiteManager : MonoBehaviour
                     {
                         //Debug.Log("match!");
                         Highlight();
-                        incoming_insertion.GetComponent<LongPressDrag>().accepted = true;
-
-                        
+                        incoming_insertion.GetComponent<LongPressDrag>().accepted = true;                      
                     }
                     else
                     {
@@ -310,7 +330,6 @@ public class BlockSiteManager : MonoBehaviour
                         incoming_insertion.GetComponent<ErrorBlock>().StartFadeError();
                     }
                 }
-
                 if (vertical && BlockMatch(incoming_insertion))
                 {
                     float finger_y = FingerPos().y;

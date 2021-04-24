@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 7712916850723003705}
   - component: {fileID: 109501065697609497}
   - component: {fileID: 4506498692497674130}
-  - component: {fileID: 1877903520799452442}
   - component: {fileID: -1503626315803433074}
   - component: {fileID: -606621330679316917}
   - component: {fileID: 2620311213801610250}
   - component: {fileID: -1443527924250229383}
+  - component: {fileID: 6699733033399717763}
   m_Layer: 0
   m_Name: delete_icon
   m_TagString: Untagged
@@ -114,20 +114,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.26, y: 1.2021698}
   m_EdgeRadius: 0
---- !u!114 &1877903520799452442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2354682794844909738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b0808f1115e8d74c89b60d971467171, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  ButtonUse: DeleteBlock
 --- !u!114 &-1503626315803433074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfd38d6ab5f81f9409be76a5be8c7a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  block: {fileID: 0}
 --- !u!114 &-1443527924250229383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +174,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonUse: Delete
+--- !u!210 &6699733033399717763
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2354682794844909738}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &5043575899206113097
 GameObject:
   m_ObjectHideFlags: 0

@@ -601,6 +601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonUse: StartDeleteBlock
+  duration: 40
 --- !u!1 &7053668443568651370
 GameObject:
   m_ObjectHideFlags: 0

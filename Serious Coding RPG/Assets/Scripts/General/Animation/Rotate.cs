@@ -38,7 +38,10 @@ public class Rotate : MonoBehaviour
         }
         else if (specific)
         {
-            moveTime = Mathf.Abs(specificDegree * 0.235f);
+            if (moveTime == 0)
+            {
+                moveTime = Mathf.Abs(specificDegree * 0.235f);
+            }
             motion = new Motion(moveTime, nowDegree, specificDegree);
         }
 
@@ -90,5 +93,17 @@ public class Rotate : MonoBehaviour
             }
         }
 
+    }
+
+    [ContextMenu("StartAnimateSpecific")]
+    public void StartAnimateSpecific()
+    {
+        specific = true;
+        if (moveTime == 0)
+        {
+            moveTime = Mathf.Abs(specificDegree * 0.235f);
+        }
+        nowDegree = 0;
+        motion = new Motion(moveTime, nowDegree, specificDegree);
     }
 }
