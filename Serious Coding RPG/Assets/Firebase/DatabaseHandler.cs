@@ -1,30 +1,30 @@
-﻿using System;
+﻿/*
+ * This is a Module for handling the communication with
+ * Firebase Server, including realtime database(for leaderboard)
+ * and Storage(for game save file)
+ */
+
+using System;
 using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using Firebase.Auth;
-using Firebase.Database;
+using Firebase.Extensions;
+using Firebase.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 using Proyecto26;
-using Proyecto26.Common;
 using UnityEngine.Networking;
-using Random = System.Random;
 
 public class DatabaseHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
     public  Text emailText;
     public  Text uidText;
-    // public  InputField userNameText;
     public  InputField levelText;
     public  InputField scoreText;
     private FirebaseUser user;
+    private static FirebaseStorage storage;
     
-    private string databaseURL = "https://spelloverflow-default-rtdb.firebaseio.com/"; 
-    // private string AuthKey = "AIzaSyDh9qM2YHYAwd-F6uEwW6LmJj4p3yotduc";
+    private const string databaseURL = "https://spelloverflow-default-rtdb.firebaseio.com/"; 
     void Start()
     {
         if (AccountHandler.getUser() != null)
@@ -33,10 +33,9 @@ public class DatabaseHandler : MonoBehaviour
             Debug.Log("getUser() NOT NULL");
         }else Debug.Log("getUser() NULL");
         
-        
-        
         emailText.text += user.Email;
         uidText.text += user.UserId;
+        storage = FirebaseStorage.DefaultInstance;
     }
 
     // Update is called once per frame
@@ -45,6 +44,8 @@ public class DatabaseHandler : MonoBehaviour
         
     }
 
+    // For upload user records to leaderboard in
+    // realtime database
     public void onUpload()
     {
         if (AccountHandler.getUser() != null)
@@ -59,6 +60,7 @@ public class DatabaseHandler : MonoBehaviour
     }
     
 
+    // For Debug only, uploading a file to storage
     [ContextMenu("onPushFile")]
     public void onPushFile()
     {
@@ -95,43 +97,146 @@ public class DatabaseHandler : MonoBehaviour
 
     }
     
+    //upload game save file to firebase storage
+    public static void onPushSaveFile(string filePath)
+    {
+
+        if (File.Exists(filePath))
+        {
+            FirebaseUser user = null;
+            string filename = "save.game";
+            Debug.Log("local save file found, pushing to firebase");
+            if (AccountHandler.getUser() != null)
+            {
+                user =  AccountHandler.getUser();
+                var url2file =
+                    "https://firebasestorage.googleapis.com/v0/b/spelloverflow.appspot.com/o/UserProfile%2F"+user.UserId+"%2F"+filename;
+                RestClient.Post(new RequestHelper
+                {
+                    Uri = url2file,
+                    UploadHandler = new UploadHandlerFile(filePath),
+                    DefaultContentType = false
+                } ).Then( response =>
+                {
+                    Debug.LogFormat("Rest Post {0} succeeded",filename);
+                }).Catch(exception => Debug.Log(exception));
+            }
+            else
+            {
+                Debug.Log("PushSaveFile failed: User not logged in yet");
+            }
+
+        }
+        else
+        {
+            Debug.Log("PushSaveFile failed: File not found = "+ filePath);
+        }
+
+    }
+    
+    //For debug only, download file from firebase storage
     [ContextMenu("onDownloadFile")]
     public void onDownloadFile()
     {
         string filename = "save.game";
         // string filePath = "E:\\Downloads\\Firebase_storage\\"+filename;
-        string filePath = "./Assets/Firebase/"+filename;
-        var url2file =
-            "https://firebasestorage.googleapis.com/v0/b/spelloverflow.appspot.com/o/UserProfile%2F"+filename+"?alt=media&token=";
+        string filePath = Application.persistentDataPath + "/save.game";
+        storage = FirebaseStorage.DefaultInstance;
+        // var url2file =
+        //     "https://firebasestorage.googleapis.com/v0/b/spelloverflow.appspot.com/o/UserProfile%2F"+filename+"?alt=media&token=";
 
-        FileStream fs;
+        var uid = "CHzrvaJHL9cV4j5KxknpCPNFlg03";
+        Debug.Log(storage);
+        var pathReference =
+            storage.GetReferenceFromUrl("gs://spelloverflow.appspot.com");
+        Debug.Log(pathReference.Child("UserProfile").Path);
+        StorageReference fileRef = pathReference.Child("UserProfile/CHzrvaJHL9cV4j5KxknpCPNFlg03/save.game");
+        
+        fileRef.GetDownloadUrlAsync().ContinueWithOnMainThread(task => {
+            if (!task.IsFaulted && !task.IsCanceled) {
+                Debug.Log("Download URL: " + task.Result);
+                // ... now download the file via WWW or UnityWebRequest.
+            }else Debug.Log("get URL failed");
+        });
+
+        fileRef.GetFileAsync(filePath).ContinueWithOnMainThread(task => {
+            if (!task.IsFaulted && !task.IsCanceled) {
+                Debug.Log("File downloaded.");
+            }
+            else
+            {
+                Debug.Log("download failed");
+            }
+        });
+
+        // FileStream fs;
+        // if (!File.Exists(filePath))
+        // {
+        //     // Create the file.
+        //     fs = File.Create(filePath);
+        //     Byte[] info = new System.Text.UTF8Encoding(true).GetBytes("This is some text in the file.");
+        //     // Add some information to the file.
+        //     fs.Write(info, 0, info.Length);
+        // }
+        // else
+        // {
+        //     fs = File.OpenWrite(filePath);
+        // }
+        //
+        // RestClient.Get(new RequestHelper
+        // {
+        //     Uri = url2file,
+        //     DefaultContentType = false,
+        //     ParseResponseBody = false
+        // } ).Then( response =>
+        // {
+        //     Debug.Log("Rest Download succeeded");
+        //     fs.Write(response.Data, 0, response.Data.Length);
+        //     Debug.LogFormat("Rest Download {0} succeeded", filename);
+        //
+        // }).Catch(exception => Debug.Log(exception));
+        
+    }
+    
+    
+    public static async Task onDownloadSaveFile()
+    {
+        string filename = "save.game";
+        string filePath = Application.persistentDataPath + "/save.game";
         if (!File.Exists(filePath))
         {
-            // Create the file.
-            fs = File.Create(filePath);
-            Byte[] info = new System.Text.UTF8Encoding(true).GetBytes("This is some text in the file.");
-            // Add some information to the file.
-            fs.Write(info, 0, info.Length);
-        }
-        else
-        {
-            fs = File.OpenWrite(filePath);
-        }
+            if (AccountHandler.getUser() != null)
+            {
+                storage = FirebaseStorage.DefaultInstance;
+                var uid = AccountHandler.getUser().UserId;
+                var childPath = "UserProfile/" +uid+"/save.game";
+                var fileRef = storage.GetReference(childPath);
+                
+                // check if the file exists in firebase storage first
+                await fileRef.GetDownloadUrlAsync().ContinueWithOnMainThread(task => {
+                    if (!task.IsFaulted && !task.IsCanceled) {
+                        Debug.Log("Download URL: " + task.Result);
+                        // ... now download the file via WWW or UnityWebRequest.
+                        fileRef.GetFileAsync(filePath).ContinueWithOnMainThread(task2 => {
+                            if (!task2.IsFaulted && !task2.IsCanceled) {
+                                Debug.Log("File downloaded.");
+                            }
+                            else
+                            {
+                                Debug.Log("file download failed");
+                            }
+                        });
+                    }
+                    else Debug.Log("get URL failed, file may not exist");
+                });
 
-        RestClient.Get(new RequestHelper
-        {
-            Uri = url2file,
-            DefaultContentType = false,
-            ParseResponseBody = false
-        } ).Then( response =>
-        {
-            Debug.Log("Rest Download succeeded");
-            fs.Write(response.Data, 0, response.Data.Length);
-            Debug.LogFormat("Rest Download {0} succeeded", filename);
-
-        }).Catch(exception => Debug.Log(exception));
-    
+                
+            }
+            else Debug.Log("DownloadSaveFile failed: User not logged in yet");
+        }
+        else Debug.Log("local profile exist, no need to download");
         
+
     }
 
 }

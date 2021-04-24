@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Proyecto26;
 
 public static class SaveLoad
 {
@@ -14,6 +15,8 @@ public static class SaveLoad
 
         formatter.Serialize(stream, data);
         stream.Close();
+        //upload the save file
+        DatabaseHandler.onPushSaveFile(path);
     }
 
 
