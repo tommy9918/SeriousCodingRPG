@@ -54,6 +54,9 @@ public class AnimationRoutine : MonoBehaviour
                         GetComponent<ScaleChange>().moveTime = durations[i];
                         GetComponent<ScaleChange>().StartAnimateReverse();
                         break;
+                    case "dim":
+                        GetComponent<Dim>().StartDim();
+                        break;
                 }
             }
             yield return new WaitForSeconds(durations[i] / 60f);

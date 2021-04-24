@@ -37,6 +37,7 @@ public class BattleMagicLearn : MonoBehaviour
     {
         GetComponent<FadeControl>().StartFadeOut();
         GetComponent<ScaleChange>().StartAnimateReverse();
+        GetComponent<Dim>().RemoveDim();
         Destroy(gameObject, 0.6f);
     }
 

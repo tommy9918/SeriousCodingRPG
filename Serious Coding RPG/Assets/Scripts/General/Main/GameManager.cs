@@ -97,6 +97,18 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    public BattleSpell GetSpellBySpellID(string id)
+    {
+        foreach (BattleSpell bs in Resources.LoadAll("ScriptableObjects/BattleSpell"))
+        {
+            if (id == bs.spell_id)
+            {
+                return bs;
+            }
+        }
+        return null;
+    }
+
     public List<BattleSpell> GetBuyableSpell()
     {
         List<BattleSpell> battle_spell_list = new List<BattleSpell>();

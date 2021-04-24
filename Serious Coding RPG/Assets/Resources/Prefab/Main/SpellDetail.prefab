@@ -906,6 +906,7 @@ GameObject:
   - component: {fileID: 593566143965653022}
   - component: {fileID: 593566143965653008}
   - component: {fileID: 593566143965653023}
+  - component: {fileID: 8153547944000371491}
   m_Layer: 0
   m_Name: SpellDetail
   m_TagString: Untagged
@@ -921,7 +922,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 593566143965653019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: -23}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_Children:
   - {fileID: 593566144286989786}
@@ -970,7 +971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animations:
-  - fadein,scale
+  - fadein,scale,dim
   durations: 14000000
   DoNotAutoStart: 0
 --- !u!114 &593566143965653008
@@ -1019,6 +1020,20 @@ MonoBehaviour:
   finalXY: {x: 0, y: 0}
   moveTime: 0
   auto_start: 0
+--- !u!114 &8153547944000371491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593566143965653019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf996355e9e5f8409773348150806d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dim_ref: {fileID: 0}
+  instance: {fileID: 0}
 --- !u!1 &593566143999162420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,7 +1936,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3753715446275586834
 Transform:
   m_ObjectHideFlags: 0
