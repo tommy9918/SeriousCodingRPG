@@ -15,7 +15,10 @@ public class ChildButton : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        parent = transform.parent.gameObject;
+        if (parent == null)
+        {
+            parent = transform.parent.gameObject;
+        }
     }
 
     void OnTouchDown()

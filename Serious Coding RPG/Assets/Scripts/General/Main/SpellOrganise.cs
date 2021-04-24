@@ -34,6 +34,7 @@ public class SpellOrganise : MonoBehaviour
     {
         GetComponent<FadeControl>().StartFadeOut();
         GetComponent<ScaleChange>().StartAnimateReverse();
+        GetComponent<Dim>().RemoveDim();
         Destroy(gameObject, 0.6f);
     }
 
@@ -66,7 +67,7 @@ public class SpellOrganise : MonoBehaviour
 
         for (int i = 0; i <= learned_skills.Count - 1; i++)
         {
-            learned_skills[i].transform.localPosition = new Vector3(1.11f + (i % 4) * 1.9f, -4.25f - (i / 4) * -2f, -1f);
+            learned_skills[i].transform.localPosition = new Vector3(1.11f + (i % 4) * 1.9f, -1.14f - (i / 4) * -2f, -1f);
         }
     }
 }

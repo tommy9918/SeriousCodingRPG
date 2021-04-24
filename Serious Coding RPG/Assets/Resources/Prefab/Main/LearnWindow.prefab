@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8480811483021647281
 Transform:
   m_ObjectHideFlags: 0
@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 4198215436460396746}
   - component: {fileID: 4198215436460396750}
   - component: {fileID: 4198215436460396749}
+  - component: {fileID: 6381033079838938408}
   m_Layer: 0
   m_Name: LearnWindow
   m_TagString: Untagged
@@ -480,9 +481,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animations:
-  - scale,fadein
+  - scale,fadein,dim
   durations: 14000000
   DoNotAutoStart: 0
+--- !u!114 &6381033079838938408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4198215436460396747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf996355e9e5f8409773348150806d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dim_ref: {fileID: 0}
+  instance: {fileID: 0}
 --- !u!1 &4198215437300161736
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,6 +23,7 @@ public class StatWindowManager : MonoBehaviour
         UpdateStatInfo();
         GetComponent<FadeControl>().StartFadeIn();
         GetComponent<ScaleChange>().StartAnimate();
+        GetComponent<Dim>().StartDim();
     }
     public void UpdateStatInfo()
     {
@@ -36,6 +37,14 @@ public class StatWindowManager : MonoBehaviour
         speed.text = Player.Instance.chanting_speed.ToString();
         memory.text = Player.Instance.max_equip_spells.ToString();
         multichant.text = "LV " + Player.Instance.spell_channels.ToString();
+    }
+
+    public void CloseWindow()
+    {
+        GetComponent<FadeControl>().StartFadeOut();
+        GetComponent<ScaleChange>().StartAnimateReverse();
+        GetComponent<Dim>().RemoveDim();
+        Destroy(gameObject, 0.6f);
     }
 
     // Start is called before the first frame update
