@@ -89,4 +89,13 @@ public class QuestManager : MonoBehaviour
         }
         return null;
     }
+
+    public Quest getQuestFromSkill(string skill_name)
+    {
+        foreach (Quest quest in all_quests)
+        {
+            if (skill_name == quest.skill_name) return quest;
+        }
+        return null;
+    }
 }

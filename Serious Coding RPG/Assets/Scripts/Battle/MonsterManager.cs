@@ -17,6 +17,10 @@ public class MonsterManager : MonoBehaviour
     public int gold;
     public int interval;
     int current = 0;
+
+    public GameObject missle_ref;
+    public Color attack_color;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,8 +77,15 @@ public class MonsterManager : MonoBehaviour
         {
             real_attack = Random.Range(1, 6);
         }
+        //GameObject missle = Instantiate(missle_ref, transform.position, Quaternion.identity);
+        //missle.GetComponent<MissleShoot>().Shoot(BattleManager.Instance.health_gem.transform.position);
+        //missle.GetComponent<MissleShoot>().effect_target = BattleManager.Instance.gameObject;
+        //missle.GetComponent<MissleShoot>().effect_value = real_attack;
+        //missle.GetComponent<MissleShoot>().effect = "damage";
+
         transform.parent.GetComponent<BattleManager>().damage(real_attack);
         //Debug.Log("Monster attacked with " + real_attack.ToString() + " damage!");
+        GameManager.Instance.MissleEffect(gameObject, BattleManager.Instance.health_gem, attack_color);
     }
 
     public void damage(int damage_amt)
@@ -93,7 +104,7 @@ public class MonsterManager : MonoBehaviour
         Debug.Log("Monster die!");
         GetComponent<FadeControl>().StartFadeOut();
         Destroy(gameObject, 1f);
-        //BattleManager.Instance.paused = true;
-        BattleManager.Instance.ToNextStage();
+        BattleManager.Instance.paused = true;
+        BattleManager.Instance.StartQuestion();
     }
 }

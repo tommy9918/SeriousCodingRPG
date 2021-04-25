@@ -83,7 +83,7 @@ public class SpellManager : MonoBehaviour
 
             BattleManager.Instance.paused = true;
             string spell_name = spell.required_skill;
-            Debug.Log(spell_name);
+            //Debug.Log(spell_name);
             BattleManager.Instance.RepairSpell(spell_name, gameObject);
         }
         else if (can_buy)

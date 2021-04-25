@@ -82,4 +82,16 @@ public class MasterTextManager : MonoBehaviour
         }
         return true;
     }
+
+    public void LoadQuestionByID(string question_id, out string question, out List<string> answers)
+    {
+        string line = LoadText(question_id);
+        string[] array = line.Split(',');
+        question = array[0];
+        answers = new List<string>();
+        for(int i = 1; i <= 4; i++)
+        {
+            answers.Add(array[i]);
+        }
+    }
 }

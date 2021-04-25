@@ -40,7 +40,7 @@ public class SpellCircle : MonoBehaviour
 
     public void InitializeSpellCircle(int index)
     {
-        Debug.Log("here");
+        //Debug.Log("here");
         channel_index = index;
         spell_lengths = new List<int>();
         speed = Player.Instance.data.channel_chanting_speed[index];
@@ -52,7 +52,7 @@ public class SpellCircle : MonoBehaviour
         fill = 0f;
         circle.fillAmount = 0f;
         executing = true;
-        Debug.Log("success");
+        //Debug.Log("success");
     }
 
     IEnumerator CastSpellSequence()

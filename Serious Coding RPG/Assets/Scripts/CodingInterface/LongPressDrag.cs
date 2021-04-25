@@ -14,7 +14,7 @@ public class LongPressDrag : MonoBehaviour
     int confirm_duration = 10;
     int current = 0;
     public bool accepted;
-
+    public bool repairing;
     public GameObject coding_manager;
 
     // Start is called before the first frame update
@@ -91,6 +91,7 @@ public class LongPressDrag : MonoBehaviour
 
     void startDragging()
     {
+        
         dragging = true;
         GetComponent<BoxCollider2D>().enabled = false;
         finger_start_position = FingerPos();

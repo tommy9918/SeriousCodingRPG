@@ -231,8 +231,7 @@ MonoBehaviour:
   spell_sprite_ren: {fileID: 968371060271973762}
   spell_name: {fileID: 968371061237930757}
   name_part: {fileID: 968371060099336030}
-  black_mist: {fileID: 593566143965653019, guid: 4adacdb0e48b5db489c8b512641a54f5,
-    type: 3}
+  black_mist: {fileID: 0}
   add_spell_controler: {fileID: 0}
   channel_manager: {fileID: 0}
   in_battle: 0

@@ -131,6 +131,6 @@ MIRACLE_DESCRIPTION=This spell can produce mana out of nothing. What a miracle!
 
 #--------------------------Battle Questions-----------------------------------------
 QUESTION1-1-1=Which Command Block will definitely bring a spell to stop?,OUTPUT,INPUT,ASSIGN,JUMP
-QUESTION1-1-2=Which Command Block is not nescessary for a loop?,OUTPUT,INPUT,ASSIGN,JUMP
-QUESTION1-1-3=Which Command Block will definitely bring a spell to stop?,OUTPUT,INPUT,ASSIGN,JUMP
-QUESTION1-1-4=Which Command Block will definitely bring a spell to stop?,OUTPUT,INPUT,ASSIGN,JUMP
+QUESTION1-1-2=Which Code Block is not nescessary for a non-endless loop?,WORD,IF,JUMP,VARIABLE
+QUESTION1-1-3=Which Code Block cannot be put into a Plus Block?,JUMP,NUMBER,WORD,VARIABLE
+QUESTION1-1-4=Which Code Block cannot be stored in a Variable Block?,IF,WORD,NUMBER,ARRAY
