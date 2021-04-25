@@ -240,6 +240,9 @@ MonoBehaviour:
   DEF: 0
   gold: 0
   interval: 0
+  missle_ref: {fileID: 4428481465188743314, guid: 89c4bd3803af5aa4c98a032d10cb9fbc,
+    type: 3}
+  attack_color: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &5095514809602265412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +285,8 @@ MonoBehaviour:
   XYSeparate: 0
   finalScale: 1
   startScale: 0.5
+  startXY: {x: 0, y: 0}
+  finalXY: {x: 0, y: 0}
   moveTime: 20
   auto_start: 0
 --- !u!114 &-1814361139377628797

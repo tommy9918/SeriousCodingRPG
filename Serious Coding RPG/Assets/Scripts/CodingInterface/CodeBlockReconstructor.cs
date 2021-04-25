@@ -37,11 +37,12 @@ public class CodeBlockReconstructor : MonoBehaviour
 
     }
 
-    public void RebuildBlocksRepair(List<CommandBlock> command_blocks)
+    public List<GameObject> RebuildBlocksRepair(List<CommandBlock> command_blocks)
     {
         
         float initial_y = -0.3f;
         float initial_x = 0.95f;
+        List<GameObject> block_list = new List<GameObject>();
         for (int i = 0; i <= command_blocks.Count - 1; i++)
         {
             GameObject temp = FillCommandBlock(command_blocks[i], code_block_parent);
@@ -52,12 +53,14 @@ public class CodeBlockReconstructor : MonoBehaviour
             //SetCodingManager(temp);
             //temp.GetComponent<SetMaskInteration>().SetMask("Default", 1);
             temp.GetComponent<SetMaskInteration>().SetInteraction("inside");
+            block_list.Add(temp);
             //temp.GetComponent<SetMaskInteration>().SetOrder(1);
             initial_y -= (temp.GetComponent<SpriteRenderer>().size.y + 0.2f);
         }
         //float y_length = -main_code_area.GetComponent<MainCodeArea>().AlignBlocks();
         //Debug.Log(y_length);
         code_block_parent.GetComponent<RectTransform>().sizeDelta = new Vector2(code_block_parent.GetComponent<RectTransform>().sizeDelta.x, -initial_y + 5f);
+        return block_list;
     }
 
     public GameObject FillCommandBlock(CommandBlock blk, GameObject parent)

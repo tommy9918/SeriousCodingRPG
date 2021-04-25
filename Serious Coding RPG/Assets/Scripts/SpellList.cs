@@ -10,16 +10,17 @@ public class SpellList : MonoBehaviour
     public List<GameObject> spell_list;
     //public List<GameObject> spell_list_ref;
     public int current_index;
-    public float this_x;
+    float this_x;
     public int pop_index;
     public GameObject magic_effect;
     public GameObject black_mist;
+    public SpellCircle progress_control;
 
     float black_mist_probability = 0.3f;
     // Start is called before the first frame update
     void Start()
     {
-        InitializeSpellList();
+        //InitializeSpellList();
     }
 
     // Update is called once per frame
@@ -28,12 +29,14 @@ public class SpellList : MonoBehaviour
         
     }
 
-    public void InitializeSpellList()
+    public void InitializeSpellList(int index)
     {
-        //spell_info_list = new List<BattleSpell>();
+        target_spell_list_id = index;
+        this_x = 0;
+        spell_info_list = new List<BattleSpell>();
         for(int i = 0; i <= Player.Instance.data.spells_in_channels[target_spell_list_id].spell_list.Count - 1; i++)
         {
-            //spell_info_list.Add(Player.Instance.data.spells_in_channels[target_spell_list_id].spell_list[i].GetSpellObjInfo());
+            spell_info_list.Add(Player.Instance.data.spells_in_channels[target_spell_list_id].spell_list[i].GetSpellObjInfo());
         }
         spell_list = new List<GameObject>();
         float y = -2.17f;
@@ -44,12 +47,13 @@ public class SpellList : MonoBehaviour
             spell_list[i].GetComponent<SpellManager>().spell = spell_info_list[current_index];
             spell_list[i].GetComponent<SpellManager>().InitializeSpell();
             spell_list[i].GetComponent<SpellManager>().DisableNamePart();
+            spell_list[i].GetComponent<SpellManager>().in_battle = true;
 
             spell_list[i].transform.localPosition = new Vector3(this_x, y, -1.35f);
             y -= 1.44f;
             current_index = (current_index + 1) % spell_info_list.Count;
 
-            if (Random.Range(0f, 1f) < black_mist_probability)
+            if (Random.Range(0f, 1f) < black_mist_probability && SpellCorruptable(spell_info_list[current_index]))
             {
                 GameObject temp_mist = Instantiate(black_mist, spell_list[i].transform);
                 temp_mist.transform.localPosition = new Vector3(0, 0, -0.1f);
@@ -57,6 +61,8 @@ public class SpellList : MonoBehaviour
             }
         }
         pop_index = 0;
+        progress_control.InitializeSpellCircle(target_spell_list_id);
+        progress_control.list = gameObject;
     }
 
     public void GoNextSpell()
@@ -72,8 +78,9 @@ public class SpellList : MonoBehaviour
         spell_list[6].GetComponent<SpellManager>().spell = spell_info_list[current_index];
         spell_list[6].GetComponent<SpellManager>().InitializeSpell();
         spell_list[6].GetComponent<SpellManager>().DisableNamePart();
+        spell_list[6].GetComponent<SpellManager>().in_battle = true;
         spell_list[6].transform.localPosition = new Vector3(this_x, -10.88f, -1.35f);
-        if (Random.Range(0f, 1f) < black_mist_probability)
+        if (Random.Range(0f, 1f) < black_mist_probability && SpellCorruptable(spell_info_list[current_index]))
         {
             GameObject temp_mist = Instantiate(black_mist, spell_list[6].transform);
             temp_mist.transform.localPosition = new Vector3(0, 0, -0.1f);
@@ -91,9 +98,9 @@ public class SpellList : MonoBehaviour
         
     }
 
-    bool SpellDestroyable(BattleSpell spell)
+    bool SpellCorruptable(BattleSpell spell)
     {
-        return true;
+        return GameManager.Instance.RepairSpellLength(spell.spell_id) >= 3;
     }
  
 

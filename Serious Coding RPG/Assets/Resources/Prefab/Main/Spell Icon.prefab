@@ -114,6 +114,8 @@ GameObject:
   - component: {fileID: 968371060194209299}
   - component: {fileID: 6118951402420721765}
   - component: {fileID: -5170038400227012043}
+  - component: {fileID: 5840310207453466967}
+  - component: {fileID: 7287618936691027628}
   m_Layer: 0
   m_Name: Spell Icon
   m_TagString: Untagged
@@ -229,11 +231,14 @@ MonoBehaviour:
   spell_sprite_ren: {fileID: 968371060271973762}
   spell_name: {fileID: 968371061237930757}
   name_part: {fileID: 968371060099336030}
-  black_mist: {fileID: 593566143965653019, guid: 4adacdb0e48b5db489c8b512641a54f5,
-    type: 3}
+  black_mist: {fileID: 0}
+  add_spell_controler: {fileID: 0}
+  channel_manager: {fileID: 0}
   in_battle: 0
   can_expand_information: 0
   can_buy: 0
+  can_add: 0
+  can_delete: 0
   detail_panel: {fileID: 593566143965653019, guid: 4adacdb0e48b5db489c8b512641a54f5,
     type: 3}
 --- !u!114 &6118951402420721765
@@ -286,6 +291,33 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5840310207453466967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968371060194209310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9560c024275be214081a392c4dd0cbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+--- !u!114 &7287618936691027628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968371060194209310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f201ffa7f6dd7a64f80fcc21a7ff3276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonUse: OnPressed
+  duration: 0
 --- !u!1 &968371060271973772
 GameObject:
   m_ObjectHideFlags: 0

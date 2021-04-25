@@ -14,6 +14,11 @@ public class PlayerData
         {
             spell_list = og_spell_list;
         }
+
+        public PlayerSpellList()
+        {
+            spell_list = new List<PlayerSpell>();
+        }
     }
     public enum Gender
     {

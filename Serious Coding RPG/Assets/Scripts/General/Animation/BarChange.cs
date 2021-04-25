@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BarChange : MonoBehaviour
 {
-    float duration = 15f;
+    float duration = 10f;
     public float fill_amount = 1f;
     public float change_amount;
     public float target_amount;

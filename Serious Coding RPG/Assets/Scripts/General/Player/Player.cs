@@ -63,7 +63,16 @@ public class Player : MonoBehaviour
             //data.language = "en";
         }
         InitializeCalculatableData();
-    }   
+    }
+
+    private void Start()
+    {
+        float original_ratio = 0.5615599f;
+        float original_size = 9.56f;
+        //Debug.Log(GetComponent<Camera>().aspect);
+        float new_ratio = (1f / GetComponent<Camera>().aspect) / (1f / original_ratio);
+        GetComponent<Camera>().orthographicSize = original_size * new_ratio;
+    }
 
     public bool checkQuestStatus(string id)    //0 = not finished, 1 = finished
     {
@@ -89,7 +98,7 @@ public class Player : MonoBehaviour
         max_mana = mana = (data.level - 1) * 50 + 100;
         ATK = (data.level - 1) * 5 + 35;
         DEF = (data.level - 1) * 3 + 20;
-        spell_channels = Mathf.Min(5, data.level / 7 + 1);
+        spell_channels = Mathf.Min(5, data.level / 7 + 2);
         chanting_speed = (data.level - 1) * 5 + 15;
         max_equip_spells = (data.level - 1) * 1 + 3;
     }

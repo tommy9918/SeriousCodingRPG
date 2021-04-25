@@ -24,6 +24,8 @@ INPUT=Input:
 OUTPUT=Output: 
 MAINQUEST=MAIN QUEST
 SIDEQUEST=SIDE QUEST
+STEPSLEFT=Chanting Steps Left
+UNUSECHANNEL=Unused Spell Channels
 
 #Quest 1
 QUESTMAIN1-1-ELDER=Oh! Hey there......
@@ -126,3 +128,9 @@ MIRACLE=Miracle
 FIREBALL_DESCRIPTION=This is what happens when you only extract the hottest magical enery!
 HEAL_DESCRIPTION=Adding this spell on top of your wounds should stop the bleeding temporarily.
 MIRACLE_DESCRIPTION=This spell can produce mana out of nothing. What a miracle!
+
+#--------------------------Battle Questions-----------------------------------------
+QUESTION1-1-1=Which Command Block will definitely bring a spell to stop?,OUTPUT,INPUT,ASSIGN,JUMP
+QUESTION1-1-2=Which Code Block is not nescessary for a non-endless loop?,WORD,IF,JUMP,VARIABLE
+QUESTION1-1-3=Which Code Block cannot be put into a Plus Block?,JUMP,NUMBER,WORD,VARIABLE
+QUESTION1-1-4=Which Code Block cannot be stored in a Variable Block?,IF,WORD,NUMBER,ARRAY

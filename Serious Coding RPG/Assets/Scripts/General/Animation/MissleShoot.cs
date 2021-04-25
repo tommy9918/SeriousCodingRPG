@@ -13,6 +13,10 @@ public class MissleShoot : MonoBehaviour
     public GameObject start_effect;
     public GameObject end_effect;
 
+    public string effect;
+    public GameObject effect_target;
+    public int effect_value;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +46,10 @@ public class MissleShoot : MonoBehaviour
                 {
                     Instantiate(end_effect, transform.position, Quaternion.identity);
                 }
+                if(effect_target != null)
+                {
+                    effect_target.SendMessage("effect", effect_value, SendMessageOptions.DontRequireReceiver);
+                }
                 Destroy(gameObject, 0.5f);
             }
         }
@@ -54,7 +62,7 @@ public class MissleShoot : MonoBehaviour
         Vector3 dist = destination - transform.position;
         current_direction = dist;
         offset = Random.Range(-dist.magnitude*2f, dist.magnitude*2f);
-        offset = 12;
+        //offset = 12;
         current_direction = Quaternion.Euler(0, 0, offset) * current_direction;
 
         if(start_effect != null)

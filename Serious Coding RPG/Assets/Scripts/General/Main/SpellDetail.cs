@@ -48,7 +48,7 @@ public class SpellDetail : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough gold! Fuck off!");
+            Debug.Log("Not enough gold!");
         }
     }
 

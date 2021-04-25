@@ -12,8 +12,12 @@ public class GameManager : MonoBehaviour
     public GameObject main_ui;
 
     public GameObject learn_window;
+    public GameObject profile_window;
+    public GameObject organise_spell_window;
 
     public GameObject black_transition;
+
+    public GameObject missle_ref;
 
     void Awake()
     {
@@ -40,11 +44,71 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void OpenProfile()
+    {
+        SpawnWindowAtCamera(profile_window);
+    }
+
+    public void OpenOrganiseSpellWindow()
+    {
+        SpawnWindowAtCamera(organise_spell_window);
+    }
+
     public void OpenLearnWindow()
     {
         Vector3 pos = Player.Instance.transform.position;
         GameObject temp = Instantiate(learn_window, new Vector3(pos.x, pos.y, learn_window.transform.position.z), Quaternion.identity);
         
+    }
+
+    public int RepairSpellLength(string spell_id)
+    {
+        foreach(PlayerSpell spell in Player.Instance.data.all_spells)
+        {
+            if(spell_id == spell.spell_id)
+            {
+
+                return GetSkillByName(GetSpellBySpellID(spell_id).required_skill).command_index.Count;
+            }
+        }
+        return 0;
+    }
+
+    public bool NowCoding()
+    {
+        return CodingInterfaceManager.Instance != null && CodingInterfaceManager.Instance.gameObject.active == true;
+    }
+
+    public void MissleEffect(GameObject shooter, GameObject destination, Color color)
+    {
+        GameObject m = Instantiate(missle_ref, shooter.transform.position, Quaternion.identity);
+        m.GetComponent<SetParticleColor>().Set(color);
+        m.GetComponent<MissleShoot>().Shoot(destination.transform.position);
+    }
+
+    public bool RepairedSkillValid(List<CommandBlock> commandblocks, string spell_id)
+    {
+        List<string>  quest_inputs = new List<string>();
+        List<string>  expect_outputs = new List<string>();
+        Skill related_skill = GetSkillByName(GetSpellBySpellID(spell_id).required_skill);
+        Quest quest = QuestManager.Instance.getQuestFromSkill(related_skill.name);
+        for (int i = 0; i <= quest.input.Length - 1; i++)
+        {
+            quest_inputs.Add(quest.input[i]);
+            expect_outputs.Add(quest.output[i]);
+        }
+        for (int i = 0; i <= quest_inputs.Count - 1; i++)
+        {
+            ExecutionSpace exec = new ExecutionSpace();
+            string output = exec.StartExecution(commandblocks, quest_inputs[i]);
+           
+            if (!output.Equals(expect_outputs[i]))
+            {
+                return false;
+            }
+                      
+        }
+        return true;
     }
 
     public IEnumerator StartMission(string quest_id)
@@ -128,12 +192,57 @@ public class GameManager : MonoBehaviour
         List<BattleSpell> learnt_list = new List<BattleSpell>();
         foreach (BattleSpell bs in Resources.LoadAll("ScriptableObjects/BattleSpell"))
         {
-            if (Player.Instance.HaveSpell(bs.name))
+           
+            if (Player.Instance.HaveSpell(bs.spell_id))
             {
                 learnt_list.Add(bs);
             }
         }
         return learnt_list;
+    }
+
+    public List<BattleSpell> GetUnequippedSpell()
+    {
+        List<BattleSpell> uneqipped_spell = new List<BattleSpell>();
+        foreach (BattleSpell spell in GetLearntSpell())
+        {
+            bool equipped = false;
+            foreach(PlayerData.PlayerSpellList spell_list in Player.Instance.data.spells_in_channels)
+            {
+                foreach(PlayerSpell bspell in spell_list.spell_list)
+                {
+                    if(bspell.spell_id == spell.spell_id)
+                    {
+                        equipped = true;
+                        break;
+                    }
+
+                }
+                if (equipped) break;
+            }
+            if (!equipped) uneqipped_spell.Add(spell);
+        }
+        return uneqipped_spell;
+    }
+
+    public PlayerSpell FindPlayerSpellBySpellID(string spell_id)
+    {
+        foreach(PlayerSpell spell in Player.Instance.data.all_spells)
+        {
+            if(spell.spell_id == spell_id)
+            {
+                return spell;
+            }
+        }
+        return null;
+    }
+
+    public GameObject SpawnWindowAtCamera(GameObject reference)
+    {
+        GameObject temp = Instantiate(reference);
+        Vector3 pos = Player.Instance.gameObject.transform.position;
+        temp.transform.position = new Vector3(pos.x, pos.y, reference.transform.position.z);
+        return temp;
     }
 
     public void SaveGame()

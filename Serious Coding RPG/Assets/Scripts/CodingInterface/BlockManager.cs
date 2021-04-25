@@ -57,7 +57,7 @@ public class BlockManager : MonoBehaviour
 
     public void StartDeleteBlock()
     {
-        if (GetComponent<LongPressDrag>().accepted)
+        if (GetComponent<LongPressDrag>().accepted && GameManager.Instance.NowCoding())
         {
             GameObject temp = Instantiate(delete_button);
             temp.transform.localPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1f);

@@ -245,7 +245,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{inproject}: user.keystore'
+  AndroidKeystoreName: '{dedicated}: Desktop/user.keystore'
   AndroidKeyaliasName: spell
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0

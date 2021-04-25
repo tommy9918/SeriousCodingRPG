@@ -19,6 +19,18 @@ public class BattleManager : MonoBehaviour
     public GameObject repairing_spell;
     public GameObject repair_screen;
 
+    public GameObject spell_list_ref;
+    public List<GameObject> spell_list_list;
+    public string stage_id;
+    public int progress = 1;
+
+    public GameObject health_gem;
+    public GameObject mana_gem;
+    public GameObject question_panel_ref;
+
+    public Color mana_color;
+    public Color attack_color;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -40,13 +52,38 @@ public class BattleManager : MonoBehaviour
         
     }
 
+    public void MonsterAttackMissle(GameObject missle)
+    {
+        missle.GetComponent<MissleShoot>().Shoot(health_gem.transform.position);
+    }
+
     public void RepairSpell(string skill_name, GameObject spell)
     {
         repairing_spell = spell;
         List<CommandBlock> spell_code = Player.Instance.GetSkillCode(skill_name);
+        int start_index = 0;
+        spell_code = Shuffle(spell_code, 3, out start_index);
         repair_screen.SetActive(true);
-        repair_screen.GetComponent<CodeBlockReconstructor>().RebuildBlocksRepair(spell_code);
+        repair_screen.GetComponent<SpellRepair>().block_list = repair_screen.GetComponent<CodeBlockReconstructor>().RebuildBlocksRepair(spell_code);
+        repair_screen.GetComponent<SpellRepair>().repairing_spell = spell;
+        repair_screen.GetComponent<SpellRepair>().InitializeRepairScreen(start_index, 3);
 
+    }
+
+    public List<CommandBlock> Shuffle(List<CommandBlock> original, int difficulty, out int start_index)
+    {
+        start_index = Random.Range(0, original.Count - difficulty);
+        //Debug.Log(start_index);
+        //List<CommandBlock> shuffled = new List<CommandBlock>();
+        for (int i = start_index; i <= start_index + difficulty - 1; ++i)
+        {
+            int r = Random.Range(i, start_index + difficulty);
+            CommandBlock tmp = original[i];
+            original[i] = original[r];
+            original[r] = tmp;
+        }
+
+        return original;
     }
 
     [ContextMenu("StartStage")]
@@ -54,6 +91,14 @@ public class BattleManager : MonoBehaviour
     {
         SummonMonsters(1);
         MPAutoRestore = StartCoroutine(AutoRestoreMP());
+        
+        for(int i = 0; i <= Player.Instance.data.spells_in_channels.Count - 1; i++)
+        {
+            GameObject temp = Instantiate(spell_list_ref, transform);
+            float start = (Player.Instance.data.spells_in_channels.Count - 1) * 2.28f / 2 * -1;
+            temp.transform.localPosition = new Vector3(start + 2.28f * i, 0, 0);
+            temp.GetComponent<SpellList>().InitializeSpellList(i);
+        }
     }
 
     [ContextMenu("UpdatePlayerStatus")]
@@ -72,6 +117,7 @@ public class BattleManager : MonoBehaviour
 
     public void damage(int damage_amt)
     {
+        Debug.Log("Here");
         Player.Instance.damage(damage_amt);
         //UpdatePlayerStatus();
         Player_HP_Bar.GetComponent<BarChange>().ChangeTo((float)Player.Instance.health / Player.Instance.max_health);
@@ -106,8 +152,10 @@ public class BattleManager : MonoBehaviour
     {
         if (consume(spell.GetAverageStep())) //player have enough mana
         {
-            if (origin.transform.childCount < 3)
+            GameManager.Instance.MissleEffect(mana_gem, origin, mana_color);
+            if (origin.GetComponent<SpellManager>().black_mist == null)
             {
+                
                 switch (spell.usage)
                 {
                     case "attack":
@@ -161,15 +209,36 @@ public class BattleManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            restore(5);
+            restore(0);
         }
 
     }
 
+    public void StartQuestion()
+    {
+        //progress++;
+        string question_id = "QUESTION" + stage_id + "-" + progress.ToString();
+        GameObject temp = GameManager.Instance.SpawnWindowAtCamera(question_panel_ref);
+        temp.GetComponent<QuestionPanel>().InitializeQuestionPanel(question_id);
+    }
+
     public void ToNextStage()
     {
-        progress_bar.Progress();
-        StartStage();
+        //progress_bar.Progress();
+        
+
+        //StartStage();
+        StartCoroutine(BattleBreak());
+        //SummonMonsters(1);
+    }
+
+    IEnumerator BattleBreak()
+    {
+        paused = true;
+        yield return new WaitForSeconds(1.5f);
+        SummonMonsters(1);
+        yield return new WaitForSeconds(0.5f);
+        paused = false;
     }
     
 }
