@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
         max_mana = mana = (data.level - 1) * 50 + 100;
         ATK = (data.level - 1) * 5 + 35;
         DEF = (data.level - 1) * 3 + 20;
-        spell_channels = Mathf.Min(5, data.level / 7 + 1);
+        spell_channels = Mathf.Min(5, data.level / 7 + 2);
         chanting_speed = (data.level - 1) * 5 + 15;
         max_equip_spells = (data.level - 1) * 1 + 3;
     }

@@ -19,6 +19,10 @@ public class BattleManager : MonoBehaviour
     public GameObject repairing_spell;
     public GameObject repair_screen;
 
+    public GameObject spell_list_ref;
+    public List<GameObject> spell_list_list;
+    public string stage_id;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -44,9 +48,27 @@ public class BattleManager : MonoBehaviour
     {
         repairing_spell = spell;
         List<CommandBlock> spell_code = Player.Instance.GetSkillCode(skill_name);
+        int start_index = 0;
+        spell_code = Shuffle(spell_code, 3, out start_index);
         repair_screen.SetActive(true);
         repair_screen.GetComponent<CodeBlockReconstructor>().RebuildBlocksRepair(spell_code);
 
+    }
+
+    public List<CommandBlock> Shuffle(List<CommandBlock> original, int difficulty, out int start_index)
+    {
+        start_index = Random.Range(0, original.Count - difficulty);
+        Debug.Log(start_index);
+        //List<CommandBlock> shuffled = new List<CommandBlock>();
+        for (int i = start_index; i <= start_index + difficulty - 1; ++i)
+        {
+            int r = Random.Range(i, start_index + difficulty);
+            CommandBlock tmp = original[i];
+            original[i] = original[r];
+            original[r] = tmp;
+        }
+
+        return original;
     }
 
     [ContextMenu("StartStage")]
@@ -54,6 +76,14 @@ public class BattleManager : MonoBehaviour
     {
         SummonMonsters(1);
         MPAutoRestore = StartCoroutine(AutoRestoreMP());
+        
+        for(int i = 0; i <= Player.Instance.data.spells_in_channels.Count - 1; i++)
+        {
+            GameObject temp = Instantiate(spell_list_ref, transform);
+            float start = (Player.Instance.data.spells_in_channels.Count - 1) * 2.28f / 2 * -1;
+            temp.transform.localPosition = new Vector3(start + 2.28f * i, 0, 0);
+            temp.GetComponent<SpellList>().InitializeSpellList(i);
+        }
     }
 
     [ContextMenu("UpdatePlayerStatus")]

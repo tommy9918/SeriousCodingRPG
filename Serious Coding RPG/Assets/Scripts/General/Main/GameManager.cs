@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public GameObject main_ui;
 
     public GameObject learn_window;
+    public GameObject profile_window;
+    public GameObject organise_spell_window;
 
     public GameObject black_transition;
 
@@ -40,11 +42,39 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void OpenProfile()
+    {
+        SpawnWindowAtCamera(profile_window);
+    }
+
+    public void OpenOrganiseSpellWindow()
+    {
+        SpawnWindowAtCamera(organise_spell_window);
+    }
+
     public void OpenLearnWindow()
     {
         Vector3 pos = Player.Instance.transform.position;
         GameObject temp = Instantiate(learn_window, new Vector3(pos.x, pos.y, learn_window.transform.position.z), Quaternion.identity);
         
+    }
+
+    public int RepairSpellLength(string spell_id)
+    {
+        foreach(PlayerSpell spell in Player.Instance.data.all_spells)
+        {
+            if(spell_id == spell.spell_id)
+            {
+
+                return GetSkillByName(GetSpellBySpellID(spell_id).required_skill).command_index.Count;
+            }
+        }
+        return 0;
+    }
+
+    public bool NowCoding()
+    {
+        return CodingInterfaceManager.Instance != null && CodingInterfaceManager.Instance.gameObject.active == true;
     }
 
     public IEnumerator StartMission(string quest_id)
@@ -134,6 +164,50 @@ public class GameManager : MonoBehaviour
             }
         }
         return learnt_list;
+    }
+
+    public List<BattleSpell> GetUnequippedSpell()
+    {
+        List<BattleSpell> uneqipped_spell = new List<BattleSpell>();
+        foreach (BattleSpell spell in GetLearntSpell())
+        {
+            bool equipped = false;
+            foreach(PlayerData.PlayerSpellList spell_list in Player.Instance.data.spells_in_channels)
+            {
+                foreach(PlayerSpell bspell in spell_list.spell_list)
+                {
+                    if(bspell.spell_id == spell.spell_id)
+                    {
+                        equipped = true;
+                        break;
+                    }
+
+                }
+                if (equipped) break;
+            }
+            if (!equipped) uneqipped_spell.Add(spell);
+        }
+        return uneqipped_spell;
+    }
+
+    public PlayerSpell FindPlayerSpellBySpellID(string spell_id)
+    {
+        foreach(PlayerSpell spell in Player.Instance.data.all_spells)
+        {
+            if(spell.spell_id == spell_id)
+            {
+                return spell;
+            }
+        }
+        return null;
+    }
+
+    public GameObject SpawnWindowAtCamera(GameObject reference)
+    {
+        GameObject temp = Instantiate(reference);
+        Vector3 pos = Player.Instance.gameObject.transform.position;
+        temp.transform.position = new Vector3(pos.x, pos.y, reference.transform.position.z);
+        return temp;
     }
 
     public void SaveGame()

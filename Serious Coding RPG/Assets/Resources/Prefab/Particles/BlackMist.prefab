@@ -40,7 +40,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791407763328609734}
   serializedVersion: 6
-  lengthInSec: 2
+  lengthInSec: 0.49
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -114,9 +114,9 @@ ParticleSystem:
     enabled: 1
     startLifetime:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 1
-      minScalar: 2
+      minMaxState: 0
+      scalar: 0.5
+      minScalar: 0.49
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -865,7 +865,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 8
+      scalar: 40
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4794,7 +4794,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4195462266669304715}
   serializedVersion: 6
-  lengthInSec: 2
+  lengthInSec: 0.49
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -4868,9 +4868,9 @@ ParticleSystem:
     enabled: 1
     startLifetime:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 1
-      minScalar: 2
+      minMaxState: 0
+      scalar: 0.5
+      minScalar: 0.49
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5619,7 +5619,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 16
+      scalar: 30
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -9550,7 +9550,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6289142379846062394}
   serializedVersion: 6
-  lengthInSec: 2
+  lengthInSec: 0.49
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -9624,9 +9624,9 @@ ParticleSystem:
     enabled: 1
     startLifetime:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 1
-      minScalar: 2
+      minMaxState: 0
+      scalar: 0.5
+      minScalar: 0.49
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10375,7 +10375,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 25
       minScalar: 10
       maxCurve:
         serializedVersion: 2
