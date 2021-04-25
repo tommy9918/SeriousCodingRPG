@@ -67,6 +67,7 @@ public class QuestionPanel : MonoBehaviour
     public void AnswerCorrect()
     {
         BattleManager.Instance.progress_bar.Progress();
+        BattleManager.Instance.progress++;
         BattleManager.Instance.ToNextStage();
         CloseWindow();
     }

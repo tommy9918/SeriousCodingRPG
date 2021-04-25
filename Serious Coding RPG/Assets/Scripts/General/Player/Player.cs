@@ -63,7 +63,16 @@ public class Player : MonoBehaviour
             //data.language = "en";
         }
         InitializeCalculatableData();
-    }   
+    }
+
+    private void Start()
+    {
+        float original_ratio = 0.5615599f;
+        float original_size = 9.56f;
+        //Debug.Log(GetComponent<Camera>().aspect);
+        float new_ratio = (1f / GetComponent<Camera>().aspect) / (1f / original_ratio);
+        GetComponent<Camera>().orthographicSize = original_size * new_ratio;
+    }
 
     public bool checkQuestStatus(string id)    //0 = not finished, 1 = finished
     {

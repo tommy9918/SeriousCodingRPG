@@ -192,7 +192,8 @@ public class GameManager : MonoBehaviour
         List<BattleSpell> learnt_list = new List<BattleSpell>();
         foreach (BattleSpell bs in Resources.LoadAll("ScriptableObjects/BattleSpell"))
         {
-            if (Player.Instance.HaveSpell(bs.name))
+           
+            if (Player.Instance.HaveSpell(bs.spell_id))
             {
                 learnt_list.Add(bs);
             }

@@ -362,7 +362,7 @@ public class BlockSiteManager : MonoBehaviour
         Dehighlight();
         if (incoming_insertion != null)
         {
-            //incoming_insertion.GetComponent<LongPressDrag>().accepted = false;
+            incoming_insertion.GetComponent<LongPressDrag>().accepted = false;
             if (BlockMatch(incoming_insertion) == false)
             {
                 incoming_insertion.GetComponent<ErrorBlock>().StartFadeBack();

@@ -22,7 +22,7 @@ public class BattleManager : MonoBehaviour
     public GameObject spell_list_ref;
     public List<GameObject> spell_list_list;
     public string stage_id;
-    public int progress = 0;
+    public int progress = 1;
 
     public GameObject health_gem;
     public GameObject mana_gem;
@@ -216,7 +216,7 @@ public class BattleManager : MonoBehaviour
 
     public void StartQuestion()
     {
-        progress++;
+        //progress++;
         string question_id = "QUESTION" + stage_id + "-" + progress.ToString();
         GameObject temp = GameManager.Instance.SpawnWindowAtCamera(question_panel_ref);
         temp.GetComponent<QuestionPanel>().InitializeQuestionPanel(question_id);
