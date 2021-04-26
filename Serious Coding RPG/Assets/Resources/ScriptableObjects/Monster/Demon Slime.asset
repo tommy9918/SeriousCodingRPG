@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0605c52aeb2e93e438ac14304a5d72ad, type: 3}
-  m_Name: Blue Slime
+  m_Name: Demon Slime
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: cf1d29fd3fbb7ab45832caace70fe7fb, type: 3}
+  sprite: {fileID: 21300000, guid: 9c00bf534794f9e49af25d57d056a3d3, type: 3}
   stageid: 1-1
-  monster_id: BLUESLIME
-  level: 1
+  monster_id: DEMONSLIME
+  level: 2
   attack_interval: 180
-  ATK: 25
-  DEF: 10
-  health: 150
+  ATK: 30
+  DEF: 12
+  health: 200

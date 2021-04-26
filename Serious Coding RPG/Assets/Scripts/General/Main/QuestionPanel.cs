@@ -68,7 +68,14 @@ public class QuestionPanel : MonoBehaviour
     {
         BattleManager.Instance.progress_bar.Progress();
         BattleManager.Instance.progress++;
-        BattleManager.Instance.ToNextStage();
+        if (BattleManager.Instance.progress < BattleManager.Instance.total_stage)
+        {
+            BattleManager.Instance.ToNextStage();
+        }
+        else
+        {
+            BattleManager.Instance.EndBattle();
+        }
         CloseWindow();
     }
 

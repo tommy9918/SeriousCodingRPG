@@ -51,7 +51,7 @@ public class SpellList : MonoBehaviour
 
             spell_list[i].transform.localPosition = new Vector3(this_x, y, -1.35f);
             y -= 1.44f;
-            current_index = (current_index + 1) % spell_info_list.Count;
+            
 
             if (Random.Range(0f, 1f) < black_mist_probability && SpellCorruptable(spell_info_list[current_index]))
             {
@@ -59,6 +59,7 @@ public class SpellList : MonoBehaviour
                 temp_mist.transform.localPosition = new Vector3(0, 0, -0.1f);
                 spell_list[i].GetComponent<SpellManager>().black_mist = temp_mist;
             }
+            current_index = (current_index + 1) % spell_info_list.Count;
         }
         pop_index = 0;
         progress_control.InitializeSpellCircle(target_spell_list_id);
@@ -100,6 +101,8 @@ public class SpellList : MonoBehaviour
 
     bool SpellCorruptable(BattleSpell spell)
     {
+        Debug.Log(spell.spell_id);
+        //if (spell.spell_id == "MIRACLE") Debug.Log(GameManager.Instance.RepairSpellLength(spell.spell_id));
         return GameManager.Instance.RepairSpellLength(spell.spell_id) >= 3;
     }
  

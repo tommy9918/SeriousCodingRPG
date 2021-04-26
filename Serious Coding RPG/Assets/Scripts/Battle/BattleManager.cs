@@ -28,6 +28,8 @@ public class BattleManager : MonoBehaviour
     public GameObject mana_gem;
     public GameObject question_panel_ref;
 
+    public int total_stage;
+
     public Color mana_color;
     public Color attack_color;
 
@@ -42,7 +44,7 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-        StartStage();
+        //StartStage();
 
     }
 
@@ -86,19 +88,35 @@ public class BattleManager : MonoBehaviour
         return original;
     }
 
-    [ContextMenu("StartStage")]
-    public void StartStage()
+    public void InitializeBattleUI()
     {
-        SummonMonsters(1);
-        MPAutoRestore = StartCoroutine(AutoRestoreMP());
-        
-        for(int i = 0; i <= Player.Instance.data.spells_in_channels.Count - 1; i++)
+        stage_monster = new List<Monster>();
+        foreach (Monster monster in Resources.LoadAll<Monster>("ScriptableObjects/Monster"))
+        {
+            if (monster.stageid == stage_id)
+            {
+                stage_monster.Add(monster);
+            }
+        }
+
+        for (int i = 0; i <= Player.Instance.data.spells_in_channels.Count - 1; i++)
         {
             GameObject temp = Instantiate(spell_list_ref, transform);
             float start = (Player.Instance.data.spells_in_channels.Count - 1) * 2.28f / 2 * -1;
             temp.transform.localPosition = new Vector3(start + 2.28f * i, 0, 0);
             temp.GetComponent<SpellList>().InitializeSpellList(i);
         }
+        paused = true;
+        progress_bar.InitializeCoordinatesList(total_stage);
+    }
+
+    [ContextMenu("StartStage")]
+    public void StartStage()
+    {
+        Debug.Log("Stage started");
+        SummonMonsters(1);
+        MPAutoRestore = StartCoroutine(AutoRestoreMP());
+        paused = false;
     }
 
     [ContextMenu("UpdatePlayerStatus")]
@@ -159,7 +177,7 @@ public class BattleManager : MonoBehaviour
                 switch (spell.usage)
                 {
                     case "attack":
-                        GameObject atk_obj = Instantiate(spell.instance_reference, origin.transform.position, Quaternion.identity);
+                        GameObject atk_obj = Instantiate(spell.instance_reference, origin.transform.position, Quaternion.identity, transform);
                         int target_index = Random.Range(0, monster_summoned.Count);
                         atk_obj.GetComponent<FlyingAttackObject>().target = monster_summoned[target_index];
                         atk_obj.GetComponent<FlyingAttackObject>().InitializeFAO();
@@ -197,6 +215,7 @@ public class BattleManager : MonoBehaviour
         for (int i = 0; i <= no_of_monster - 1; i++)
         {
             GameObject temp_monster = Instantiate(monster_reference, new Vector3(0, 3.5f, 0), Quaternion.identity, transform);
+            temp_monster.transform.localPosition = new Vector3(0, 3.5f, 0);
             temp_monster.GetComponent<MonsterManager>().monster = stage_monster[Random.Range(0, stage_monster.Count)];
             temp_monster.GetComponent<MonsterManager>().InitializeMonster();
             monster_summoned.Add(temp_monster);
@@ -217,7 +236,7 @@ public class BattleManager : MonoBehaviour
     public void StartQuestion()
     {
         //progress++;
-        string question_id = "QUESTION" + stage_id + "-" + progress.ToString();
+        string question_id = "QUESTION" + stage_id + "-" + (progress+1).ToString();
         GameObject temp = GameManager.Instance.SpawnWindowAtCamera(question_panel_ref);
         temp.GetComponent<QuestionPanel>().InitializeQuestionPanel(question_id);
     }
@@ -230,6 +249,13 @@ public class BattleManager : MonoBehaviour
         //StartStage();
         StartCoroutine(BattleBreak());
         //SummonMonsters(1);
+    }
+
+    public void EndBattle()
+    {
+        Player.Instance.data.completedStage.Add(stage_id);
+        SaveLoad.Save(Player.Instance);
+        GameManager.Instance.BattleToMapChange("Village2");
     }
 
     IEnumerator BattleBreak()

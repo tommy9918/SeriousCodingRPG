@@ -32,6 +32,7 @@ public class PlayerData
     public int gold;
     public List<string> completedTask;
     public List<Skill> skills;
+    public List<string> completedStage;
     public List<string> equiped_spells_id;
     public List<PlayerSpell> all_spells;
     public List<int> channel_chanting_speed;
@@ -39,6 +40,7 @@ public class PlayerData
     public List<string> unlocked_blocks;
     public int spell_channels;
     public string language;
+    public string location;
 
     
     public void TestAddSpellChannels()
@@ -70,12 +72,14 @@ public class PlayerData
         gold = 0;
         completedTask = new List<string>();
         skills = new List<Skill>();
+        completedStage = new List<string>();
         equiped_spells_id = new List<string>();
         all_spells = new List<PlayerSpell>();
         channel_chanting_speed = new List<int>();
         spells_in_channels = new List<PlayerSpellList>();
         unlocked_blocks = new List<string>();
         spell_channels = 1;
+        location = "village1";
 
         language = "en";
         
@@ -90,12 +94,14 @@ public class PlayerData
         this.gold = player.data.gold;
         this.completedTask = new List<string>(player.data.completedTask);
         this.skills = new List<Skill>(player.data.skills);
+        this.completedStage = new List<string>(player.data.completedStage);
         this.equiped_spells_id = new List<string>(player.data.equiped_spells_id);
         this.all_spells = new List<PlayerSpell>(player.data.all_spells);
         this.channel_chanting_speed = new List<int>(player.data.channel_chanting_speed);
         this.spells_in_channels = new List<PlayerSpellList>(player.data.spells_in_channels);
         this.unlocked_blocks = new List<string>(player.data.unlocked_blocks);
         this.spell_channels = 1;
+        this.location = player.data.location;
 
         this.language = player.data.language;
         

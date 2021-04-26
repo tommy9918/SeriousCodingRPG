@@ -6,6 +6,7 @@ using UnityEngine;
 public class Monster : ScriptableObject
 {
     public Sprite sprite;
+    public string stageid;
     public string monster_id;
     public int level;
     public int attack_interval;

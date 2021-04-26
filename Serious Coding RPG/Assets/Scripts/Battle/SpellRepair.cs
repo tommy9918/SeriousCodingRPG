@@ -20,6 +20,7 @@ public class SpellRepair : MonoBehaviour
     void RepairSuccess()
     {
         BattleManager.Instance.repairing_spell.GetComponent<SpellManager>().RepairSuccess();
+        GetComponent<Dim>().RemoveDim();
         gameObject.SetActive(false);
         foreach (Transform child in block_parent.transform)
         {
@@ -157,6 +158,10 @@ public class SpellRepair : MonoBehaviour
             
         }
         //return initial_y;
+
+        GetComponent<FadeControl>().StartFadeIn();
+        GetComponent<ScaleChange>().StartAnimate();
+        GetComponent<Dim>().StartDim();
     }
 
     

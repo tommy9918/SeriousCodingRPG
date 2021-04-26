@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject black_transition;
 
+    public GameObject stage_select;
+
     public GameObject missle_ref;
 
     void Awake()
@@ -46,7 +48,8 @@ public class GameManager : MonoBehaviour
 
     public void OpenProfile()
     {
-        SpawnWindowAtCamera(profile_window);
+        GameObject temp = SpawnWindowAtCamera(profile_window);
+        temp.GetComponent<StatWindowManager>().UpdateStatInfo();
     }
 
     public void OpenOrganiseSpellWindow()
@@ -63,6 +66,7 @@ public class GameManager : MonoBehaviour
 
     public int RepairSpellLength(string spell_id)
     {
+        
         foreach(PlayerSpell spell in Player.Instance.data.all_spells)
         {
             if(spell_id == spell.spell_id)
@@ -77,6 +81,11 @@ public class GameManager : MonoBehaviour
     public bool NowCoding()
     {
         return CodingInterfaceManager.Instance != null && CodingInterfaceManager.Instance.gameObject.active == true;
+    }
+
+    public void SelectStage()
+    {
+        SpawnWindowAtCamera(stage_select);
     }
 
     public void MissleEffect(GameObject shooter, GameObject destination, Color color)
@@ -129,6 +138,60 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void StartBattle(string stage_id)
+    {
+        StartCoroutine(StartBattleSequence(stage_id));
+    }
+
+    public IEnumerator StartBattleSequence(string stage_id)
+    {
+        Vector3 pos = Player.Instance.gameObject.transform.position;
+        black_transition.transform.position = new Vector3(pos.x, pos.y, black_transition.transform.position.z);
+        black_transition.GetComponent<FadeControl>().StartFadeIn();
+        main_ui.GetComponent<MainUI>().HideMainUI();
+        yield return new WaitForSeconds(0.5f);
+        map_ui.SetActive(false);
+        battle_ui.GetComponent<BattleManager>().stage_id = stage_id;
+        battle_ui.transform.position = (Vector2)Player.Instance.gameObject.transform.position;
+        battle_ui.GetComponent<BattleManager>().InitializeBattleUI();
+        battle_ui.SetActive(true);
+        black_transition.GetComponent<FadeControl>().StartFadeOut();
+        //Debug.Log("ready to start");
+        yield return new WaitForSeconds(0.5f);
+        battle_ui.GetComponent<BattleManager>().StartStage();
+    }
+
+    public void BattleToMapChange(string new_map_id)
+    {
+        StartCoroutine(BattleToMapChangeSequence(new_map_id));
+    }
+
+    public void MapToMapChange(string new_map_id)
+    {
+        StartCoroutine(MapToMapChangeSequence(new_map_id));
+    }
+
+    public IEnumerator MapToMapChangeSequence(string new_map_id)
+    {
+        //main_ui.GetComponent<MainUI>().ShowMainUI();
+        black_transition.GetComponent<FadeControl>().StartFadeIn();
+
+
+        yield return new WaitForSeconds(0.5f);
+        map_ui.SetActive(true);
+    }
+
+    public IEnumerator BattleToMapChangeSequence(string new_map_id)
+    {
+        main_ui.GetComponent<MainUI>().ShowMainUI();
+        black_transition.GetComponent<FadeControl>().StartFadeIn();
+        
+
+        yield return new WaitForSeconds(0.5f);
+        battle_ui.SetActive(false);
+        map_ui.SetActive(true);
+    }
+
     public IEnumerator FinishMission(string quest_id)
     {
         main_ui.GetComponent<MainUI>().ShowMainUI();
@@ -150,6 +213,15 @@ public class GameManager : MonoBehaviour
             if (skill == bs.required_skill) return bs;
         }
         return null;
+    }
+
+    public bool CheckFinishStage(string stage_id)
+    {
+        if (Player.Instance.data.completedStage.Contains(stage_id))
+        {
+            return true;
+        }
+        return false;
     }
 
     public Skill GetSkillByName(string name)

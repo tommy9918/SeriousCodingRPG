@@ -11,8 +11,10 @@ public class CharacterManager : MonoBehaviour
 
     public GameObject walkable;
     public GameObject obstacle;
+    public GameObject exit;
     public List<Collider2D> walkable_collider;
     public List<Collider2D> obstacle_collider;
+    public List<Collider2D> exit_colliders;
 
     void Start()
     {
@@ -34,6 +36,7 @@ public class CharacterManager : MonoBehaviour
     {
         walkable_collider = new List<Collider2D>();
         obstacle_collider = new List<Collider2D>();
+        exit_colliders = new List<Collider2D>();
         foreach(Collider2D c in walkable.GetComponents<Collider2D>())
         {
             walkable_collider.Add(c);
@@ -41,6 +44,10 @@ public class CharacterManager : MonoBehaviour
         foreach (Collider2D c in obstacle.GetComponents<Collider2D>())
         {
             obstacle_collider.Add(c);
+        }
+        foreach(Collider2D c in exit.GetComponents<Collider2D>())
+        {
+            exit_colliders.Add(c);
         }
     }
 
@@ -106,7 +113,28 @@ public class CharacterManager : MonoBehaviour
                 return false;
             }
         }
-        return true;
+
+        if (!CanExit(pos))
+        {
+            return true;
+        }
+        else
+        {
+            GameManager.Instance.SelectStage();
+            return false;
+        }
+    }
+
+    bool CanExit(Vector2 pos)
+    {
+        foreach(Collider2D c in exit_colliders)
+        {
+            if (c.bounds.Contains(pos))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     void OnTouchUp()

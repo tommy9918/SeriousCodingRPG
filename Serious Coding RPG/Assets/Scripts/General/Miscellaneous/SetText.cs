@@ -65,6 +65,8 @@ public class SetText : MonoBehaviour
         //Debug.Log(search_key);
         //Debug.Log(read_key);
 
+        if (search_key.Length > read_key.Length) return false;
+
         for (int i = 0; i <= search_key.Length - 1; i++)
         {
             if (search_key[i] != read_key[i]) return false;

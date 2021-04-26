@@ -85,7 +85,9 @@ public class MasterTextManager : MonoBehaviour
 
     public void LoadQuestionByID(string question_id, out string question, out List<string> answers)
     {
+        Debug.Log(question_id);
         string line = LoadText(question_id);
+        Debug.Log(line);
         string[] array = line.Split(',');
         question = array[0];
         answers = new List<string>();

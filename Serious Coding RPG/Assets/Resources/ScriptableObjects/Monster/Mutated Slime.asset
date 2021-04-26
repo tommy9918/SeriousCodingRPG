@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0605c52aeb2e93e438ac14304a5d72ad, type: 3}
-  m_Name: Blue Slime
+  m_Name: Mutated Slime
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: cf1d29fd3fbb7ab45832caace70fe7fb, type: 3}
+  sprite: {fileID: 21300000, guid: c55782d7b68a4a546829adb4b64287a9, type: 3}
   stageid: 1-1
-  monster_id: BLUESLIME
-  level: 1
+  monster_id: MUTATEDSLIME
+  level: 3
   attack_interval: 180
-  ATK: 25
-  DEF: 10
-  health: 150
+  ATK: 30
+  DEF: 20
+  health: 250
