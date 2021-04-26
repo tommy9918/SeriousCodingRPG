@@ -24,7 +24,8 @@ public class SetZ : MonoBehaviour
     [ContextMenu("SetZ")]
     public void UpdateZ()
     {
-        original_z = transform.position.z;
+        //original_z = transform.position.z;
+        original_z = -1f;
         //Debug.Log(squish(-100));
         float y = transform.position.y;
         transform.position = new Vector3(transform.position.x, transform.position.y, original_z + squish(y));

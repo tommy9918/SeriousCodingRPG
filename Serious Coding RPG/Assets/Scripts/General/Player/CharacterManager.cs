@@ -18,8 +18,15 @@ public class CharacterManager : MonoBehaviour
 
     void Start()
     {
-        GetAllCollider();
+        
+    }
 
+    public void InitializeCharacter()
+    {
+        GetAllCollider();
+        cam = Player.Instance.gameObject;
+        cam.transform.position = new Vector3(transform.position.x, transform.position.y + 1.13f, cam.transform.position.z);
+        Player.Instance.character = gameObject;
     }
 
     // Update is called once per frame

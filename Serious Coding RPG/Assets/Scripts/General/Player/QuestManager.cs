@@ -7,7 +7,7 @@ public class QuestManager : MonoBehaviour
     // Start is called before the first frame update
     public static QuestManager Instance { get; private set; }
     public Quest[] all_quests;
-    public NPCManager[] NPC_list;
+    public List<NPCManager> NPC_list;
     public GameObject QuestConfirmPanel;
     public GameObject questUI;
     public GameObject RewardPanel;

@@ -1457,6 +1457,7 @@ MonoBehaviour:
   map_id: Village2
   prerequisite: 1-1
   requirement_text: {fileID: 7611441353279237690}
+  controller: {fileID: 7611441352662341831}
 --- !u!1 &7611441353183937085
 GameObject:
   m_ObjectHideFlags: 0

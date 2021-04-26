@@ -174,21 +174,34 @@ public class GameManager : MonoBehaviour
     public IEnumerator MapToMapChangeSequence(string new_map_id)
     {
         //main_ui.GetComponent<MainUI>().ShowMainUI();
+        Vector3 pos = Player.Instance.gameObject.transform.position;
+        black_transition.transform.position = new Vector3(pos.x, pos.y, black_transition.transform.position.z);
         black_transition.GetComponent<FadeControl>().StartFadeIn();
 
 
         yield return new WaitForSeconds(0.5f);
+        MapController.Instance.ReplaceScene(new_map_id);
+        pos = Player.Instance.gameObject.transform.position;
+        black_transition.transform.position = new Vector3(pos.x, pos.y, black_transition.transform.position.z);
+        black_transition.GetComponent<FadeControl>().StartFadeOut();
         map_ui.SetActive(true);
     }
 
     public IEnumerator BattleToMapChangeSequence(string new_map_id)
     {
         main_ui.GetComponent<MainUI>().ShowMainUI();
+        Vector3 pos = Player.Instance.gameObject.transform.position;
+        black_transition.transform.position = new Vector3(pos.x, pos.y, black_transition.transform.position.z);
         black_transition.GetComponent<FadeControl>().StartFadeIn();
         
 
         yield return new WaitForSeconds(0.5f);
         battle_ui.SetActive(false);
+        
+        MapController.Instance.ReplaceScene(new_map_id);
+        pos = Player.Instance.gameObject.transform.position;
+        black_transition.transform.position = new Vector3(pos.x, pos.y, black_transition.transform.position.z);
+        black_transition.GetComponent<FadeControl>().StartFadeOut();
         map_ui.SetActive(true);
     }
 

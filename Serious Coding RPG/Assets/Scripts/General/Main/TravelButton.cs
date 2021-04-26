@@ -7,6 +7,7 @@ public class TravelButton : MonoBehaviour
     public string map_id;
     public string prerequisite;
     public GameObject requirement_text;
+    public StageSelect controller;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class TravelButton : MonoBehaviour
 
     public void StartTravel()
     {
-
+        GameManager.Instance.MapToMapChange(map_id);
+        controller.CloseWindow();
     }
 }
