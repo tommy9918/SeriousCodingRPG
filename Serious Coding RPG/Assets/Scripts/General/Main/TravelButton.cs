@@ -26,7 +26,10 @@ public class TravelButton : MonoBehaviour
 
     public void StartTravel()
     {
-        GameManager.Instance.MapToMapChange(map_id);
-        controller.CloseWindow();
+        if (Player.Instance.data.completedStage.Contains(prerequisite))
+        {
+            GameManager.Instance.MapToMapChange(map_id);
+            controller.CloseWindow();
+        }
     }
 }

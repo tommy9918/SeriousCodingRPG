@@ -26,12 +26,24 @@ public class LeaderboardHandler : MonoBehaviour
     void Start()
     {
         fdb = FirebaseDatabase.DefaultInstance;
+        //GetComponent<FadeControl>().StartFadeIn();
+        GetComponent<ScaleChange>().StartAnimate();
+        GetComponent<Dim>().StartDim();
+
     }
 
     // Update is called once per frame
     void Update()
     {
         leaderboardText.text = top10;
+    }
+
+    public void CloseWindow()
+    {
+        //GetComponent<FadeControl>().StartFadeOut();
+        GetComponent<ScaleChange>().StartAnimateReverse();
+        GetComponent<Dim>().RemoveDim();
+        Destroy(gameObject, 0.5f);
     }
 
     public string GetRandomString(int n)

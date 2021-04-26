@@ -22,11 +22,7 @@ public class Player : MonoBehaviour
     public int chanting_speed;
     public int max_equip_spells;
 
-    [ContextMenu("TestAddSpellChannels")]
-    public void TestAddSpells()
-    {
-        data.TestAddSpellChannels();
-    }
+    
 
     public List<CommandBlock> GetSkillCode(string skill_name)
     {

@@ -16011,6 +16011,8 @@ MonoBehaviour:
     type: 3}
   missle_ref: {fileID: 4428481465188743314, guid: 89c4bd3803af5aa4c98a032d10cb9fbc,
     type: 3}
+  scoreboard: {fileID: 6017059062290865950, guid: 32e9108781393d546b90729c5ba9fb4a,
+    type: 3}
 --- !u!114 &434861361
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject missle_ref;
 
+    public GameObject scoreboard;
+
     void Awake()
     {
         if (Instance == null)   //singleton Player instance, easy for referencing in other scripts
@@ -46,6 +48,11 @@ public class GameManager : MonoBehaviour
         
     }
 
+
+    public void OpenScoreBoard()
+    {
+        SpawnWindowAtCamera(scoreboard);
+    }
     public void OpenProfile()
     {
         GameObject temp = SpawnWindowAtCamera(profile_window);
@@ -263,7 +270,7 @@ public class GameManager : MonoBehaviour
         List<BattleSpell> battle_spell_list = new List<BattleSpell>();
         foreach (BattleSpell bs in Resources.LoadAll("ScriptableObjects/BattleSpell"))
         {
-            if(Player.Instance.HaveSkill(bs.required_skill) && !Player.Instance.HaveSpell(bs.name))
+            if(Player.Instance.HaveSkill(bs.required_skill) && !Player.Instance.HaveSpell(bs.spell_id))
             {
                 battle_spell_list.Add(bs);
             }

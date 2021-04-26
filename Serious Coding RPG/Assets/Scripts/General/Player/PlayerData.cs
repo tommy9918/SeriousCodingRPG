@@ -43,24 +43,7 @@ public class PlayerData
     public string location;
 
     
-    public void TestAddSpellChannels()
-    {
-        List<PlayerSpell> spell_list1 = new List<PlayerSpell>();
-        List<PlayerSpell> spell_list2 = new List<PlayerSpell>();
-        spell_list1.Add(all_spells[0]);
-        spell_list2.Add(all_spells[1]);
-        spell_list2.Add(all_spells[2]);
-        spells_in_channels.Add(new PlayerSpellList(spell_list1));
-        spells_in_channels.Add(new PlayerSpellList(spell_list2));
-
-        foreach(PlayerSpellList spell_list in spells_in_channels)
-        {
-            foreach(PlayerSpell spell in spell_list.spell_list)
-            {
-                Debug.Log(spell.spell_id);
-            }
-        }
-    }
+    
     
 
     public PlayerData()    //initialize a new player
@@ -78,7 +61,7 @@ public class PlayerData
         channel_chanting_speed = new List<int>();
         spells_in_channels = new List<PlayerSpellList>();
         unlocked_blocks = new List<string>();
-        spell_channels = 1;
+        spell_channels = 2;
         location = "village1";
 
         language = "en";
@@ -100,7 +83,7 @@ public class PlayerData
         this.channel_chanting_speed = new List<int>(player.data.channel_chanting_speed);
         this.spells_in_channels = new List<PlayerSpellList>(player.data.spells_in_channels);
         this.unlocked_blocks = new List<string>(player.data.unlocked_blocks);
-        this.spell_channels = 1;
+        this.spell_channels = 2;
         this.location = player.data.location;
 
         this.language = player.data.language;
