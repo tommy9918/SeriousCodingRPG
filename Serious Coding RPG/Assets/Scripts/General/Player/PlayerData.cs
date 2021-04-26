@@ -62,7 +62,7 @@ public class PlayerData
         spells_in_channels = new List<PlayerSpellList>();
         unlocked_blocks = new List<string>();
         spell_channels = 2;
-        location = "village1";
+        location = "Village1";
 
         language = "en";
         

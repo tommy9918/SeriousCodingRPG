@@ -236,6 +236,7 @@ public class GameManager : MonoBehaviour
         black_transition.transform.position = new Vector3(pos.x, pos.y, black_transition.transform.position.z);
         black_transition.GetComponent<FadeControl>().StartFadeOut();
         map_ui.SetActive(true);
+        Player.Instance.data.location = new_map_id;
     }
 
     public IEnumerator BattleToMapChangeSequence(string new_map_id)
@@ -254,6 +255,7 @@ public class GameManager : MonoBehaviour
         black_transition.transform.position = new Vector3(pos.x, pos.y, black_transition.transform.position.z);
         black_transition.GetComponent<FadeControl>().StartFadeOut();
         map_ui.SetActive(true);
+        Player.Instance.data.location = new_map_id;
     }
 
     public IEnumerator FinishMission(string quest_id)
