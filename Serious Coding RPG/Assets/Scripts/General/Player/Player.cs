@@ -70,7 +70,8 @@ public class Player : MonoBehaviour
         //Debug.Log(GetComponent<Camera>().aspect);
         float new_ratio = (1f / GetComponent<Camera>().aspect) / (1f / original_ratio);
         GetComponent<Camera>().orthographicSize = original_size * new_ratio;
-        MapController.Instance.entire_scene.GetComponent<VillageController>().InitializeVillage();
+        //MapController.Instance.entire_scene.GetComponent<VillageController>().InitializeVillage();
+        MapController.Instance.ReplaceScene(data.location);
     }
 
     public bool checkQuestStatus(string id)    //0 = not finished, 1 = finished

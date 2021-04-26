@@ -30,7 +30,7 @@ public class MapController : MonoBehaviour
 
     public void ReplaceScene(string sceneid)
     {
-        if (entire_scene.GetComponent<VillageController>().VillageID == sceneid) return;
+        if (entire_scene != null && entire_scene.GetComponent<VillageController>().VillageID == sceneid) return;
         GameObject new_scene = null;
         foreach(GameObject village in village_reference)
         {

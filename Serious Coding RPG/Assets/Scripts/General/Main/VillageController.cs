@@ -24,13 +24,15 @@ public class VillageController : MonoBehaviour
     public void InitializeVillage()
     {
         objects.GetComponent<SetObjectsZ>().SetZOrder();
+        Player.Instance.character = character;
+        character.GetComponent<CharacterManager>().InitializeCharacter();
         QuestManager.Instance.NPC_list = new List<NPCManager>();
         foreach (GameObject npc in NPC_list)
         {
             npc.GetComponent<SetZ>().UpdateZ();
             QuestManager.Instance.NPC_list.Add(npc.GetComponent<NPCManager>());
         }
-        character.GetComponent<CharacterManager>().InitializeCharacter();
+        
     }
 }
 
