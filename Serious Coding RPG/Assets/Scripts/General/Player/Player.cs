@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     public int chanting_speed;
     public int max_equip_spells;
 
+    public int max_exp;
+
     
 
     public List<CommandBlock> GetSkillCode(string skill_name)
@@ -98,6 +100,7 @@ public class Player : MonoBehaviour
         spell_channels = Mathf.Min(5, data.level / 7 + 2);
         chanting_speed = (data.level - 1) * 5 + 15;
         max_equip_spells = (data.level - 1) * 1 + 3;
+        max_exp = (data.level * data.level)*20 + 100;
     }
 
     public void SaveData()

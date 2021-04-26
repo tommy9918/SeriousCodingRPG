@@ -162,6 +162,8 @@ public class ExecutionSpace
             if (current_step > step_limit - 1)
             {
                 execution_end = true;
+                CodingInterfaceManager.Instance.RaiseCurse();
+                CodingInterfaceManager.Instance.toolong = true;
                 break;
             }
             //Debug.Log(commands[current_line_number - 1].command);
@@ -257,8 +259,16 @@ public class ExecutionSpace
 
     public string ExecuteSubroutine(List<CommandBlock> commands)
     {
-        for(int i = 0; i <= commands.Count - 1; i++)
+        int step_limit = 1000;
+        for (int i = 0; i <= commands.Count - 1; i++)
         {
+            if (current_step > step_limit - 1)
+            {
+                execution_end = true;
+                CodingInterfaceManager.Instance.RaiseCurse();
+                CodingInterfaceManager.Instance.toolong = true;
+                break;
+            }
             line_number_traversed.Add(current_line_number);
             //Debug.Log("Running sub line number:" + (i+1).ToString());
             switch (commands[i].command)
@@ -440,6 +450,7 @@ public class ExecutionSpace
                     {
                         Debug.Log("Curse by zero-division!");
                         CodingInterfaceManager.Instance.RaiseCurse();
+                        CodingInterfaceManager.Instance.zerodivision = true;
                         //trigger zero-division curse
                         return "0";
                     }
@@ -452,6 +463,7 @@ public class ExecutionSpace
                     {
                         Debug.Log("Curse by zero-division!");
                         CodingInterfaceManager.Instance.RaiseCurse();
+                        CodingInterfaceManager.Instance.zerodivision = true;
                         //trigger zero-division curse
                         return "0";
                     }

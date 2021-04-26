@@ -289,8 +289,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.35, y: -0.05}
-  m_SizeDelta: {x: 357.98352, y: 82.04489}
+  m_AnchoredPosition: {x: 1.402, y: -0.05}
+  m_SizeDelta: {x: 1058.6893, y: 82.04489}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &593566143220233345
 CanvasRenderer:
@@ -382,8 +382,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.381, y: -3.022}
-  m_SizeDelta: {x: 659.40985, y: 82.04489}
+  m_AnchoredPosition: {x: 1.388, y: -3.022}
+  m_SizeDelta: {x: 1062.3154, y: 82.04489}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &593566143316466291
 CanvasRenderer:
@@ -1068,8 +1068,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.01, y: -1.58}
-  m_SizeDelta: {x: 504.33246, y: 82.04489}
+  m_AnchoredPosition: {x: 1.383, y: -1.58}
+  m_SizeDelta: {x: 1061.3933, y: 82.04489}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &593566143999162423
 CanvasRenderer:
@@ -1463,6 +1463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accepted: 0
+  repairing: 0
   coding_manager: {fileID: 0}
 --- !u!114 &1240971012096953780
 MonoBehaviour:
@@ -2471,9 +2472,13 @@ MonoBehaviour:
   spell_name: {fileID: 7384571949264333939}
   name_part: {fileID: 7384571950134292520}
   black_mist: {fileID: 593566143965653019}
+  add_spell_controler: {fileID: 0}
+  channel_manager: {fileID: 0}
   in_battle: 0
   can_expand_information: 0
   can_buy: 0
+  can_add: 0
+  can_delete: 0
   detail_panel: {fileID: 593566143965653019}
 --- !u!114 &4603238096774262547
 MonoBehaviour:

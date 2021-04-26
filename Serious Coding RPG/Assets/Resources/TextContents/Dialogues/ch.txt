@@ -4,7 +4,12 @@ REWARD=獎勵
 EXP=經驗值
 OK=確定
 NPCNAMEELDER=巫師長老
+NPCNAMECHEF=廚師
+NPCNAMEELENA=伊蓮娜
+NPCNAMEDORIS=朵麗絲
+NPCNAMEPOTTER=波特
 ELDER=又看到你了年青人！祝你一路平安！
+ELENA=你要變得更強才有辦法對付怪物！
 CHEF=謝謝你幫了我，火魔法真是太棒了！
 DORIS=我相信你就是被選中的巫師，請拯救我們的世界。。
 POTTER=天賦異稟的魔法師，你學得越多，就越強大！
@@ -22,6 +27,11 @@ INPUT=輸入:
 OUTPUT=輸出: 
 MAINQUEST=主線任務
 SIDEQUEST=支線任務
+STEPSLEFT=剩餘詠唱步數
+UNUSECHANNEL=剩餘咒語頻道
+CONFIRM=確認
+CANCEL=取消
+RESTARTPROMPT=重新啟動遊戲以套用設定
 
 #Quest 1
 QUESTMAIN1-1-ELDER=噢！在那邊的人....
@@ -105,5 +115,31 @@ QUESTMAIN9-1-POTTER=第二個挑戰，當我給你一個數組，告訴我數組
 #Quest 10
 QUESTMAIN10-1-POTTER=太漂亮了！你在這麼短的時間就學會了這兩個數組魔法，你確實天賦異稟，怪不得朵麗絲認為你可能是天選之巫師。
 QUESTMAIN10-2-POTTER=請務必跟我一起去拜見大魔法師，我相信他會讓你進行賢者的試煉。
+
+#-------------------Skill related-------------------------------------------
+REQUIREDSKILL=必要技能: 
+EFFECT=效果: 
+AVERAGELENGTH=平均長度
+#------------Effects---------------------------------------
+ATTACK=以<value>點額外攻勢力攻擊。
+HEAL=回復<value>點生命值。
+RESTORE=回復<value>點魔力值。
+
+#-------------------------NAMES---------------------------------------
+FIREBALL=火球術
+LESSERHEAL=初級治療術
+MIRACLE=奇蹟術
+
+#-----------------------Skill description--------------------------------
+FIREBALL_DESCRIPTION=聚集熱度最高的魔力的結果。
+LESSERHEAL_DESCRIPTION=把此咒語加到你的傷口上面能暫時止血。
+MIRACLE_DESCRIPTION=這個咒語能憑空變出魔力？真是奇蹟！
+
+#--------------------------Battle Questions-----------------------------------------
+QUESTIONSITUATION=一鼓魔法迷霧使你迷失了去路。你感覺到自己若不能解開謎題，便將會永遠徘徊於此......
+QUESTION1-1-1=以下哪個指令方塊必定會完結一個咒語?,OUTPUT,INPUT,ASSIGN,JUMP
+QUESTION1-1-2=以下哪個指令方塊於構築有限迴圈時不是必要的?,WORD,IF,JUMP,VARIABLE
+QUESTION1-1-3=以下哪個方塊不能被放進PLUS方塊?,JUMP,NUMBER,WORD,VARIABLE
+QUESTION1-1-4=以下哪個方塊不能被放進VARIABLE方塊?,IF,WORD,NUMBER,ARRAY
 
 

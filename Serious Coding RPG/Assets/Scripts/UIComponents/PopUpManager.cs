@@ -94,7 +94,8 @@ public class PopUpManager : MonoBehaviour
 
         pop_up_instance.Add(pop_up);
         SetLayer(pop_up_instance[pop_up_instance.Count - 1]);
-
+        Vector3 pos = Player.Instance.gameObject.transform.position;
+        confirm_layer.transform.position = new Vector3(pos.x, pos.y, confirm_layer.transform.position.z);
         confirm_layer.enabled = true;
     }
 

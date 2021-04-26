@@ -9796,7 +9796,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 1.7
-      minScalar: 3
+      minScalar: 18.6
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14292,7 +14292,7 @@ GameObject:
   - component: {fileID: 5851266959897925410}
   - component: {fileID: 5851266959897925411}
   m_Layer: 0
-  m_Name: skeleton
+  m_Name: curse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -41,7 +41,7 @@ public class MapController : MonoBehaviour
             }
         }
         Destroy(entire_scene);
-        entire_scene = Instantiate(new_scene);
+        entire_scene = Instantiate(new_scene, transform);
         entire_scene.GetComponent<VillageController>().InitializeVillage();
     }
 }

@@ -1,6 +1,6 @@
-QUESTMAIN1_NAME=HELLO MANA!
-QUESTMAIN1_DESCRIPTION=Use the OUT block to output some mana!
-QUESTMAIN2_NAME=SUM OF TWO NUMBERS
-QUESTMAIN2_DESCRIPTION=This spell takes 2 numbers as input and output their sum.
-QUESTMAIN3_NAME=MAXIMUM HEAT
-QUESTMAIN3_DESCRIPTION=This spell takes in 2 numbers and output the larger one.
+QUESTMAIN1_NAME=魔力你好
+QUESTMAIN1_DESCRIPTION=用OUT方塊輸出魔力(mana)
+QUESTMAIN2_NAME=兩個數的和
+QUESTMAIN2_DESCRIPTION=這個咒法會吸收兩個數字，然後輸出它們的和。
+QUESTMAIN3_NAME=最大熱度
+QUESTMAIN3_DESCRIPTION=這個咒法會吸收兩個數字，然後輸出它們的最大值。

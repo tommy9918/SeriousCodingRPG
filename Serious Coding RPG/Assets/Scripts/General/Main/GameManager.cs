@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +23,11 @@ public class GameManager : MonoBehaviour
     public GameObject missle_ref;
 
     public GameObject scoreboard;
+
+    public GameObject settings;
+    public GameObject quit_prompt;
+
+    public GameObject notification;
 
     void Awake()
     {
@@ -48,6 +54,44 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void Notification(string message)
+    {
+        StartCoroutine(NotificationSequence(message));
+    }
+
+    public IEnumerator NotificationSequence(string message)
+    {
+        GameObject noti = SpawnWindowAtCamera(notification);
+        noti.transform.position = noti.transform.position + Vector3.up * 5.11f;
+        noti.GetComponentInChildren<Text>().text = message;
+        noti.GetComponent<FadeControl>().StartFadeIn();
+        yield return new WaitForSeconds(2);
+        noti.GetComponent<FadeControl>().StartFadeOut();
+        Destroy(noti, 0.5f);
+    }
+
+    void ToEnglish()
+    {
+        Player.Instance.data.language = "en";
+        SpawnWindowAtCamera(quit_prompt);
+    }
+
+    void ToChinese()
+    {
+        Player.Instance.data.language = "ch";
+        SpawnWindowAtCamera(quit_prompt);
+    }
+
+    public void OpenSettings()
+    {
+        SpawnWindowAtCamera(settings);
+    }
+
+    public void CloseGame()
+    {
+        Debug.Log("closing");
+        Application.Quit();
+    }
 
     public void OpenScoreBoard()
     {

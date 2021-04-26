@@ -49,6 +49,8 @@ public class CodingInterfaceManager : MonoBehaviour
 
     public GameObject curse;
     public bool cursed;
+    public bool toolong;
+    public bool zerodivision;
     void Awake()
     {
         if(Instance == null)
@@ -175,6 +177,8 @@ public class CodingInterfaceManager : MonoBehaviour
         debug_real_output.Clear();
         debug_expected_output.Clear();
         cursed = false;
+        toolong = false;
+        zerodivision = false;
         playbar.SwitchToCode();
     }
 
@@ -248,6 +252,14 @@ public class CodingInterfaceManager : MonoBehaviour
         {
             GameObject temp = Instantiate(curse, transform);
             Destroy(temp, 2f);
+            if (zerodivision)
+            {
+                GameManager.Instance.Notification("<b><i><color=#FF0000>You Have Been Cursed by Zero Division</color>\nCredit Point Decreased</i></b>");          
+            }
+            else if (toolong)
+            {
+                GameManager.Instance.Notification("<b><i><color=#FF0000>You Have Been Cursed by Spell Overflow</color>\nCredit Point Decreased</i></b>");
+            }
         }
         StartCoroutine(SummonRunes());
 
@@ -295,7 +307,8 @@ public class CodingInterfaceManager : MonoBehaviour
         if (block_selection.active == false)
         {
             detail_requirement.SetActive(true);
-            DarkLayer = Instantiate(DarkLayerInstance);
+            DarkLayer = Instantiate(DarkLayerInstance, transform);
+            DarkLayer.transform.localPosition = new Vector3(0, 0, DarkLayer.transform.localPosition.z);
             DarkLayer.GetComponent<FadeControl>().StartFadeIn();
         }
     }
@@ -378,11 +391,13 @@ public class CodingInterfaceManager : MonoBehaviour
     public void DisableScrolling()
     {
         coding_scroll_list.GetComponent<ScrollRect>().vertical = false;
+        coding_scroll_list.GetComponent<ScrollRect>().horizontal = false;
     }
 
     public void EnableScrolling()
     {
         coding_scroll_list.GetComponent<ScrollRect>().vertical = true;
+        coding_scroll_list.GetComponent<ScrollRect>().horizontal = true;
     }
 
     public void GenerateInputBlock(string variable_name)
@@ -441,5 +456,7 @@ public class CodingInterfaceManager : MonoBehaviour
         add_icon.GetComponent<ChildButton>().ButtonUse = "OpenBlockSelection";
         coding_area.SetActive(true);
         cursed = false;
+        toolong = false;
+        zerodivision = false;
     }
 }

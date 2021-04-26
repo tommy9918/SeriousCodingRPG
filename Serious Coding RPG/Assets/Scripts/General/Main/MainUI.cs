@@ -24,7 +24,7 @@ public class MainUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateMainUI();
     }
 
     [ContextMenu("UpdateMainUI")]
@@ -32,9 +32,9 @@ public class MainUI : MonoBehaviour
     {
         PlayerName.text = Player.Instance.data.name.ToUpper();
         LevelNo.text = Player.Instance.data.level.ToString();
-        ExpGem.fillAmount = 0.5f;
-        HealthBar.fillAmount = 0.7f;
-        ManaBar.fillAmount = 0.95f;
+        ExpGem.fillAmount = Player.Instance.data.EXP/Player.Instance.max_exp;
+        HealthBar.fillAmount = Player.Instance.health/Player.Instance.max_health;
+        ManaBar.fillAmount = Player.Instance.mana / Player.Instance.max_mana;
     }
 
     [ContextMenu("HideMainUI")]
