@@ -31,6 +31,8 @@ public class SpellRepair : MonoBehaviour
     void RepairFail()
     {
         BattleManager.Instance.repairing_spell.GetComponent<SpellManager>().RepairFail();
+        GetComponent<Dim>().RemoveDim();
+        gameObject.SetActive(false);
         foreach (Transform child in block_parent.transform)
         {
             Destroy(child.gameObject);

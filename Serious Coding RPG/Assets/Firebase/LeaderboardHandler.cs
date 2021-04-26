@@ -93,7 +93,7 @@ public class LeaderboardHandler : MonoBehaviour
                     {
 
                         var buffer = rank.ToString() + " ";
-                        buffer += h.Child("name").Value.ToString() + ", level = " + h.Child("level").Value.ToString();
+                        buffer += h.Child("name").Value.ToString() + "\t" + h.Child("level").Value.ToString();
                         Debug.Log(buffer);
                         top10 = buffer + "\n" + top10;
                         rank--;
@@ -140,7 +140,7 @@ public class LeaderboardHandler : MonoBehaviour
                     {
 
                         var buffer = rank.ToString() + " ";
-                        buffer += h.Child("name").Value.ToString() + ", score = " + h.Child("score").Value.ToString();
+                        buffer += h.Child("name").Value.ToString() + "\t" + h.Child("score").Value.ToString();
                         Debug.Log(buffer);
                         top10 = buffer + "\n" + top10;
                         rank--;

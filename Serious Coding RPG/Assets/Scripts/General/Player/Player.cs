@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         data = LoadData();     //load player data
-        if(data.language == "" || data.language == null)
+        if (data.language == "" || data.language == null)
         {
             data.language = LanguageFileTarget(Application.systemLanguage);
             //data.language = "en";
