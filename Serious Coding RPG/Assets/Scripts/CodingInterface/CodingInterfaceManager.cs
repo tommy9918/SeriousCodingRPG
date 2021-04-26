@@ -47,6 +47,8 @@ public class CodingInterfaceManager : MonoBehaviour
     public Sprite edit;
     public bool all_passed;
 
+    public GameObject curse;
+    public bool cursed;
     void Awake()
     {
         if(Instance == null)
@@ -172,7 +174,7 @@ public class CodingInterfaceManager : MonoBehaviour
         passed.Clear();
         debug_real_output.Clear();
         debug_expected_output.Clear();
-
+        cursed = false;
         playbar.SwitchToCode();
     }
 
@@ -242,7 +244,11 @@ public class CodingInterfaceManager : MonoBehaviour
             //    runes_summoned[i].GetComponent<FadeControl>().StartFadeIn();
             //}
         }
-
+        if (cursed)
+        {
+            GameObject temp = Instantiate(curse, transform);
+            Destroy(temp, 2f);
+        }
         StartCoroutine(SummonRunes());
 
         if (all_passed)
@@ -384,6 +390,13 @@ public class CodingInterfaceManager : MonoBehaviour
 
     }
 
+    public void RaiseCurse()
+    {
+        //GameObject temp = Instantiate(curse, transform);
+        //Destroy(temp, 2f);
+        cursed = true;
+    }
+
     [ContextMenu("FinishQuest")]
     public void FinishQuest()
     {
@@ -427,6 +440,6 @@ public class CodingInterfaceManager : MonoBehaviour
         add_icon.GetComponent<SpriteRenderer>().sprite = add;
         add_icon.GetComponent<ChildButton>().ButtonUse = "OpenBlockSelection";
         coding_area.SetActive(true);
-
+        cursed = false;
     }
 }

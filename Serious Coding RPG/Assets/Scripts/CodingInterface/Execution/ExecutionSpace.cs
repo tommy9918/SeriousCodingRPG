@@ -439,6 +439,7 @@ public class ExecutionSpace
                     else
                     {
                         Debug.Log("Curse by zero-division!");
+                        CodingInterfaceManager.Instance.RaiseCurse();
                         //trigger zero-division curse
                         return "0";
                     }
@@ -450,6 +451,7 @@ public class ExecutionSpace
                     else
                     {
                         Debug.Log("Curse by zero-division!");
+                        CodingInterfaceManager.Instance.RaiseCurse();
                         //trigger zero-division curse
                         return "0";
                     }
