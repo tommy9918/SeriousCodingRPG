@@ -92,6 +92,7 @@ public class SpellManager : MonoBehaviour
             temp.transform.position = new Vector3(temp.transform.position.x, temp.transform.position.y, detail_panel.transform.position.z);
             temp.GetComponent<SpellDetail>().buyable = true;
             temp.GetComponent<SpellDetail>().InitializeSpellDetail(spell);
+            GameManager.Instance.OpenedWindow.Add(temp);
             //PopUpManager.Instance.OpenComplexPopUp(temp);
         }
         else if (can_expand_information)
@@ -100,6 +101,7 @@ public class SpellManager : MonoBehaviour
             temp.transform.position = new Vector3(temp.transform.position.x, temp.transform.position.y, detail_panel.transform.position.z);
             //temp.GetComponent<SpellDetail>().buyable = true;
             temp.GetComponent<SpellDetail>().InitializeSpellDetail(spell);
+            GameManager.Instance.OpenedWindow.Add(temp);
             //PopUpManager.Instance.OpenComplexPopUp(temp);
         }
         else if (can_add)

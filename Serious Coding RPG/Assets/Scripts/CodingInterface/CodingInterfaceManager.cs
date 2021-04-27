@@ -432,6 +432,10 @@ public class CodingInterfaceManager : MonoBehaviour
             }
             total_step /= debug_space.Count;
             new_skill.average_steps = total_step;
+            if(GameManager.Instance.GetSkillByName(skill_name) != null)
+            {
+                Player.Instance.data.skills.Remove(GameManager.Instance.GetSkillByName(skill_name));
+            }
             Player.Instance.data.skills.Add(new_skill);
         }
         StartCoroutine(GameManager.Instance.FinishMission(questID));

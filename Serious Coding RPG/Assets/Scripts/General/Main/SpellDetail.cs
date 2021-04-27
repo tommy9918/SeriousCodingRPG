@@ -12,6 +12,7 @@ public class SpellDetail : MonoBehaviour
     public Text spell_effect;
     public Text spell_price;
     public GameObject buy_button;
+    public GameObject edit_button;
     public bool buyable;
 
     // Start is called before the first frame update
@@ -60,6 +61,7 @@ public class SpellDetail : MonoBehaviour
         spell.EnableNamePart();
         skill_blk.skill = GameManager.Instance.GetSkillByName(spell_info.required_skill);
         skill_blk.InitializeSkillBlock();
+        edit_button.GetComponent<GameManagerButton>().value = spell_info.required_skill;
 
         spell_description.text = "<b><i>" + MasterTextManager.Instance.LoadText(spell_info.spell_id + "_DESCRIPTION") + "</i></b>";
         spell_length.text = MasterTextManager.Instance.LoadText("AVERAGELENGTH") + ": " + skill_blk.skill.average_steps;

@@ -10,6 +10,7 @@ public class GameManagerButton : MonoBehaviour
     float start_time;
     float end_time;
     public string ButtonUse;
+    public string value;
     bool pressed;   
 
     void OnTouchDown()
@@ -32,7 +33,15 @@ public class GameManagerButton : MonoBehaviour
             end_time = Time.time;
             if (start_pos != null && Vector2.Distance(start_pos, end_pos) <= 0.02f && end_time - start_time <= 1f)
             {
-                GameManager.Instance.SendMessage(ButtonUse, options: SendMessageOptions.DontRequireReceiver);
+                if(value != null && value != "")
+                {
+                    GameManager.Instance.SendMessage(ButtonUse, value, options: SendMessageOptions.DontRequireReceiver);
+                }
+                else
+                {
+                    GameManager.Instance.SendMessage(ButtonUse, options: SendMessageOptions.DontRequireReceiver);
+                }
+                
             }
         }
         pressed = false;

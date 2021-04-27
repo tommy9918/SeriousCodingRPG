@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject notification;
 
+    public List<GameObject> OpenedWindow;
+
     void Awake()
     {
         if (Instance == null)   //singleton Player instance, easy for referencing in other scripts
@@ -45,7 +47,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        OpenedWindow = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -112,7 +114,7 @@ public class GameManager : MonoBehaviour
     {
         Vector3 pos = Player.Instance.transform.position;
         GameObject temp = Instantiate(learn_window, new Vector3(pos.x, pos.y, learn_window.transform.position.z), Quaternion.identity);
-        
+        OpenedWindow.Add(temp);
     }
 
     public int RepairSpellLength(string spell_id)
@@ -268,7 +270,10 @@ public class GameManager : MonoBehaviour
         coding_ui.GetComponent<CodingInterfaceManager>().ResetCodingUI();
         coding_ui.SetActive(false);
         black_transition.GetComponent<FadeControl>().StartFadeOut();
-        QuestManager.Instance.FinishQuest(quest_id);
+        if (!Player.Instance.data.completedTask.Contains(quest_id))
+        {
+            QuestManager.Instance.FinishQuest(quest_id);
+        }
         SaveLoad.Save(Player.Instance);
     }
 
@@ -377,10 +382,68 @@ public class GameManager : MonoBehaviour
 
     public GameObject SpawnWindowAtCamera(GameObject reference)
     {
+        Debug.Log("spawning window");
         GameObject temp = Instantiate(reference);
         Vector3 pos = Player.Instance.gameObject.transform.position;
         temp.transform.position = new Vector3(pos.x, pos.y, reference.transform.position.z);
+        Debug.Log(OpenedWindow.Count);
+        OpenedWindow.Add(temp);
+        Debug.Log(OpenedWindow.Count);
         return temp;
+    }
+
+    public void UpdateOpenedWindow(GameObject new_window)
+    {
+        for (int i = 0; i <= OpenedWindow.Count - 1; i++)
+        {
+            if (OpenedWindow[i] == null)
+            {
+                OpenedWindow.Remove(OpenedWindow[i]);
+            }
+        }
+        OpenedWindow.Add(new_window);
+    }
+
+    public void RemoveAllWindow()
+    {
+        for (int i = 0; i <= OpenedWindow.Count - 1; i++)
+        {
+            if (OpenedWindow[i] != null)
+            {
+                Destroy(OpenedWindow[i].GetComponent<Dim>().instance);
+                Destroy(OpenedWindow[i]);
+            }
+        }
+        OpenedWindow.Clear();
+    }
+
+    public void SwitchToEditSkill(string skill_name)
+    {
+        Quest quest = QuestManager.Instance.getQuestFromSkill(skill_name);
+        Skill skill = GetSkillByName(skill_name);
+        StartCoroutine(StartEditSkill(quest.questId, skill));
+    }
+
+    public IEnumerator StartEditSkill(string quest_id, Skill target)
+    {
+        Vector3 pos = Player.Instance.gameObject.transform.position;
+        black_transition.transform.position = new Vector3(pos.x, pos.y, black_transition.transform.position.z);
+        black_transition.GetComponent<FadeControl>().StartFadeIn();
+        main_ui.GetComponent<MainUI>().HideMainUI();
+        yield return new WaitForSeconds(0.5f);
+        RemoveAllWindow();
+        map_ui.SetActive(false);
+        coding_ui.GetComponent<CodingInterfaceManager>().questID = quest_id;
+        coding_ui.transform.position = (Vector2)Player.Instance.gameObject.transform.position;
+        coding_ui.GetComponent<CodingInterfaceManager>().InitializeCodingUI();
+        
+        //coding_ui.transform.position = new Vector3(0, 0, coding_ui.transform.position.z);
+        //main_ui.transform.parent.transform.position = new Vector3(0, 0, coding_ui.transform.position.z);
+        coding_ui.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        coding_ui.GetComponent<CodeBlockReconstructor>().RebuildBlocks(target.GetOriginalCommandBlockList());
+        black_transition.GetComponent<FadeControl>().StartFadeOut();
+
     }
 
     public void SaveGame()
