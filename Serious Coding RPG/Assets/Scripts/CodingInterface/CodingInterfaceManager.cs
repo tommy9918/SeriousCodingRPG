@@ -366,7 +366,9 @@ public class CodingInterfaceManager : MonoBehaviour
         if (block_selection.active == false)
         {
             block_selection.SetActive(true);
-            DarkLayer = Instantiate(DarkLayerInstance);
+            block_selection.GetComponent<Collider2D>().enabled = true;
+            DarkLayer = Instantiate(DarkLayerInstance, transform);
+            DarkLayer.transform.localPosition = new Vector3(0, 0, DarkLayer.transform.localPosition.z);
             DarkLayer.GetComponent<FadeControl>().StartFadeIn();
         }
     }
@@ -381,6 +383,7 @@ public class CodingInterfaceManager : MonoBehaviour
         //block_selection.GetComponent<FadeControl>().GetAllComponenets();
         DarkLayer.GetComponent<FadeControl>().StartFadeOut();
         block_selection.GetComponent<BlockSelection>().FadeAllBlocks();
+        block_selection.GetComponent<Collider2D>().enabled = false;
         Destroy(DarkLayer, 0.5f);
         block_selection.GetComponent<FadeControl>().StartFadeOut();
         block_selection.GetComponent<ScaleChange>().StartAnimateReverse();

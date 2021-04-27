@@ -121,9 +121,9 @@ REQUIREDSKILL=REQUIRED SKILL:
 EFFECT=EFFECTS: 
 AVERAGELENGTH=AVERAGE LENGTH
 #------------Effects---------------------------------------
-ATTACK=ATTACK WITH <value> EXTRA DAMAGE.
-HEAL=RESTORE <value> HEALTH POINTS.
-RESTORE=RESTORE <value> MANA POINTS.
+ATTACKEFFECT=ATTACK WITH <value> EXTRA DAMAGE.
+HEALEFFECT=RESTORE <value> HEALTH POINTS.
+RESTOREEFFECT=RESTORE <value> MANA POINTS.
 
 #-------------------------NAMES---------------------------------------
 FIREBALL=Fireball
@@ -136,6 +136,7 @@ LESSERHEAL_DESCRIPTION=Adding this spell on top of your wounds should stop the b
 MIRACLE_DESCRIPTION=This spell can produce mana out of nothing. What a miracle!
 
 #--------------------------Battle Questions-----------------------------------------
+QUESTIONSITUATION=A magical mist has blocked your way. You have a feeling you are gonna wander forever if you cannot solve the mystery behind......
 QUESTION1-1-1=Which Command Block will definitely bring a spell to stop?,OUTPUT,INPUT,ASSIGN,JUMP
 QUESTION1-1-2=Which Code Block is not nescessary for a non-endless loop?,WORD,IF,JUMP,VARIABLE
 QUESTION1-1-3=Which Code Block cannot be put into a PLUS Block?,JUMP,NUMBER,WORD,VARIABLE

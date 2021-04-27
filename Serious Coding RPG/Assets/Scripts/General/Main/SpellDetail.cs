@@ -78,7 +78,7 @@ public class SpellDetail : MonoBehaviour
 
     public string effect_text(string type, string value)
     {
-        string final_text = MasterTextManager.Instance.LoadText(type.ToUpper());
+        string final_text = MasterTextManager.Instance.LoadText(type.ToUpper()+"EFFECT");
         final_text = final_text.Replace("<value>", value);
         return final_text;
     }
