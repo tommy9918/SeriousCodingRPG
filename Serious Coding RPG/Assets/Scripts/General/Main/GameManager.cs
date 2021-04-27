@@ -273,6 +273,11 @@ public class GameManager : MonoBehaviour
         if (!Player.Instance.data.completedTask.Contains(quest_id))
         {
             QuestManager.Instance.FinishQuest(quest_id);
+            Notification("<b><i>Mission Finished</i></b>");
+        }
+        else
+        {
+            Notification("<b><i>Spell Updated</i></b>");
         }
         SaveLoad.Save(Player.Instance);
     }

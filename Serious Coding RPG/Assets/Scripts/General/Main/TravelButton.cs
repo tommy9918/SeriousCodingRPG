@@ -33,7 +33,7 @@ public class TravelButton : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.Notification("You have unfinished route!");
+            GameManager.Instance.Notification("<b><i>You Have Unfinished Route!</i></b>");
         }
     }
 }

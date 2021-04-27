@@ -101,10 +101,13 @@ public class BattleManager : MonoBehaviour
 
         for (int i = 0; i <= Player.Instance.data.spells_in_channels.Count - 1; i++)
         {
-            GameObject temp = Instantiate(spell_list_ref, transform);
-            float start = (Player.Instance.data.spells_in_channels.Count - 1) * 2.28f / 2 * -1;
-            temp.transform.localPosition = new Vector3(start + 2.28f * i, 0, 0);
-            temp.GetComponent<SpellList>().InitializeSpellList(i);
+            if (Player.Instance.data.spells_in_channels[i].spell_list.Count >= 1)
+            {
+                GameObject temp = Instantiate(spell_list_ref, transform);
+                float start = (Player.Instance.data.spells_in_channels.Count - 1) * 2.28f / 2 * -1;
+                temp.transform.localPosition = new Vector3(start + 2.28f * i, 0, 0);
+                temp.GetComponent<SpellList>().InitializeSpellList(i);
+            }
         }
         paused = true;
         progress_bar.InitializeCoordinatesList(total_stage);
