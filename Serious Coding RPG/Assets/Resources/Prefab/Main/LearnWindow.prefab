@@ -591,6 +591,7 @@ GameObject:
   - component: {fileID: 6374576192843219616}
   - component: {fileID: 7919854957028828379}
   - component: {fileID: 6355542920526722264}
+  - component: {fileID: 1465883224967831638}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -658,6 +659,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: <b>BUYABLE SPELLS</b>
+--- !u!114 &1465883224967831638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5591881870805732788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccefd5c61c0911f41bbdcb159a3bf08c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Textkey: BUYABLESPELL
+  bold: 1
+  italic: 0
 --- !u!1 &6275460846520903086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,6 +1479,7 @@ GameObject:
   - component: {fileID: 6448374871238544340}
   - component: {fileID: 1748333866448817820}
   - component: {fileID: 4786245686449864357}
+  - component: {fileID: 6997129792781832653}
   m_Layer: 5
   m_Name: Text (1)
   m_TagString: Untagged
@@ -1530,6 +1547,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: <b>YOUR SPELLS</b>
+--- !u!114 &6997129792781832653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7676110196822841312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccefd5c61c0911f41bbdcb159a3bf08c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Textkey: YOURSPELL
+  bold: 1
+  italic: 0
 --- !u!1 &8081796175653372272
 GameObject:
   m_ObjectHideFlags: 0
