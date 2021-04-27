@@ -42,6 +42,7 @@ public class AccountHandler : MonoBehaviour
             if (signedIn)
             {
                 Debug.Log("Signed in " + user.UserId);
+                SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 // displayName = user.DisplayName ?? "";
                 // emailAddress = user.Email ?? "";
                 // photoUrl = user.PhotoUrl ?? "";
@@ -81,7 +82,7 @@ public class AccountHandler : MonoBehaviour
 
     public void onSignIn()
     {
-         auth.SignInWithEmailAndPasswordAsync(emailText.text, passwordText.text).ContinueWithOnMainThread(async task => {
+         auth.SignInWithEmailAndPasswordAsync(emailText.text, passwordText.text).ContinueWithOnMainThread( task => {
             if (task.IsCanceled) {
                 Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
                 return;
@@ -103,8 +104,8 @@ public class AccountHandler : MonoBehaviour
                 string uid = user.UserId;
                 Debug.LogFormat( "user information : name:{0} email:{1} uid:{2}", name, email, uid );
             }
-            await DatabaseHandler.onDownloadSaveFile();
-            SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+            DatabaseHandler.onDownloadSaveFile();
+            // SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
         });
         
 
@@ -134,7 +135,7 @@ public class AccountHandler : MonoBehaviour
                 Debug.Log("GoogleLogIn: task completed");
 
                 Credential credential = Firebase.Auth.GoogleAuthProvider.GetCredential (((Task<GoogleSignInUser>)task).Result.IdToken, null);
-                auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread (async authTask => {
+                auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread ( authTask => {
                     if (authTask.IsCanceled) {
                         signInCompleted.SetCanceled();
                         Debug.Log("GoogleLogIn: auth task canceled");
@@ -145,8 +146,8 @@ public class AccountHandler : MonoBehaviour
                         signInCompleted.SetResult(((Task<FirebaseUser>)authTask).Result);
                         user = ((Task<FirebaseUser>) authTask).Result;
                         Debug.Log("GoogleLogIn: auth task completed");
-                        await DatabaseHandler.onDownloadSaveFile();
-                        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                        DatabaseHandler.onDownloadSaveFile();
+                        // SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                     }
                     
                 });

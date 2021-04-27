@@ -14,6 +14,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Proyecto26;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class DatabaseHandler : MonoBehaviour
 {
@@ -161,6 +162,7 @@ public class DatabaseHandler : MonoBehaviour
 
         fileRef.GetFileAsync(filePath).ContinueWithOnMainThread(task => {
             if (!task.IsFaulted && !task.IsCanceled) {
+                
                 Debug.Log("File downloaded.");
             }
             else
@@ -199,7 +201,7 @@ public class DatabaseHandler : MonoBehaviour
     }
     
     
-    public static async Task onDownloadSaveFile()
+    public static void  onDownloadSaveFile()
     {
         string filename = "save.game";
         string filePath = Application.persistentDataPath + "/save.game";
@@ -213,13 +215,14 @@ public class DatabaseHandler : MonoBehaviour
                 var fileRef = storage.GetReference(childPath);
                 
                 // check if the file exists in firebase storage first
-                await fileRef.GetDownloadUrlAsync().ContinueWithOnMainThread(task => {
+                 fileRef.GetDownloadUrlAsync().ContinueWithOnMainThread(task => {
                     if (!task.IsFaulted && !task.IsCanceled) {
                         Debug.Log("Download URL: " + task.Result);
                         // ... now download the file via WWW or UnityWebRequest.
                         fileRef.GetFileAsync(filePath).ContinueWithOnMainThread(task2 => {
                             if (!task2.IsFaulted && !task2.IsCanceled) {
                                 Debug.Log("File downloaded.");
+                                SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                             }
                             else
                             {
@@ -227,7 +230,12 @@ public class DatabaseHandler : MonoBehaviour
                             }
                         });
                     }
-                    else Debug.Log("get URL failed, file may not exist");
+                    else
+                    {
+                        Debug.Log("get URL failed, file may not exist");
+                        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                    }
+                    
                 });
 
                 
