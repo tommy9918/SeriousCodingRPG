@@ -15880,6 +15880,7 @@ MonoBehaviour:
     type: 3}
   notification: {fileID: 4132760178854365364, guid: ac4eae0bbb03f31499142a251d726ff0,
     type: 3}
+  OpenedWindow: []
 --- !u!114 &434861361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18627,6 +18628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonUse: OpenProfile
+  value: 
 --- !u!61 &771354327
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19738,7 +19740,7 @@ PrefabInstance:
     - target: {fileID: 5656106135292120618, guid: 48978bb3f9c4513489fd3f22002f108e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48978bb3f9c4513489fd3f22002f108e, type: 3}
@@ -21148,7 +21150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313687126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.588, y: 0.097, z: -10.22}
+  m_LocalPosition: {x: 0.588, y: 0.097, z: -59.5}
   m_LocalScale: {x: 102.617676, y: 113.84839, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -42850,6 +42852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonUse: OpenSettings
+  value: 
 --- !u!61 &1889625141
 BoxCollider2D:
   m_ObjectHideFlags: 0

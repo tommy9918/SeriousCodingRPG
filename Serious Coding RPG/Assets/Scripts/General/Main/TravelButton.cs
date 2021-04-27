@@ -12,7 +12,7 @@ public class TravelButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Player.Instance.data.completedStage.Contains(prerequisite))
+        if (Player.Instance.data.completedStage.Contains(prerequisite) || prerequisite == null || prerequisite == "")
         {
             requirement_text.SetActive(false);
         }
@@ -26,7 +26,7 @@ public class TravelButton : MonoBehaviour
 
     public void StartTravel()
     {
-        if (Player.Instance.data.completedStage.Contains(prerequisite))
+        if (Player.Instance.data.completedStage.Contains(prerequisite) || prerequisite == null || prerequisite == "")
         {
             GameManager.Instance.MapToMapChange(map_id);
             controller.CloseWindow();
