@@ -31,5 +31,9 @@ public class TravelButton : MonoBehaviour
             GameManager.Instance.MapToMapChange(map_id);
             controller.CloseWindow();
         }
+        else
+        {
+            GameManager.Instance.Notification("You have unfinished route!");
+        }
     }
 }
